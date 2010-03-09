@@ -41,18 +41,18 @@ Tópicos tratados, ver cada item no Wiki
 ||		||		||	RF004 - cadastrar Administrador	||		||
 ||		||		||	RF005 - Definir Nivel de permição	||		||
 ||		||		||	RF006 - Manter Instituição	||		||
-||		||		||	RF007 - Manter Curso	||		||
+||		||		||	RF007 - Manter Curso	||	||
 ||		||		||	RF008 - Manter Disciplina	||		||
-||		||		||	RF009 - Manter Turma	||		||
+||		||		||	RF009 - Manter Turma	||	||
 ||		||		||	RF010 - Manter Professor	||		||
-||		||		||	RF011 - Manter Aluno	||		||
+||		||		||	RF011 - Manter Aluno	||	||
 ||		||		||	RF012 - Criar Plano de Prova	||		||
-||		||		||	RF013 - Aplica Prova	||		||
-||		||		||	RF014 - Manter Questão	||		||
-||		||		||	RF015 - Gerar Prova	||		||
-||		||		||	RF016 - Realizar Prova 	||		||
-||		||		||	RF017 - Gera Relatôrio Por Aluno||  ||   	||		||		||	RF018 - Gera Relatôrio Por Professor|| ||	
-||		||		||	RF019 - Gera Relatôrio por Turma
+||		||		||	RF013 - Aplica Prova	||      ||
+||		||		||	RF014 - Manter Questão	||	||
+||		||		||	RF015 - Gerar Prova	||	||
+||		||		||	RF016 - Realizar Prova 	||	||
+||		||		||	RF017 - Gera Relatôrio Por Aluno||  ||   	||		||		||	RF018 - Gera Relatôrio Por Professor||	
+||		||		||	RF019 - Gera Relatôrio por Turma||
 ||		||	Regras de Negócio	||		||		||
 ||		||		||	RN01 - Check-Out	||		||
 ||		||		||	RN02 - Check-In	||		||
