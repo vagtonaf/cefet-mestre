@@ -51,7 +51,8 @@ Tópicos tratados, ver cada item no Wiki
 ||		||		||	RF014 - Manter Questão	||	||
 ||		||		||	RF015 - Gerar Prova	||	||
 ||		||		||	RF016 - Realizar Prova 	||	||
-||		||		||	RF017 - Gera Relatôrio Por Aluno||  ||   	||		||		||	RF018 - Gera Relatôrio Por Professor||	
+||		||		||	RF017 - Gera Relatôrio Por Aluno||  ||   	||
+||		||	        ||	RF018 - Gera Relatôrio Por Professor||		||
 ||		||		||	RF019 - Gera Relatôrio por Turma||
 ||		||	Regras de Negócio	||		||		||
 ||		||		||	RN01 - Check-Out	||		||
