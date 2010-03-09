@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n\n\n@auth.requires_login()\ndef list():\n    tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))\n    try:\n        form=crud.create(db[tabela])\n    except KeyError, NameError:\n        response.flash='Erro de Entrada'\n        pass   \n    registros=db().select(db[tabela].ALL)\n    response.flash='Lista ' + tabela\n    return dict(registros=registros,form=form)\n\nresponse._vars=response._caller(list)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py", line 17, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\tools.py", line 1848, in f\n    return action(*a, **b)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py", line 13, in list\n    registros=db().select(db[tabela].ALL)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\sql.py", line 1274, in __getitem__\n    return dict.__getitem__(self, str(key))\nKeyError: \'alunodc\'\n'
+p8
+s.

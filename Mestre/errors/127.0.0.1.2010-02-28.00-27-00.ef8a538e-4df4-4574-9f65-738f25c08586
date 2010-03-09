@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n\n\n@auth.requires_login()\ndef list():\n    tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))\n    try:\n        form=crud.create(db[tabela])\n    except KeyError, NameError:\n        response.flash='Tabela Inexistente!'\n        return dict(registros='N\xc3\xa3o posso listar esta tabela!')   \n    registros=db().select(db[tabela].ALL)\n    response.flash='Lista ' + tabela\n    return dict(registros=registros,form=form)\n\n@auth.requires_login()\ndef edit():\n   tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))\n   registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))\n   registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))\n   form=crud.update(db[tabela],[tabela],next=url('list_' + tabela))\n   return dict(form=form)\n\nresponse._vars=response._caller(edit)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py", line 25, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\tools.py", line 1848, in f\n    return action(*a, **b)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py", line 22, in edit\n    form=crud.update(db[tabela],[tabela],next=url(\'list_\' + tabela))\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\tools.py", line 2262, in update\n    upload=self.settings.download_url,\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\sqlhtml.py", line 556, in __init__\n    self.record_id = str(record[\'id\'])\nTypeError: list indices must be integers, not str\n'
+p8
+s.

@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/controllers/prova.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n\n@auth.requires_login()\ndef cad_prova():\n    prova = SQLFORM(db.prova)\n    if prova.accepts(request.vars,session):\n            redirect(URL(r=request,f='ver_prova'))\n    if prova.errors: response.flash='Erro em seu formul\xc3\xa1rio'\n    return dict(prova=prova)\n\ndef ver_prova():\n    row_prova=db().select(db.prova.ALL)\n    return dict(row_prova=row_prova)\n\n@auth.requires_login()\ndef list_provas():\n   form=crud.create(db.prova)\n   provas=db(db.prova.id>0).select(db.prova.ALL)\n   turmas=db(db.turma.id>0).select(db.turma.ALL)\n   planoprovas=db(db.plano_de_prova.id>0).select(db.plano_de_prova.ALL,db.turma.ALL,left=db.turma.on(db.plano_de_prova.turma==db.turma.id))\n   response.flash='Lista Prova'\n   return dict(provas=provas,form=form,planoprovas=planoprovas)\n\n@auth.requires_login()\ndef edit_prova():\n   prova_id=request.args(0)\n   prova=db.prova[prova_id] or redirect(URL(r=request,f='../default/error'))\n   form=crud.update(db.prova,prova,next=url('list_provas'))\n   return dict(form=form)\n\nresponse._vars=response._caller(list_provas)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/controllers/prova.py", line 32, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\gluon\\tools.py", line 1848, in f\n    return action(*a, **b)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/controllers/prova.py", line 21, in list_provas\n    planoprovas=db(db.plano_de_prova.id>0).select(db.plano_de_prova.ALL,db.turma.ALL,left=db.turma.on(db.plano_de_prova.turma==db.turma.id))\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\gluon\\sql.py", line 1556, in __getattr__\n    return dict.__getitem__(self,key)\nKeyError: \'turma\'\n'
+p8
+s.

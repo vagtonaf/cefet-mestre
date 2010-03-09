@@ -1,0 +1,35 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Disciplinas Cadastrados</h1>
+
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+{{=button('Lista Curso','../curso/list_cursos')}}
+{{=button('Lista Turma','../turma/list_turmas')}}
+<div id="form">
+<h2>Nova Disciplina</h2>
+{{=form}}
+</div>
+
+<br /><br />
+<table class="smarttable">
+<thead>
+    <tr>
+        <th>Disciplina</th><th>Curso</th><th>Acao</th>
+    </tr>    
+</thead>
+<tbody>
+{{if disciplinas:}}
+  {{for disciplina in disciplinas:}}
+   <tr>
+      <td>{{=A(disciplina.disciplina.nome,_href=url('edit_disciplina',disciplina.disciplina.id))}}</td>
+      <td>{{=A(disciplina.curso.nome,_href=url('../curso/edit_curso',disciplina.curso.id))}}</td>
+      <td>{{=button('Alterar','edit_disciplina',disciplina.disciplina.id)}}</td></tr>
+   {{pass}}
+</tbody>
+</table>

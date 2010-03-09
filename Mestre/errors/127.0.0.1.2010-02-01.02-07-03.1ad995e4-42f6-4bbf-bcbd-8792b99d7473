@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\applications\\Mestre/controllers/aluno.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n\n@auth.requires_login()\ndef cad_aluno():\n    aluno = SQLFORM(db.aluno)\n    if aluno.accepts(request.vars,session):\n            redirect(URL(r=request,f='list_alunos'))\n    if aluno.errors: response.flash='Erro em seu formul\xc3\xa1rio'\n    return dict(aluno=aluno)\n\n@auth.requires_login()\ndef list_alunos():\n   form=crud.create(db.aluno)\n   alunos=db(db.aluno.id>0).select(\n          db.aluno.ALL,\n          db.auth_user.ALL,\n          left=db.auth_user.on(db.aluno.usuario==db.auth_user.id)\n          )\n   alunos.db().select(orderby=db.aluno.matricula)       \n   response.flash='Lista Alunos'\n   return dict(alunos=alunos,form=form)\n\n@auth.requires_login()\ndef edit_aluno():\n   aluno_id=request.args(0)\n   aluno=db.aluno[aluno_id] or redirect(URL(r=request,f='../default/error'))\n   form=crud.update(db.aluno,aluno,next=url('list_alunos'))\n   return dict(form=form)\n\nresponse._vars=response._caller(list_alunos)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\applications\\Mestre/controllers/aluno.py", line 31, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\gluon\\tools.py", line 1640, in f\n    return action(*a, **b)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\applications\\Mestre/controllers/aluno.py", line 20, in list_alunos\n    alunos.db().select(orderby=db.aluno.matricula)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\gluon\\sql.py", line 2981, in select\n    query = self._select(*fields, **attributes)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100129\\web2py\\gluon\\sql.py", line 2872, in _select\n    raise SyntaxError, \'Set: no tables selected\'\nSyntaxError: Set: no tables selected\n'
+p8
+s.

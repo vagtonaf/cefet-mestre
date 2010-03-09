@@ -1,0 +1,36 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Turmas Cadastradas</h1>
+
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+{{=button('Lista Disciplina','../disciplina/list_disciplinas')}}
+{{=button('Lista Alocação','../alocacao/list_alocacoes')}}
+<div id="form">
+<h2>Novas Turmas</h2>
+{{=form}}
+</div>
+
+<br /><br />
+<table class="smarttable">
+<thead>
+    <tr>
+        <th>Turma</th><th>Turno</th><th>Disciplina</th><th>Ação</th>
+    </tr>    
+</thead>
+<tbody>
+{{if turmas:}}
+  {{for turma in turmas:}}
+   <tr>
+      <td>{{=A(turma.turma.nome,_href=url('cad_turma',turma.turma.id))}}</td>
+      <td>{{=turma.turma.turno}}</td>
+      <td>{{=A(turma.disciplina.nome,_href=url('cad_disciplina',turma.disciplina.id))}}</td
+      <td>{{=button('Alterar','edit_turma',turma.turma.id)}}</td></tr>
+   {{pass}}
+</tbody>
+</table>

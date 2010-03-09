@@ -1,0 +1,40 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Usuarios Cadastrados</h1>
+
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+{{=button('Lista Professor','../professor/list_professores')}}
+{{=button('Lista Aluno','../aluno/list_alunos')}}
+<div id="form">
+<h2>Novo Usuario</h2>
+{{=form}}
+</div>
+
+<br /><br />
+<table class="smarttable">
+<thead>
+    <tr>
+        <th>id</th><th>Nome</th><th>Email</th><th>Acao</th>
+    </tr>    
+</thead>
+<tbody>
+{{if usuarios:}}
+  {{for usuario in usuarios:}}
+   <tr>
+      <td>{{=A(usuario.id,_href=url('cad_usuario',usuario.id))}}</td>
+      <td>{{=usuario.first_name + ' ' + usuario.last_name}}</td>
+      <td>{{=usuario.email}}</td>
+      <td>{{=button('edit','edit_usuario',usuario.id)}}</td>
+   {{pass}}
+{{ else: }}
+    <p>Nenhum Registro não Encontrado</p> 
+{{ pass }}
+   
+</tbody>
+</table>

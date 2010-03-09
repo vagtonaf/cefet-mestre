@@ -1,0 +1,18 @@
+(dp1
+S'questao'
+p2
+S'INT, INDEX questao__idx (questao), FOREIGN KEY (questao) REFERENCES questao(id) ON DELETE CASCADE'
+p3
+sS'alternativa_correta'
+p4
+S'INT, INDEX alternativa_correta__idx (alternativa_correta), FOREIGN KEY (alternativa_correta) REFERENCES alternativa(id) ON DELETE CASCADE'
+p5
+sS'id'
+p6
+S'INT AUTO_INCREMENT NOT NULL'
+p7
+sS'prova_gerada'
+p8
+S'INT, INDEX prova_gerada__idx (prova_gerada), FOREIGN KEY (prova_gerada) REFERENCES prova_gerada(id) ON DELETE CASCADE'
+p9
+s.

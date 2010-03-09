@@ -1,0 +1,18 @@
+(dp1
+S'disciplina'
+p2
+S'INT, INDEX disciplina__idx (disciplina), FOREIGN KEY (disciplina) REFERENCES disciplina(id) ON DELETE CASCADE'
+p3
+sS'id'
+p4
+S'INT AUTO_INCREMENT NOT NULL'
+p5
+sS'turno'
+p6
+S'VARCHAR(512)'
+p7
+sS'nome'
+p8
+S'VARCHAR(50) NOT NULL'
+p9
+s.

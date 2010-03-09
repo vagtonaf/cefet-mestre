@@ -1,0 +1,572 @@
+(dp1
+S'recent_companies'
+p2
+(lp3
+sS'_formkey[alocacao_create]'
+p4
+S'86184e95-13c3-4e62-8d19-670ce22cb803'
+p5
+sS'_formkey[turma_create]'
+p6
+S'9deb81cf-7f9f-4efd-a464-c42e8859d35d'
+p7
+sS'_formkey[auth_user/1]'
+p8
+S'114a2c65-241b-4a20-bf67-d9e58bc43153'
+p9
+sS'auth'
+p10
+ccopy_reg
+_reconstructor
+p11
+(cgluon.storage
+Storage
+p12
+c__builtin__
+dict
+p13
+(dp14
+S'remember'
+p15
+I00
+sS'expiration'
+p16
+I3600
+sS'last_visit'
+p17
+cdatetime
+datetime
+p18
+(S'\x07\xda\x02\t\x01\x16(\rY\xf8'
+tRp19
+sS'user'
+p20
+g11
+(g12
+g13
+(dp21
+S'reset_password_key'
+p22
+S''
+sS'first_name'
+p23
+S'Rafael'
+p24
+sS'last_name'
+p25
+S'Castaneda'
+p26
+sS'password'
+p27
+S'1242fe501776e9770dac9989e8c8e834b31999ebb728b3127b729895256ed11404a76ffd726cf6a91aba4f52e8ca1f9149eab74fc94dc84c4098023e87435b0f'
+p28
+sS'registration_key'
+p29
+S''
+sS'id'
+p30
+L2L
+sS'email'
+p31
+S'rafaelcastaneda@gmail.com'
+p32
+stRp33
+(dp34
+g22
+S''
+sg23
+g24
+sg25
+g26
+sg27
+g28
+sg29
+S''
+sg30
+L2L
+sg31
+g32
+sbstRp35
+(dp36
+g15
+I00
+sg16
+I3600
+sg17
+g19
+sg20
+g33
+sbsS'_formkey[curso/None]'
+p37
+S'50d6a568-8cab-4ad5-bc57-f5951609f08c'
+p38
+sS'last_orderby'
+p39
+NsS'_formkey[instituicao/None]'
+p40
+S'4caf36af-708d-412f-b858-eb06aa1cc7c0'
+p41
+sS'_formkey[disciplina/None]'
+p42
+S'4603e793-83e1-45be-ac13-d1d6a82efec5'
+p43
+sS'_formkey[turma/None]'
+p44
+S'8aeb27fd-2131-423e-99e8-45d9783b3bfc'
+p45
+sS'_formkey[aluno/None]'
+p46
+S'a2356d91-dc5d-4339-b41c-97405777a91d'
+p47
+sS'last_query'
+p48
+S'db.disciplina.id>0'
+p49
+sS'_formkey[register]'
+p50
+S'5414ba60-4cda-411f-965e-df4cdc54a4a1'
+p51
+sS'_formkey[disciplina_create]'
+p52
+S'110a711f-b310-4649-95be-c6cef477ddce'
+p53
+sS'_formkey[auth_user/None]'
+p54
+S'61065487-53aa-4bf5-bbc2-2ae420605d16'
+p55
+sS'flash'
+p56
+NsS'_formkey[turma_1]'
+p57
+S'980b034d-429e-467e-b3f8-2a84e9f9f0c9'
+p58
+sS'_formkey[disciplina_2]'
+p59
+S'80d22b96-3d7c-4c4f-9f04-ccb7a28d7b8c'
+p60
+sS'recent_persons'
+p61
+(lp62
+sS'_formkey[login]'
+p63
+S'4264c5ec-7134-4399-a807-2c788710e992'
+p64
+sS'_formkey[instituicao_create]'
+p65
+S'ef0267f4-72cb-40a5-93e8-b67c789479c1'
+p66
+sS'_formkey[disciplina_1]'
+p67
+S'f5b1aa18-2bb1-4c23-957d-d3ced73f39d1'
+p68
+sS'_formkey[professor_create]'
+p69
+S'ef12a8eb-d527-4425-919e-64b0d2c7ecbc'
+p70
+sS'_formkey[auth_user_create]'
+p71
+S'1accc295-7b95-4b05-a527-e64b67352d55'
+p72
+s.s.
+s.
+s.has atualizadas'
+p85
+sS'click here for online examples'
+p86
+S'clique aqui para ver alguns exemplos'
+p87
+sS'Logged out'
+p88
+g88
+sS'User %(id)s Logged-out'
+p89
+g89
+sS'Menu Model'
+p90
+g90
+sS'Record %(id)s created'
+p91
+g91
+sS'state'
+p92
+S'estado'
+p93
+sS'Old password'
+p94
+g94
+sS'Site de Estudo desenvolvido por: Jos\xef\xbf\xbd Roberto, Vagton Alves Ferreira. Todos os direitos reservados.'
+p95
+g95
+sS'First name'
+p96
+g96
+sS'User ID'
+p97
+g97
+sS'database %s select'
+p98
+S'Selecionar banco de dados %s'
+p99
+sS'Invalid email'
+p100
+g100
+sS'Record Created'
+p101
+g101
+sS'record does not exist'
+p102
+S'registro n\xc3\xa3o existe'
+p103
+sS'or import from csv file'
+p104
+S'ou importar de um arquivo csv'
+p105
+sS'Last name'
+p106
+g106
+sS'Import/Export'
+p107
+S'Importar/Exportar'
+p108
+sS'Register'
+p109
+S'Registre-se'
+p110
+sS'db'
+p111
+g111
+sS'No databases in this application'
+p112
+S'Sem bancos de dados nesta aplica\xc3\xa7\xc3\xa3o'
+p113
+sS'Use (...)&(...) for AND, (...)|(...) for OR, and ~(...)  for NOT to build more complex queries.'
+p114
+S'Use (...)&(...) para AND, (...)|(...) para OR, e ~(...)  para NOT para construir consultas mais complexas.'
+p115
+sS'Origin'
+p116
+g116
+sS'Password'
+p117
+g117
+sS'Invalid password'
+p118
+g118
+sS'%s rows deleted'
+p119
+S'%s linhas apagadas'
+p120
+sS'next 100 rows'
+p121
+S'pr\xc3\xb3ximas 100 linhas'
+p122
+sS'invalid request'
+p123
+S'requisi\xc3\xa7\xc3\xa3o inv\xc3\xa1lida'
+p124
+sS'Check to delete'
+p125
+S'Marque para apagar'
+p126
+sS'Index'
+p127
+g127
+sS'design'
+p128
+g128
+sS'customize me!'
+p129
+S'Personalize-me!'
+p130
+sS'record id'
+p131
+S'id do registro'
+p132
+sS'Sure you want to delete this object?'
+p133
+S'Est\xc3\xa1 certo(a) que deseja apagar esse objeto ?'
+p134
+sS'User %(id)s Password changed'
+p135
+g135
+sS'Current response'
+p136
+S'Resposta atual'
+p137
+sS'Client IP'
+p138
+g138
+sS'selected'
+p139
+S'selecionado'
+p140
+sS'Current request'
+p141
+S'Requisi\xc3\xa7\xc3\xa3o atual'
+p142
+sS'Remember me (for 30 days)'
+p143
+g143
+sS'Query:'
+p144
+S'Consulta:'
+p145
+sS'Controller'
+p146
+g146
+sS'%Y-%m-%d'
+p147
+g147
+sS'previous 100 rows'
+p148
+S'100 linhas anteriores'
+p149
+sS'New password'
+p150
+g150
+sS'Logged in'
+p151
+g151
+sS'Change Password'
+p152
+g152
+sS'Verify Password'
+p153
+g153
+sS'new record inserted'
+p154
+S'novo registro inserido'
+p155
+sS'The "query" is a condition like "db.table1.field1==\'value\'". Something like "db.table1.field1==db.table2.field2" results in a SQL JOIN.'
+p156
+S'Uma "consulta" \xc3\xa9 uma condi\xc3\xa7\xc3\xa3o como "db.tabela1.campo1==\'valor\'". Express\xc3\xb5es como "db.tabela1.campo1==db.tabela2.campo2" resultam em um JOIN SQL.'
+p157
+sS'Site de Estudo desenvolvido por: Jos\xc3\xa9 Roberto, Vagton Alves Ferreira. Todos os direitos reservados.'
+p158
+g158
+sS'Delete:'
+p159
+S'Apagar:'
+p160
+sS'Current session'
+p161
+S'Sess\xc3\xa3o atual'
+p162
+sS'Invalid Query'
+p163
+S'Consulta Inv\xc3\xa1lida'
+p164
+sS'Creditos'
+p165
+g165
+sS'Administration'
+p166
+g166
+sS'unable to parse csv file'
+p167
+S'n\xc3\xa3o foi poss\xc3\xadvel analisar arquivo csv'
+p168
+sS'done!'
+p169
+S'conclu\xc3\xaddo!'
+p170
+sS'Table name'
+p171
+g171
+sS'table'
+p172
+S'tabela'
+p173
+sS'Timestamp'
+p174
+g174
+sS"Password fields don't match"
+p175
+g175
+sS'Invalid login'
+p176
+g176
+sS'Logout'
+p177
+g177
+sS'%Y-%m-%d %H:%M:%S'
+p178
+g178
+sS'View'
+p179
+g179
+sS'Database'
+p180
+g180
+sS'User %(id)s Logged-in'
+p181
+g181
+sS'Available databases and tables'
+p182
+S'Bancos de dados e tabelas dispon\xc3\xadveis'
+p183
+sS'Cannot be empty'
+p184
+S'N\xc3\xa3o pode ser vazio'
+p185
+sS'data uploaded'
+p186
+S'dados enviados'
+p187
+sS'"update" is an optional expression like "field1=\'newvalue\'". You cannot update or delete the results of a JOIN'
+p188
+S'"update" \xc3\xa9 uma express\xc3\xa3o opcional como "campo1=\'novovalor\'". Voc\xc3\xaa n\xc3\xa3o pode atualizar ou apagar os resultados de um JOIN'
+p189
+sS'Edit Profile'
+p190
+g190
+sS'User %(id)s Profile updated'
+p191
+g191
+sS'Check to delete:'
+p192
+g192
+sS'Update:'
+p193
+S'Atualizar:'
+p194
+sS'insert new'
+p195
+S'inserir novo'
+p196
+sS'Layout'
+p197
+g197
+sS'Submit'
+p198
+g198
+sS'E-mail'
+p199
+g199
+sS'Stylesheet'
+p200
+g200
+sS'Rows selected'
+p201
+S'Linhas selecionadas'
+p202
+sS'Record %(id)s updated'
+p203
+g203
+sS'export as csv file'
+p204
+S'exportar como um arquivo csv'
+p205
+sS'Hello World'
+p206
+S'Ol\xc3\xa1 Mundo'
+p207
+sS'DB Model'
+p208
+g208
+sS'Internal State'
+p209
+S'Estado Interno'
+p210
+sS'User %(id)s Registered'
+p211
+g211
+sS'Description'
+p212
+g212
+sS'Lost Password'
+p213
+S'Esqueceu sua senha?'
+p214
+sS'Group %(group_id)s created'
+p215
+g215
+sS'Group ID'
+p216
+g216
+sS'Mecanismo Sinergico de Treinamento'
+p217
+g217
+sS'Record Updated'
+p218
+g218
+sS'click here for the administrative interface'
+p219
+S'clique aqui para acessar a interface administrativa'
+p220
+sS'New Record'
+p221
+S'Novo Registro'
+p222
+sS'Jos\xe9 Roberto, Vagton Alves Ferreira. Todos os direitos reservados.'
+p223
+g223
+sS'Record ID'
+p224
+g224
+sS'Name'
+p225
+g225
+sS'Reset Password key'
+p226
+g226
+sS'Edit'
+p227
+g227
+sS'Login'
+p228
+S'Autentique-se'
+p229
+sS'Group uniquely assigned to user %(id)s'
+p230
+g230
+sS'Function disabled'
+p231
+g231
+sS'database'
+p232
+S'banco de dados'
+p233
+sS'Site de Estudo desenvolvido por: Jos\xe9 Roberto, Vagton Alves Ferreira. Todos os direitos reservados.'
+p234
+g234
+sS'Welcome to web2py'
+p235
+S'Bem vindo ao web2py'
+p236
+sS'Rows in table'
+p237
+S'Linhas na tabela'
+p238
+ssS'language_file'
+p239
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/languages/pt-br.py'
+p240
+sS'folder'
+p241
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/'
+p242
+sbsbsS'_formkey[turma_1]'
+p243
+S'980b034d-429e-467e-b3f8-2a84e9f9f0c9'
+p244
+sS'_formkey[disciplina_2]'
+p245
+S'80d22b96-3d7c-4c4f-9f04-ccb7a28d7b8c'
+p246
+sS'recent_persons'
+p247
+(lp248
+sS'_formkey[turma/None]'
+p249
+S'3dd3b8b7-7061-4206-9d9f-56587ab7ce75'
+p250
+sS'_formkey[professor_create]'
+p251
+S'ef12a8eb-d527-4425-919e-64b0d2c7ecbc'
+p252
+sS'_formkey[auth_user_create]'
+p253
+S'1accc295-7b95-4b05-a527-e64b67352d55'
+p254
+s.

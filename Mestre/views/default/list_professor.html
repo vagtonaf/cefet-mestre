@@ -1,0 +1,33 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Professores</h1>
+
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">toggle</a>]
+<div id="form">
+<h2>New Professor</h2>
+{{=form}}
+</div>
+
+<br /><br />
+<table class="smarttable">
+<thead>
+    <tr>
+      <th>Name</th><th>Actions</th>
+    </tr>    
+</thead>
+<tbody>
+{{for Professor in Professores:}}
+    <tr>
+       <td>{{=link_Professor(Professor)}}</td>   
+       <td>{{=button('contacts','list_users',Professor.id)}}
+       {{=button('edit','edit_Professor',Professor.id)}}</td>
+    </tr>
+{{pass}}
+</tbody>
+</table>
