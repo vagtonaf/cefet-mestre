@@ -60,9 +60,9 @@ Tópicos tratados, ver cada item no Wiki
 ||	Diagrama de Caso de Uso (UML)	||		||		||		||
 ||		||	Descrições do Caso de Uso	||		||		||
 ||		||	Diagrama de Classes  	||		||		||
-||		||		||	Diagrama de Classes Conceitual	||	#Protótipo inicial Vagton#	||
-||		||		||	Diagrama de Classes Implementado	||		||
-||		||		||	Dicionário de Classes	||		||
+||		||		||	Diagrama de Classes Conceitual	||Vagton-Ok	||
+||		||		||	Diagrama de Classes Implementado||Vagton-Ok		||
+||		||		||	Dicionário de Classes	||Vagton-Ok	||
 ||		||		||	Diagramas de Sequência	||		||
 ||	Projeto do Banco de Dados	||		||		||		||
 ||		||	Projeto Lógico	||		||		||
