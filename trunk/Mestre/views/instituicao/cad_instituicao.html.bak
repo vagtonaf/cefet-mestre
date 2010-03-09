@@ -1,0 +1,7 @@
+{{extend 'layout.html'}}
+
+<h1>Novo Cadastro de Instituição </h1>
+
+{{=instituicoes}}
+{{=button('Lista Instituições','../instituicao/list_instituicoes')}}
+{{=button('Cadastro de Curso','../curso/cad_curso')}}

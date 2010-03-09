@@ -1,0 +1,35 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Dificuldade</h1>
+
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+{{=button('Lista Topico','../topico/list_topicos')}}
+{{=button('Lista Taxionomia','../taxionomia/list_taxionomias')}}
+<div id="form">
+<h2>Nova Disciplina</h2>
+{{=form}}
+</div>
+
+<br /><br />
+<table class="smarttable">
+<thead>
+    <tr>
+        <th>Nível de Dificuldade</th><th>Acao</th>
+    </tr>    
+</thead>
+<tbody>
+{{if dificuldades:}}
+  {{for dificuldade in dificuldades:}}
+   <tr>
+      <td>{{=A(dificuldade.nivel,_href=url('cad_curso',dificuldade.id))}}</td>
+      <td>{{=button('Alterar','edit_dificuldade',dificuldade.id)}}</td></tr>
+   {{pass}}
+   
+</tbody>
+</table>

@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100207\\web2py\\applications\\Mestre/controllers/questao.py'
+p4
+sS'code'
+p5
+S'# coding: utf8\n# try something like\n\ndef cad_questao():\n    db.questao.enunciado.widget = advanced_editor\n    questao = SQLFORM(db.questao)\n    if questao.accepts(request.vars,session):\n            redirect(URL(r=request,f=\'ver_questao\'))\n    if questao.errors: response.flash=\'Erro em seu formul\xc3\xa1rio\'\n    return dict(questao=questao)\n\ndef ver_questao():\n    row_questao=db().select(db.questao.ALL)\n    table = SQLTABLE(row_questao, orderby=True, _class=\'sortable\', _width="100%")\n\n    table[0][0].append(TH("Registro"))\n    for i, value in enumerate(table[1]):\n       table[1][i].append(TD("linha %d" % i, _align="center"))\n\n    #row_questao.que_enu.widget = advanced_editor\n    #rows=db(db.Questao.que_cod==db.resposta.res_que_cod).select()\n    #for row in rows: print row.Questao.que_cod,row.Resposta.res_cod\n    return dict(row_questao=table)\n\n@auth.requires_login()\ndef list_questoes():\n   db.questao.enunciado.widget = advanced_editor\n   form=crud.create(db.questao)\n   questoes.questao.enunciado.widget = advanced_editor\n   questoes=db(db.questao.id>0).select(db.questao.ALL,db.alternativa.ALL,left=db.alternativa.on(db.questao.id==db.alternativa.questao))\n   \n   response.flash=\'Lista Quest\xc3\xb5es\'\n   return dict(questoes=questoes,form=form)\n\n@auth.requires_login()\ndef edit_questao():\n   questao_id=request.args(0)\n   questao=db.questao[questao_id] or redirect(URL(r=request,f=\'../default/error\'))\n   form=crud.update(db.questao,questao,next=url(\'list_questoes\'))\n   return dict(form=form)\n\nresponse._vars=response._caller(list_questoes)\n'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100207\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100207\\web2py\\applications\\Mestre/controllers/questao.py", line 42, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100207\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100207\\web2py\\gluon\\tools.py", line 1848, in f\n    return action(*a, **b)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100207\\web2py\\applications\\Mestre/controllers/questao.py", line 29, in list_questoes\n    questoes.questao.enunciado.widget = advanced_editor\nUnboundLocalError: local variable \'questoes\' referenced before assignment\n'
+p8
+s.

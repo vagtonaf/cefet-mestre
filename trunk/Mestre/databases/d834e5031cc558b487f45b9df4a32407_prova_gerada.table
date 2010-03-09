@@ -1,0 +1,18 @@
+(dp1
+S'aluno'
+p2
+S'INT, INDEX aluno__idx (aluno), FOREIGN KEY (aluno) REFERENCES aluno(id) ON DELETE CASCADE'
+p3
+sS'prova'
+p4
+S'INT, INDEX prova__idx (prova), FOREIGN KEY (prova) REFERENCES prova(id) ON DELETE CASCADE'
+p5
+sS'data'
+p6
+S'DATETIME'
+p7
+sS'id'
+p8
+S'INT AUTO_INCREMENT NOT NULL'
+p9
+s.

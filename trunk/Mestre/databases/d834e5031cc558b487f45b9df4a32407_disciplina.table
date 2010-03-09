@@ -1,0 +1,14 @@
+(dp1
+S'curso'
+p2
+S'INT, INDEX curso__idx (curso), FOREIGN KEY (curso) REFERENCES curso(id) ON DELETE CASCADE'
+p3
+sS'id'
+p4
+S'INT AUTO_INCREMENT NOT NULL'
+p5
+sS'nome'
+p6
+S'VARCHAR(50) NOT NULL'
+p7
+s.

@@ -1,0 +1,22 @@
+(dp1
+S'topico'
+p2
+S'INT, INDEX topico__idx (topico), FOREIGN KEY (topico) REFERENCES topico(id) ON DELETE CASCADE'
+p3
+sS'taxionomia'
+p4
+S'INT, INDEX taxionomia__idx (taxionomia), FOREIGN KEY (taxionomia) REFERENCES taxionomia(id) ON DELETE CASCADE'
+p5
+sS'id'
+p6
+S'INT AUTO_INCREMENT NOT NULL'
+p7
+sS'dificuldade'
+p8
+S'INT, INDEX dificuldade__idx (dificuldade), FOREIGN KEY (dificuldade) REFERENCES dificuldade(id) ON DELETE CASCADE'
+p9
+sS'enunciado'
+p10
+S'LONGTEXT NOT NULL'
+p11
+s.

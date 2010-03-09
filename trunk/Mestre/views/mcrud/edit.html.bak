@@ -1,0 +1,4 @@
+{{extend 'layout.html'}}
+    <h1>Altera {{=tabela}}</h1>
+{{=form}}
+{{=button('Voltar','cadlist/' + tabela)}}

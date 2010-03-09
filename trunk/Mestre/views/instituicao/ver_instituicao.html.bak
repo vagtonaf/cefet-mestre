@@ -1,0 +1,22 @@
+<tbody>
+{{extend 'layout.html'}}
+<h1>Listagem de intituição Cadastrada</h1>
+<table border=1>
+{{ if instituicoes: }}
+<thead>
+   <tr>
+     <th>id</th><th>Nome</th><th>Acao</th>
+   </tr>
+</thead>
+{{for instituicao in instituicoes:}}
+   <tr>
+      <td>{{=A(instituicao.id,_href=url('ver_professor',instituicao.id))}}</li></td>
+      <td>{{=instituicao.nome}}</td>
+      <td>{{=button('edit','edit_instituicao',instituicao.id)}}</td>
+   </tr>
+   {{pass}}
+{{ else: }}
+    <p>Nenhum Registro</p> 
+{{ pass }}
+</tbody>
+</table>

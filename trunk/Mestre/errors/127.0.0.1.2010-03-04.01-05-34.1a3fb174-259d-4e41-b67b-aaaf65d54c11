@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n\n\n@auth.requires_login()\n# Cadastra e Lista tabela simples\ndef cadlist():\n    tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))\n    try:\n        if tabela=='aluno':\n            registros=db(db.aluno.matricula>0).select(\n              db.aluno.matricula,\n              db.aluno.usuario,\n              db.aluno.id,\n              db.auth_user.ALL,\n              left=db.auth_user.on(db.aluno.usuario==db.auth_user.id),\n              orderby=db.aluno.matricula\n            )\n        elif tabela=='professor':\n            registros=db(db.professor.id>0).select(\n                db.professor.ALL,\n                db.auth_user.ALL,\n                left=db.auth_user.on(db.professor.usuario==db.auth_user.id)\n            )\n        else:\n            registros=db(db[tabela].id>0).select(db[tabela].ALL)\n    except AttributeError:\n        tabela='error'\n        response.flash='Tabela Inexistente!'\n        return dict(registros='N\xc3\xa3o posso listar esta tabela!')   \n    form=crud.create(db[tabela])\n    response.flash='Cadastra e Lista ' + tabela\n    return dict(registros=registros,form=form, tabela=tabela)\n\n@auth.requires_login()\n# Edita tabela simples\ndef edit():\n   tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))\n   registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))\n   registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))\n   form=crud.update(db[tabela],registros,next=url('Cadlist/'+ tabela))\n   return dict(form=form)\n\nresponse._vars=response._caller(cadlist)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py", line 44, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\tools.py", line 1848, in f\n    return action(*a, **b)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\applications\\Mestre/controllers/mcrud.py", line 26, in cadlist\n    registros=db(db[tabela].id>0).select(db[tabela].ALL)\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100227\\web2py\\gluon\\sql.py", line 1274, in __getitem__\n    return dict.__getitem__(self, str(key))\nKeyError: \'x\'\n'
+p8
+s.

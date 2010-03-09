@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+<script type="text/javascript" src="{{=URL(request.application,'static','js/ckeditor/ckeditor.js')}}"></script>
+<h1>Cadastro de Questões</h1>
+<table>
+<tr>
+    <th>Enunciado da Questão</th>
+</tr>
+<tr>{{=questao}}</tr>
+</table>
+{{=button('Lista Alernativa','../alternativa/list_alternativas')}}

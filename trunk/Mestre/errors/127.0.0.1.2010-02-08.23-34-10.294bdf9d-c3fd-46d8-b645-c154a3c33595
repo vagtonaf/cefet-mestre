@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/controllers/prova.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n\n@auth.requires_login()\ndef cad_prova():\n    prova = SQLFORM(db.prova)\n    if prova.accepts(request.vars,session):\n            redirect(URL(r=request,f='ver_prova'))\n    if prova.errors: response.flash='Erro em seu formul\xc3\xa1rio'\n    return dict(prova=prova)\n\ndef ver_prova():\n    row_prova=db().select(db.prova.ALL)\n    return dict(row_prova=row_prova)\n\n@auth.requires_login()\ndef list_provas():\n   form=crud.create(db.prova)\n   provas=db(db.prova.id>0).select(db.prova.ALL)\n   turmas=db(db.turma.id>0).select(db.turma.ALL)\n   planoprovas=db((db.plano_de_prova.id>0) && (db.plano_de_prova.professor==auth.user.id)).select(db.plano_de_prova.ALL,db.professor.ALL, distinct=True)\n   response.flash='Lista Prova'\n   return dict(provas=provas,form=form,planoprovas=planoprovas)\n\n@auth.requires_login()\ndef edit_prova():\n   prova_id=request.args(0)\n   prova=db.prova[prova_id] or redirect(URL(r=request,f='../default/error'))\n   form=crud.update(db.prova,prova,next=url('list_provas'))\n   return dict(form=form)\n\nresponse._vars=response._caller(list_provas)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\gluon\\restricted.py", line 171, in restricted\n    ccode = compile(code.replace(\'\\r\\n\', \'\\n\'), layer, \'exec\')\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100209\\web2py\\applications\\Mestre/controllers/prova.py", line 21\n    planoprovas=db((db.plano_de_prova.id>0) && (db.plano_de_prova.professor==auth.user.id)).select(db.plano_de_prova.ALL,db.professor.ALL, distinct=True)\n                                             ^\nSyntaxError: invalid syntax\n'
+p8
+s.

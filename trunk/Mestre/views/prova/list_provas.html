@@ -1,0 +1,57 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Prova Cadastrada</h1>
+
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+{{=button('Lista Plano de Prova','planoprova/list_planoprova')}}
+{{=button('Lista Professor','../professor/list_professores')}}
+{{=button('Lista Turma','../turma/list_turmas')}}
+<div id="form">
+ <h2>Nova Prova</h2>
+ {{=form}}
+</div>
+
+
+</br></br>
+<table border=1 class="smarttable">
+<thead>
+     <tr><th colspan=4>[ Prova ]</th></tr>
+    <tr>
+       <th>Referência</th><th>Turma</th><th>Plano de Prova</th><th>Tipo</th><th>Ação</th>
+    </tr>    
+</thead>
+<tbody>
+{{if provas:}}
+   {{for prova in provas:}}
+   <tr>
+      <td>{{=prova.referencia }}</td>
+      <td>{{=prova.turma.nome}}</td>
+      <td>{{=prova.plano_de_prova.referencia}}</td>
+      <td>{{=prova.tipo}}</td>
+      <td>{{=button('Alterar','edit_prova',prova.id)}}</td>
+   </tr>
+   {{pass}}
+</tbody>
+</table>
+<table border=1 class="smarttable">
+<thead>
+    <tr><th colspan=2>[ TURMA ]</th></tr>
+    <tr>
+        <th>Turma</th><th>Ação</th>
+    </tr>    
+</thead>
+<tbody>
+{{if turmas:}}
+  {{for turma in turmas:}}
+   <tr>
+      <td>{{=A(turma.nome,_href=url('cad_turma',turma.id))}}</td>
+      <td>{{=button('Alterar','../turma/edit_turma',turma.id)}}</td></tr>
+   {{pass}}
+</tbody>
+</table>

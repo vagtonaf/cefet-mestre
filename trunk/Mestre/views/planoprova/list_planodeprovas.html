@@ -1,0 +1,68 @@
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<script>
+$(document).ready(function() { 
+   jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Lista de Planos de Prova Cadastrados</h1>
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+{{=button('Lista Alocação','../alocacao/list_alocacoes')}}
+<div id="form">
+<h2>Novo Plano de Prova</h2>
+{{=form}}
+</div>
+<br />
+<table border=1 class="smarttable">
+<thead>
+    <tr>
+       <th colspan=3>[Professor]</th>
+    </tr> 
+    <tr>
+       <th>Cod. func.</th><th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+</thead>
+<tbody>
+{{if professores:}}
+   {{for professor in professores:}}
+   <tr>
+      <td>{{=A(professor.codigo_funcional,_href=url('cad_professor',professor.id))}}</td>
+      <td>{{=professor.usuario.first_name + ' ' + professor.usuario.last_name}}</td>
+      <td>{{=professor.usuario.email}}</td>
+      <td>{{=button('Alterar','../professor/edit_professor',professor.id)}}</td>
+   </tr>
+   {{pass}}
+</tbody>
+</table>
+<h1>Lista de itens de Planos de Prova Cadastrados</h1>
+[<a href="#nil2" onclick="jQuery('#form2').slideToggle();">Cadastro</a>]
+{{=button('Lista Alocação','../alocacao/list_alocacoes')}}
+<div id="form2">
+<h2>Novo item de Plano de Prova</h2>
+{{=form2}}
+</div>
+<table border=1 class="smarttable">
+<thead>
+    <tr>
+       <th colspan=6>[Plano de Provar]</th>
+    </tr> 
+    <tr>
+        <th>Referência</th><th>Nome</th><th>Valor</th><th>Topico</th><th>Taxionomia</th><th>dificuldade</th><th>Ação</th>
+    </tr>    
+</thead>
+<tbody>
+{{if planodeprovas:}}
+   {{for planodeprova in planodeprovas:}}
+   <tr>
+      <td>{{=A(planodeprova.plano_de_prova.referencia,_href=url('cad_planodeprova',planodeprova.plano_de_prova.id))}}</td>
+      <td>{{=planodeprova.plano_de_prova.professor.usuario.first_name + ' ' + planodeprova.plano_de_prova.professor.usuario.last_name}}</td>
+      <td>{{=planodeprova.item_plano_de_prova.valor}}</td>
+      <td>{{=planodeprova.item_plano_de_prova.topico}}</td>
+      <td>{{=planodeprova.item_plano_de_prova.taxionomia}}</td>
+      <td>{{=planodeprova.item_plano_de_prova.dificuldade}}</td>
+      <td>{{=button('Alterar','edit_planodeprova',planodeprova.plano_de_prova.id)}}</td>
+   </tr>
+   {{pass}}
+</tbody>
+</table>

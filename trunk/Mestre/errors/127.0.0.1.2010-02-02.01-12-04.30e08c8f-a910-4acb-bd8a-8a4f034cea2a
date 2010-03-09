@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100201\\web2py\\applications\\Mestre/controllers/topico.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\n    \n\n@auth.requires_login()\ndef cad_topico():\n    topico = SQLFORM(db.topico)\n    if topico.accepts(request.vars,session):\n            redirect(URL(r=request,f='ver_topico'))\n    if topico.errors: response.flash='Erro em seu formul\xc3\xa1rio'\n    return dict(topico=topico)\n    \ndef ver_topico():\n    row_topico=db().select(db.topico.ALL)\n    return dict(row_topico=row_topico)\n\n   \n@auth.requires_login()\ndef list_topicos():\n   form=crud.create(db.topico)\n   topicos=db(db.topico.id>0).select(db.topico.ALL))\n   response.flash='Lista T\xc3\xb3pico'\n   return dict(topicos=topicos,form=form)\n\n@auth.requires_login()\ndef edit_topico():\n   topico_id=request.args(0)\n   topico=db.topico[topico_id] or redirect(URL(r=request,f='../default/error'))\n   form=crud.update(db.topico,topico,next=url('list_topicos'))\n   return dict(form=form)\n\nresponse._vars=response._caller(list_topicos)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100201\\web2py\\gluon\\restricted.py", line 171, in restricted\n    ccode = compile(code.replace(\'\\r\\n\', \'\\n\'), layer, \'exec\')\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\MESTRE-20100201\\web2py\\applications\\Mestre/controllers/topico.py", line 21\n    topicos=db(db.topico.id>0).select(db.topico.ALL))\n                                                    ^\nSyntaxError: invalid syntax\n'
+p8
+s.

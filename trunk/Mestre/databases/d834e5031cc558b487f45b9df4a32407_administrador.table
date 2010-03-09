@@ -1,0 +1,10 @@
+(dp1
+S'id'
+p2
+S'INT AUTO_INCREMENT NOT NULL'
+p3
+sS'usuario'
+p4
+S'INT, INDEX usuario__idx (usuario), FOREIGN KEY (usuario) REFERENCES auth_user(id) ON DELETE CASCADE'
+p5
+s.

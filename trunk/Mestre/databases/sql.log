@@ -1,0 +1,219 @@
+timestamp: 2010-02-27T00:04:12.328000
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.375000
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.375000
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INT, INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.390000
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT, INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group(id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.390000
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.406000
+CREATE TABLE professor(
+    id INT AUTO_INCREMENT NOT NULL,
+    usuario INT, INDEX usuario__idx (usuario), FOREIGN KEY (usuario) REFERENCES auth_user(id) ON DELETE CASCADE,
+    codigo_funcional VARCHAR(10) NOT NULL,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.421000
+CREATE TABLE aluno(
+    id INT AUTO_INCREMENT NOT NULL,
+    usuario INT, INDEX usuario__idx (usuario), FOREIGN KEY (usuario) REFERENCES auth_user(id) ON DELETE CASCADE,
+    matricula VARCHAR(10) NOT NULL,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.421000
+CREATE TABLE instituicao(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.437000
+CREATE TABLE curso(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    instituicao INT, INDEX instituicao__idx (instituicao), FOREIGN KEY (instituicao) REFERENCES instituicao(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.437000
+CREATE TABLE disciplina(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    curso INT, INDEX curso__idx (curso), FOREIGN KEY (curso) REFERENCES curso(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.453000
+CREATE TABLE turma(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    turno VARCHAR(512),
+    disciplina INT, INDEX disciplina__idx (disciplina), FOREIGN KEY (disciplina) REFERENCES disciplina(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.453000
+CREATE TABLE alocacao(
+    id INT AUTO_INCREMENT NOT NULL,
+    aluno INT, INDEX aluno__idx (aluno), FOREIGN KEY (aluno) REFERENCES aluno(id) ON DELETE CASCADE,
+    turma INT, INDEX turma__idx (turma), FOREIGN KEY (turma) REFERENCES turma(id) ON DELETE CASCADE,
+    data DATETIME,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.468000
+CREATE TABLE taxionomia(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.468000
+CREATE TABLE dificuldade(
+    id INT AUTO_INCREMENT NOT NULL,
+    nivel VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.484000
+CREATE TABLE topico(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.500000
+CREATE TABLE questao(
+    id INT AUTO_INCREMENT NOT NULL,
+    enunciado LONGTEXT NOT NULL,
+    taxionomia INT, INDEX taxionomia__idx (taxionomia), FOREIGN KEY (taxionomia) REFERENCES taxionomia(id) ON DELETE CASCADE,
+    dificuldade INT, INDEX dificuldade__idx (dificuldade), FOREIGN KEY (dificuldade) REFERENCES dificuldade(id) ON DELETE CASCADE,
+    topico INT, INDEX topico__idx (topico), FOREIGN KEY (topico) REFERENCES topico(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.500000
+CREATE TABLE alternativa(
+    id INT AUTO_INCREMENT NOT NULL,
+    questao INT, INDEX questao__idx (questao), FOREIGN KEY (questao) REFERENCES questao(id) ON DELETE CASCADE,
+    resposta LONGTEXT NOT NULL,
+    correta CHAR(1),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.546000
+CREATE TABLE plano_de_prova(
+    id INT AUTO_INCREMENT NOT NULL,
+    referencia VARCHAR(50) NOT NULL,
+    professor INT, INDEX professor__idx (professor), FOREIGN KEY (professor) REFERENCES professor(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.546000
+CREATE TABLE item_plano_de_prova(
+    id INT AUTO_INCREMENT NOT NULL,
+    valor DOUBLE,
+    plano_de_prova INT, INDEX plano_de_prova__idx (plano_de_prova), FOREIGN KEY (plano_de_prova) REFERENCES plano_de_prova(id) ON DELETE CASCADE,
+    taxionomia INT, INDEX taxionomia__idx (taxionomia), FOREIGN KEY (taxionomia) REFERENCES taxionomia(id) ON DELETE CASCADE,
+    dificuldade INT, INDEX dificuldade__idx (dificuldade), FOREIGN KEY (dificuldade) REFERENCES dificuldade(id) ON DELETE CASCADE,
+    topico INT, INDEX topico__idx (topico), FOREIGN KEY (topico) REFERENCES topico(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.562000
+CREATE TABLE prova(
+    id INT AUTO_INCREMENT NOT NULL,
+    referencia VARCHAR(50) NOT NULL,
+    turma INT, INDEX turma__idx (turma), FOREIGN KEY (turma) REFERENCES turma(id) ON DELETE CASCADE,
+    plano_de_prova INT, INDEX plano_de_prova__idx (plano_de_prova), FOREIGN KEY (plano_de_prova) REFERENCES plano_de_prova(id) ON DELETE CASCADE,
+    tipo VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.578000
+CREATE TABLE prova_gerada(
+    id INT AUTO_INCREMENT NOT NULL,
+    data DATETIME,
+    aluno INT, INDEX aluno__idx (aluno), FOREIGN KEY (aluno) REFERENCES aluno(id) ON DELETE CASCADE,
+    prova INT, INDEX prova__idx (prova), FOREIGN KEY (prova) REFERENCES prova(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.593000
+CREATE TABLE item_prova_gerada(
+    id INT AUTO_INCREMENT NOT NULL,
+    prova_gerada INT, INDEX prova_gerada__idx (prova_gerada), FOREIGN KEY (prova_gerada) REFERENCES prova_gerada(id) ON DELETE CASCADE,
+    questao INT, INDEX questao__idx (questao), FOREIGN KEY (questao) REFERENCES questao(id) ON DELETE CASCADE,
+    alternativa_correta INT, INDEX alternativa_correta__idx (alternativa_correta), FOREIGN KEY (alternativa_correta) REFERENCES alternativa(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.609000
+CREATE TABLE plugin_tagging_tag(
+    id INT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(512),
+    counter INT,
+    created_by INT, INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on DATETIME,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-02-27T00:04:12.609000
+CREATE TABLE plugin_tagging_tag_link(
+    id INT AUTO_INCREMENT NOT NULL,
+    tag INT, INDEX tag__idx (tag), FOREIGN KEY (tag) REFERENCES plugin_tagging_tag(id) ON DELETE CASCADE,
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2010-03-05T22:14:23.812000
+CREATE TABLE administrador(
+    id INT AUTO_INCREMENT NOT NULL,
+    usuario INT, INDEX usuario__idx (usuario), FOREIGN KEY (usuario) REFERENCES auth_user(id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
