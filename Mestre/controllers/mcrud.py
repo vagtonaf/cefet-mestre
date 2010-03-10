@@ -11,8 +11,8 @@ def cadlist():
         if form.accepts(request.vars,session): 
             redirect(URL(r=request,f='../default/error'))
         elif form.errors: response.flash='Erro em seu formulário'
+        row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
         if tabela=='aluno':
-            row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
             if row_professor:
                 registros=db(db.aluno.matricula>0).select(
                     db.aluno.matricula,
@@ -31,7 +31,6 @@ def cadlist():
                 left=db.auth_user.on(db.professor.usuario==db.auth_user.id)
             )
         elif tabela=='alocacao':
-            row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
             if row_professor:  
                 list_alunosA=db()._select(db.alocacao.aluno)
                 list_alunos=db(~db.aluno.id.belongs(list_alunosA)).select(
@@ -52,6 +51,13 @@ def cadlist():
                 redirect(URL(r=request,f='../default/erro_acesso'))
             response.flash='Cadastra e Lista ' + tabela
             return dict(registros=registros, form=form, tabela=tabela, list_turmas=list_turmas, list_alunos=list_alunos)
+        elif: tabela=='disciplina':
+            if row_professor:
+                registros= disciplinas=db(db.disciplina.id>0).select(
+                    db.disciplina.ALL,
+                    db.curso.ALL,
+                    left=db.curso.on(db.disciplina.curso==db.curso.id)
+                )      
         else:
             registros=db(db[tabela].id>0).select(db[tabela].ALL)
     except KeyError, NameError:
