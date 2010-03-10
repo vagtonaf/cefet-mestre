@@ -1,3 +1,0 @@
-{{extend 'layout.html'}}
-<h1>Área restrita a professores</h1>
-{{=form)}
