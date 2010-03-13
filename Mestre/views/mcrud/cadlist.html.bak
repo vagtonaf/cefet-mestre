@@ -6,7 +6,7 @@ $(document).ready(function() {
    jQuery('.smarttable').dataTable(); 
 });
 </script>
-{{if ~form=='':}}
+{{if form<>'':}}
     <h1>Lista e Cadastra</h1>
     [<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
 
@@ -25,7 +25,8 @@ $(document).ready(function() {
     {{pass}}
     <div id="form">
     <h2>Novo Registro de {{=tabela}}</h2>
-        {{=form}}
+	{{=form}}
+{{pass}}
     </div>
 {{else:}}
     <h2>Solicitação não encontrada</h2>
@@ -124,10 +125,116 @@ $(document).ready(function() {
         <td>{{=turma.turma.nome}}</td>
         <td>{{=button('Alterar','edit/turma',turma.turma.id)}}</td>
         </tr>
+	{{pass}}
+	</tbody>
+	</table>
+{{pass}}
+{{if tabela=='disciplina':}}
+	<table class="smarttable">
+	<thead>
+    <tr>
+        <th>Disciplina</th><th>Curso</th><th>Acão</th>
+    </tr>		
+	</thead>
+	<tbody>
+	{{for disciplina in registros:}}
+		<tr>
+			<td>{{=A(disciplina.disciplina.nome,_href=url('edit/disciplina',disciplina.disciplina.id))}}</td>
+			<td>{{=A(disciplina.curso.nome,_href=url('edit/curso',disciplina.curso.id))}}</td>
+			<td>{{=button('Alterar','edit/disciplina',disciplina.disciplina.id)}}</td>
+		</tr>
+	{{pass}}
+	</tbody>
+	</table>
+{{pass}}
+{{if tabela=='plano_de_prova':}}
+	<table border=1 class="smarttable">
+	<thead>
+    <tr>
+       <th colspan=3>[Professor]</th>
+    </tr> 
+    <tr>
+       <th>Cod. func.</th><th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+	</thead>
+	<tbody>
+	{{for professor in professores:}}
+		<tr>
+		<td>{{=A(professor.codigo_funcional,_href=url('cadlist/professor',professor.id))}}</td>
+		<td>{{=professor.usuario.first_name + ' ' + professor.usuario.last_name}}</td>
+		<td>{{=professor.usuario.email}}</td>
+		<td>{{=button('Alterar','../professor/edit/professor',professor.id)}}</td>
+		</tr>
+	{{pass}}
+	</tbody>
+	</table>
+	<h1>Lista de itens de Planos de Prova Cadastrados</h1>
+	[<a href="#nil2" onclick="jQuery('#form2').slideToggle();">Cadastro</a>]
+	{{=button('Lista Alocação','cadlist/alocacao')}}
+	<div id="form2">
+	<h2>Novo item de Plano de Prova</h2>
+	{{=form2}}
+	</div>
+	<table border=1 class="smarttable">
+	<thead>
+    <tr>
+       <th colspan=6>[Plano de Provar]</th>
+    </tr> 
+    <tr>
+        <th>Referência</th><th>Nome</th><th>Valor</th><th>Topico</th><th>Taxionomia</th><th>dificuldade</th><th>Ação</th>
+    </tr>    
+	</thead>
+	<tbody>
+	{{for planodeprova in registros:}}
+		<tr>
+		<td>{{=A(planodeprova.plano_de_prova.referencia,_href=url('cadlist/plano_de_prova',planodeprova.plano_de_prova.id))}}</td>
+		<td>{{=planodeprova.plano_de_prova.professor.usuario.first_name + ' ' + planodeprova.plano_de_prova.professor.usuario.last_name}}</td>
+		<td>{{=planodeprova.item_plano_de_prova.valor}}</td>
+		<td>{{=planodeprova.item_plano_de_prova.topico}}</td>
+		<td>{{=planodeprova.item_plano_de_prova.taxionomia}}</td>
+		<td>{{=planodeprova.item_plano_de_prova.dificuldade}}</td>
+		<td>{{=button('Alterar','edit/plano_de_prova',planodeprova.plano_de_prova.id)}}</td>
+		</tr>
+	{{pass}}
+	</tbody>
+	</table>
+{{pass}}
+{{if tabela=='prova':}}
+	<table border=1 class="smarttable">
+	<thead>
+    <tr><th colspan=4>[ Prova ]</th></tr>
+    <tr>
+       <th>Referência</th><th>Turma</th><th>Plano de Prova</th><th>Tipo</th><th>Ação</th>
+    </tr>    
+	</thead>
+	<tbody>
+   {{for prova in registros:}}
+		<tr>
+		<td>{{=prova.referencia }}</td>
+		<td>{{=prova.turma.nome}}</td>
+		<td>{{=prova.plano_de_prova.referencia}}</td>
+		<td>{{=prova.tipo}}</td>
+		<td>{{=button('Alterar','edit/prova',prova.id)}}</td>
+		</tr>
    {{pass}}
-</tbody>
-</table>
-
+	</tbody>
+	</table>
+	<table border=1 class="smarttable">
+	<thead>
+    <tr><th colspan=2>[ TURMA ]</th></tr>
+    <tr>
+        <th>Turma</th><th>Ação</th>
+    </tr>    
+	</thead>
+	<tbody>
+	{{for turma in turmas:}}
+		<tr>
+		<td>{{=A(turma.nome,_href=url('cadlist/turma',turma.id))}}</td>
+		<td>{{=button('Alterar','edit/turma',turma.id)}}</td></tr>
+   {{pass}}
+	</tbody>
+	</table>
+{{pass}}
 {{if flayout==0:}}
     <table class="smarttable">
     <tbody>
