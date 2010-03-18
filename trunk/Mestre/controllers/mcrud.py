@@ -1,6 +1,10 @@
 # coding: utf8
 # try something like
 
+def url(f,args=[]): return URL(r=request,f=f,args=args)
+
+def button(text,action,args=[]):
+    return SPAN('[',A(text,_href=URL(r=request,f=action,args=args)),']')
 
 @auth.requires_login()
 # Cadastra e Lista tabela simples
@@ -98,12 +102,15 @@ def cadlist():
 @auth.requires_login()
 # Edita tabela simples
 def edit():
+    #só deixa editar se for professor
     row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
     if row_professor:
         tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
         registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))
         registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
+	#if not registros: raise HTTP(404)
         form=crud.update(db[tabela],registros,next=url('Cadlist/'+ tabela))
         return dict(form=form, tabela=tabela)
     else:
         redirect(URL(r=request,f='../default/erro_acesso'))
+

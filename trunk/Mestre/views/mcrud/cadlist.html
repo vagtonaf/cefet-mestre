@@ -11,18 +11,30 @@ $(document).ready(function() {
     [<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
 
     {{if tabela=='aluno':}}
-        {{=button('Lista Usuario','../mcrud/cadlist/auth_user')}}
-        {{=button('Lista de Alocação','../mcrud/cadlist/alocacao')}}
+        {{=button('Lista Usuario','cadlist/auth_user')}}
+        {{=button('Lista de Alocação','cadlist/alocacao')}}
     {{pass}}
     {{if tabela=='professor':}}
-        {{=button('Lista Usuario','../mcrud/cadlist/auth_user')}}
-        {{=button('Lista de Alocação','../mcrud/cadlist/alocacao')}}    
+        {{=button('Lista Usuario','cadlist/auth_user')}}
+        {{=button('Lista de Alocação','cadlist/alocacao')}}    
     {{pass}}
     {{if tabela=='alocacao':}}
-        {{=button('Lista Plano de Prova','planoprova/list_planoprova')}}
-        {{=button('Lista Aluno','../aluno/list_alunos')}}    
-        {{=button('Lista Turma','../turma/list_turmas')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Aluno','cadlist/aluno')}}    
+        {{=button('Lista Turma','cadlist/turma')}}
     {{pass}}
+	{{if tabela=='disciplina':}}
+		{{=button('Lista Curso','cadlist/curso')}}
+		{{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+	{{if tabela=='plano_de_prova':}}
+		{{=button('Lista Alocação','cadlist/alocacao')}}
+    {{pass}
+	{{if tabela=='prova':}}
+		{{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+		{{=button('Lista Professor','cadlist/professor')}}
+		{{=button('Lista Turma','cadlist/turma')}}
+    {{pass}
     <div id="form">
     <h2>Novo Registro de {{=tabela}}</h2>
 	{{=form}}
