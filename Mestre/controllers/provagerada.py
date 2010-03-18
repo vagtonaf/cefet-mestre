@@ -28,8 +28,11 @@ def botao():
        #response.flash='Vocé clicou o botão %s Gerar Prova'%op
        if op=='1':
           response.flash='Vocé clicou o botão %s Gerar Prova'%op
-          lista=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22]  #aqui vamos pegar os daos do Banco de dados (id questoes) em um select 
+	  #aqui vamos pegar os dados do Banco de dados (id questoes) em um select 
+	  #exemplo de lista para o teste
+          lista=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22]  
           resp = geraProva(lista)
+          #aqui vamos gerar o inserte no Banco de dados  da 10 (id questoes) selecionadas  
           response.flash='Indices Gerados - %s '%resp
        elif op=='2':
           response.flash='Vocé clicou o botão %s Criar Turma'%op
