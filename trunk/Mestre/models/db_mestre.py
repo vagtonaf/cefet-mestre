@@ -66,7 +66,7 @@ db.define_table('alocacao',
         Field('turma',db.turma),
         Field('data','datetime',default=request.now, writable=False)
         )
-db.alocacao.aluno.requires=IS_IN_DB(db,'aluno.id','%(matricula)s - %(x)d' % {'x': db(db.auth_user.id==usuario).select(db.auth_user.first_name)})
+#db.alocacao.aluno.requires=IS_IN_DB(db,'aluno.id','%(matricula)s - %(x)d' % {'x': #db(db.auth_user.id==aluno.id).select(db.auth_user.first_name)})
 db.alocacao.turma.requires=IS_IN_DB(db,'turma.id','turma.nome')
 
 db.define_table('taxionomia',

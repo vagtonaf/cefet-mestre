@@ -61,27 +61,27 @@ if 'auth' in globals():
                       [
                        ['Usuario', 
                             False, 
-                            URL(request.application,'usuario','cad_usuario'), []
+                            URL(request.application,'mcrud','cadlist/usuario'), []
                        ],
                        ['Professor', 
                             False, 
-                            URL(request.application,'professor','cad_professor'), []
+                            URL(request.application,'mcrud','cadlist/professor'), []
                        ],
                        ['Aluno', 
                             False, 
-                            URL(request.application,'aluno','cad_aluno'), []
+                            URL(request.application,'mcrud','cadlist/aluno'), []
                        ],
                        ['Instituicao', 
                             False, 
-                            URL(request.application,'instituicao','cad_instituicao'), []
+                            URL(request.application,'mcrud','cadlist/instituicao'), []
                        ],
                        ['Curso', 
                             False, 
-                            URL(request.application,'curso','cad_curso'), []
+                            URL(request.application,'mcrud','cadlist/curso'), []
                        ],
                        ['Disciplina', 
                             False, 
-                            URL(request.application,'disciplina','cad_disciplina'), []
+                            URL(request.application,'mcrud','cadlist/disciplina'), []
                        ],
                        ['Turma', 
                             False, 
