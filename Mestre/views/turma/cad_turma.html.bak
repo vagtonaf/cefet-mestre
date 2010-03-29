@@ -1,6 +1,0 @@
-{{extend 'layout.html'}}
-<h1>Cadastro de Turma</h1>
-{{=turma}}
-{{=button('Lista Turma','list_turmas')}}
-{{=button('Cadastra Disciplina','./disciplina/cad_disciplina')}}
-{{=button('Aloca Turma','../alocacao/cad_alocacao')}}
