@@ -17,7 +17,7 @@ def cadlist():
         elif form.errors: response.flash='Erro em seu formulário'
         row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
         # aqui no if somente as tabelas que tem um select especial valeu
-        if tabela=='aluno':
+        if tabela == 'aluno':
             if row_professor:
                 registros=db(db.aluno.matricula>0).select(
                     db.aluno.matricula,
@@ -29,13 +29,13 @@ def cadlist():
                 )
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
-        elif tabela=='professor':
+        elif tabela == 'professor':
             registros=db(db.professor.id>0).select(
                 db.professor.ALL,
                 db.auth_user.ALL,
                 left=db.auth_user.on(db.professor.usuario==db.auth_user.id)
             )
-        elif tabela=='alocacao':
+        elif tabela == 'alocacao':
             if row_professor:  
                 list_alunosA=db()._select(db.alocacao.aluno)
                 list_alunos=db(~db.aluno.id.belongs(list_alunosA)).select(
@@ -53,17 +53,28 @@ def cadlist():
                     left=db.auth_user.on(db.alocacao.aluno==db.auth_user.id),distinct=True
                 )
                 response.flash='Cadastra e Lista ' + tabela
-                return dict(registros=registros,form=form, tabela=tabela, list_turmas=list_turmas, ist_aluno=ist_aluno)
+                return dict(registros=registros,form=form, tabela=tabela, list_turmas=list_turmas, list_alunos=list_alunos)
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
-        elif tabela=='disciplina':
+        elif tabela == 'disciplina':
             if row_professor:
                 registros= disciplinas=db(db.disciplina.id>0).select(
                     db.disciplina.ALL,
                     db.curso.ALL,
                     left=db.curso.on(db.disciplina.curso==db.curso.id)
-                )  
-        elif tabela=='plano_de_prova':
+                )
+            else:
+                redirect(URL(r=request,f='../default/erro_acesso'))
+        elif tabela == 'turma':
+            if row_professor:
+                registros=db(db.turma.id>0).select(db.turma.ALL,
+                    db.disciplina.ALL,
+                    orderby=db.turma.nome,
+                    left=db.disciplina.on(db.turma.disciplina==db.disciplina.id)
+                )
+            else:
+                redirect(URL(r=request,f='../default/erro_acesso'))
+        elif tabela == 'plano_de_prova':
             if row_professor:
                 form2=crud.create(db.item_plano_de_prova)
                 professores=db(db.professor.id>0).select(db.professor.ALL)
@@ -77,7 +88,9 @@ def cadlist():
                 )
                 response.flash='Lista Plano de Prova'
                 return dict(registros=registros, professores=professores, form=form, form2=form2, tabela=tabela)
-        elif tabela=='prova':
+            else:
+                redirect(URL(r=request,f='../default/erro_acesso'))
+        elif tabela == 'prova':
             registros=db(db.prova.id>0).select(db.prova.ALL)
             turmas=db(db.turma.id>0).select(db.turma.ALL)
             if 'auth' in globals():
@@ -98,9 +111,12 @@ def cadlist():
     except KeyError, NameError:
         tabela='error'
         response.flash='Tabela Inexistente!'
-        form=''
-        return dict(form=form, registros='Não posso listar esta tabela!', tabela=tabela)   
-    response.flash='Cadastra e Lista ' + tabela
+        form = ''
+        return dict(form=form, registros='Não posso listar esta tabela!', tabela=tabela)
+    if tabela == 'auth_user':
+        response.flash='Cadastra e Lista Usuario'
+    else:
+        response.flash='Cadastra e Lista ' + tabela
     return dict(registros=registros,form=form, tabela=tabela)
 
 @auth.requires_login()
