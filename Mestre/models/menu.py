@@ -61,64 +61,82 @@ if 'auth' in globals():
                       [
                        ['Usuario', 
                             False, 
-                            URL(request.application,'mcrud','cadlist/usuario'), []
-                       ],
-                       ['Professor', 
-                            False, 
-                            URL(request.application,'mcrud','cadlist/professor'), []
-                       ],
-                       ['Aluno', 
-                            False, 
-                            URL(request.application,'mcrud','cadlist/aluno'), []
+                            URL(request.application,'mcrud','cadlist/auth_user'), [
+                ['Professor', 
+                                    False, 
+                                    URL(request.application,'mcrud','cadlist/professor'), []
+                            ],
+                            ['Aluno', 
+                                    False, 
+                                    URL(request.application,'mcrud','cadlist/aluno'), []
+                            ],          
+                    
+                    
+            ]
                        ],
                        ['Instituicao', 
                             False, 
-                            URL(request.application,'mcrud','cadlist/instituicao'), []
+                            URL(request.application,'mcrud','cadlist/instituicao'), [
+                            ['Curso', 
+                                    False, 
+                                    URL(request.application,'mcrud','cadlist/curso'), []
+                            ],          
+                            ['Disciplina', 
+                                    False, 
+                                    URL(request.application,'mcrud','cadlist/disciplina'), []
+                            ],                  
+                            ['Turma', 
+                                    False, 
+                                    URL(request.application,'turma','cadlist/turma'), [
+                                    ['Alocacao', 
+                                            False, 
+                                            URL(request.application,'alocacao','cadlist/alocacao'), []
+                                    ],                      
+                        
+                        ]
+                            ],                  
+                    
+            ]
                        ],
-                       ['Curso', 
-                            False, 
-                            URL(request.application,'mcrud','cadlist/curso'), []
-                       ],
-                       ['Disciplina', 
-                            False, 
-                            URL(request.application,'mcrud','cadlist/disciplina'), []
-                       ],
-                       ['Turma', 
-                            False, 
-                            URL(request.application,'turma','cad_turma'), []
-                       ],
-                       ['Alocacao', 
-                            False, 
-                            URL(request.application,'alocacao','cad_alocacao'), []
-                       ],
-                       ['Topico', 
-                            False, 
-                            URL(request.application,'topico','cad_topico'), []
-                       ],
-                       ['Questão', 
-                            False, 
-                            URL(request.application,'questao','cad_questao'), []
-                       ],     
-                       ['Alternativa', 
-                            False, 
-                            URL(request.application,'alternativa','cad_alternativa'), []
-                       ],
+
+
                        ['Plano de Prova', 
                             False, 
-                            URL(request.application,'planoprova','cad_planoprova'), []
+                            URL(request.application,'planoprova','cadlist/planoprova'), [
+                            ['Prova', 
+                                    False, 
+                                    URL(request.application,'mcrud','cadlist/prova'), [
+                        
+                        ['Topico', 
+                                            False, 
+                                            URL(request.application,'mcrud','cadlist/topico'), []
+                                    ],
+                                    ['Questao', 
+                                            False, 
+                                            URL(request.application,'mcrud','cadlist/questao'), []
+                                    ],     
+                                    ['Alternativa', 
+                                            False, 
+                                            URL(request.application,'mcrud','cadlist/alternativa'), []
+                                    ],
+                        
+                        
+                    ]
+                            ],                  
+                
+                            ['Aplicar Prova', 
+                                    False, 
+                                    URL(request.application,'aplicaprova','aplicar_prova'), []
+                            ],
+                            ['Realiza Prova', 
+                                    False, 
+                                    URL(request.application,'realizaprova','realizar_prova'), []
+                            ],
+
+                    ]
                        ],
-                       ['Prova', 
-                            False, 
-                            URL(request.application,'prova','cad_prova'), []
-                       ],
-                       ['Aplicar Prova', 
-                            False, 
-                            URL(request.application,'aplicaprova','aplicar_prova'), []
-                       ],
-                       ['Realiza Prova', 
-                            False, 
-                            URL(request.application,'realizaprova','realizar_prova'), []
-                       ],
+
+
                       ]
 
                ],
@@ -127,51 +145,51 @@ if 'auth' in globals():
                  URL(request.application,'appcadastro','index'), [
                        ['Usuario', 
                             False, 
-                            URL(request.application,'usuario','list_usuarios'), []
+                            URL(request.application,'mcrud','cadlist/usuario/List'), []
                        ],
                        ['Professor', 
                             False, 
-                            URL(request.application,'professor','list_professores'), []
+                            URL(request.application,'mcrud','cadlist/professor/list'), []
                        ],
                        ['Aluno', 
                             False, 
-                            URL(request.application,'aluno','list_alunos'), []
+                            URL(request.application,'mcrud','cadlist/aluno/list'), []
                        ],
                        ['Instituicao', 
                             False, 
-                            URL(request.application,'instituicao','list_instituicoes'), []
+                            URL(request.application,'mcrud','cadlist/instituicao/list'), []
                        ],
                        ['Curso', 
                             False, 
-                            URL(request.application,'curso','list_cursos'), []
+                            URL(request.application,'mcrud','cadlist/curso/list'), []
                        ],
                        ['Disciplina', 
                             False, 
-                            URL(request.application,'disciplina','list_disciplinas'), []
+                            URL(request.application,'mcrud','cadlist/disciplina/list'), []
                        ],
                        ['Turma', 
                             False, 
-                            URL(request.application,'turma','list_turmas'), []
+                            URL(request.application,'mcrud','cadlist/turma/list'), []
                        ],
                        ['Alocacao', 
                             False, 
-                            URL(request.application,'alocacao','list_alocacoes'), []
+                            URL(request.application,'mcrud','cadlist/alocacao/list'), []
                        ],
                        ['Topico', 
                             False, 
-                            URL(request.application,'topico','list_topicos'), []
+                            URL(request.application,'mcrud','cadlist/topico/list'), []
                        ],
                        ['Questao', 
                             False, 
-                            URL(request.application,'questao','list_questoes'), []
+                            URL(request.application,'mcrud','cadlist/questao/list'), []
                        ],
                        ['Plano de Prova', 
                             False, 
-                            URL(request.application,'planoprova','list_planodeprovas'), []
+                            URL(request.application,'mcrud','cadlist/plano_de_prova/list'), []
                        ],
                        ['Prova', 
                             False, 
-                            URL(request.application,'prova','list_provas'), []
+                            URL(request.application,'mcrud','cadlist/prova/list'), []
                        ],
                        ['Gerar Relatorio por Aluno', 
                             False, 
