@@ -55,15 +55,49 @@ $(document).ready(function() {
     {{if tabela == 'instituicao':}}
         {{=button('Lista Curso','cadlist/curso')}}
     {{pass}}
-    <div id="form">
-    <h2>Novo Registro de {{=tabela}}</h2>
-    {{=form}}
-    </div>
+    {{if tabela == 'usuario':}}
+        {{=button('Lista Professor','cadlist/professor')}}
+        {{=button('Lista Aluno','cadlist/aluno')}}
+    {{pass}}
+    {{if tabela == 'dificuldade':}}
+        {{=button('Lista Topico','cadlist/topico')}}
+        {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+    {{pass}}
+    {{if tabela == 'taxionomia':}}
+        {{=button('Plano de Prova','cadlist/Plano_de_Prova')}}
+    {{pass}}
+    {{if request.args(1) != 'list':}}
+        <div id="form">
+        <h2>Novo Registro de {{=tabela}}</h2>
+        {{=form}}
+        </div>
+    {{pass}}
 {{else:}}
     <h2>Solicitação não encontrada</h2>
 {{pass}}
 
 <br /><br />
+
+{{if tabela == 'usuario':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>id</th><th>Nome</th><th>Email</th><th>Acao</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for usuario in registros:}}
+      <tr>
+      <td>{{=A(usuario.id,_href=url('cadlist/auth_user',usuario.id))}}</td>
+      <td>{{=usuario.first_name + ' ' + usuario.last_name}}</td>
+      <td>{{=usuario.email}}</td>
+      <td>{{=button('edit','edit/auth_user',usuario.id)}}</td>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
 {{if tabela == 'aluno':}}
     {{flayout=1}}
     <table class="smarttable">
@@ -318,6 +352,82 @@ $(document).ready(function() {
     {{pass}}
     </tbody>
     </table>
+{{pass}}
+
+{{if tabela == 'curso':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Curso</th><th>Instituicão</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for curso in registros:}}
+      <tr>
+      <td>{{=A(curso.nome,_href=url('edit/curso',curso.id))}}</td>
+      <td>{{=A(curso.instituicao.nome,_href=url('edit/instituicao',curso.instituicao.id))}}</td>
+      <td>{{=button('Alterar','edit/curso',curso.id)}}</td>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+
+{{if tabela == 'dificuldade':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Nível de Dificuldade</th><th>Acao</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for dificuldade in registros:}}
+      <tr>
+      <td>{{=A(dificuldade.nivel,_href=url('cadlist/curso',dificuldade.id))}}</td>
+      <td>{{=button('Alterar','edit/dificuldade',dificuldade.id)}}</td></tr>
+   {{pass}}
+   
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'topico':}}
+   {{flayout=1}}
+   <table class="smarttable">
+   <thead>
+   <tr>
+   <th>Tópico</th><th>Ação</th>
+   </tr>    
+   </thead>
+   <tbody>
+   {{for topico in registros:}}
+      <tr>
+      <td>{{=A(topico.nome,_href=url('cadlist/topico',topico.id))}}</td>
+      <td>{{=button('Alterar','edit/topico',topico.id)}}</td></tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'taxionomia':}}
+   {{flayout=1}}
+   <table class="smarttable">
+   <thead>
+   <tr>
+   <th>Nome</th><th>Ações</th>
+   </tr>    
+   </thead>
+   <tbody>
+   {{for taxionomia in registros:}}
+      <tr>
+      <td>{{=A(taxionomia.nome,_href=url('cadlist/taxionomia',taxionomia.nome))}}</td>   
+      <td>{{=button('Alterar','edit/taxionomia',taxionomia.id)}}</td>
+      </tr>
+   {{pass}}
+   </tbody>
+   </table>
 {{pass}}
 
 {{if flayout == 0:}}
