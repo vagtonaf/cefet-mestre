@@ -1,4 +1,9 @@
 {{extend 'layout.html'}}
+{{if tabela == 'auth_user': tabela='usuario'}}
     <h1>Altera {{=tabela}}</h1>
 {{=form}}
-{{=button('Voltar para o cadastro de ' + tabela,'cadlist/' + tabela)}}
+{{if tabela == 'usuario': }}
+    {{=button('Voltar para o cadastro de usuario','cadlist/auth_user')}}
+{{else:}}
+    {{=button('Voltar para o cadastro de ' + tabela,'cadlist/' + tabela)}}
+{{pass}}
