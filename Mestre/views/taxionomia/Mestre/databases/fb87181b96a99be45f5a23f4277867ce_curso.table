@@ -1,0 +1,14 @@
+(dp1
+S'instituicao'
+p2
+S'REFERENCES instituicao(id) ON DELETE CASCADE'
+p3
+sS'id'
+p4
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p5
+sS'nome'
+p6
+S'CHAR(50) NOT NULL'
+p7
+s.
