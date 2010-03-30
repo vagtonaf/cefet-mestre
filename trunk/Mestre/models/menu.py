@@ -87,10 +87,10 @@ if 'auth' in globals():
                             ],                  
                             ['Turma', 
                                     False, 
-                                    URL(request.application,'turma','cadlist/turma'), [
+                                    URL(request.application,'mcrud','cadlist/turma'), [
                                     ['Alocacao', 
                                             False, 
-                                            URL(request.application,'alocacao','cadlist/alocacao'), []
+                                            URL(request.application,'mcrud','cadlist/alocacao'), []
                                     ],                      
                         
                         ]
@@ -102,7 +102,7 @@ if 'auth' in globals():
 
                        ['Plano de Prova', 
                             False, 
-                            URL(request.application,'planoprova','cadlist/planoprova'), [
+                            URL(request.application,'mcrud','cadlist/plano_de_prova'), [
                             ['Prova', 
                                     False, 
                                     URL(request.application,'mcrud','cadlist/prova'), [
