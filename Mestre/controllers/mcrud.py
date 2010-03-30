@@ -13,7 +13,7 @@ def cadlist():
         tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
         form=crud.create(db[tabela])
         if form.accepts(request.vars,session): 
-            redirect(URL(r=request,f='../default/error'))
+            redirect(URL(r=request,f='cadlist/' + tabela))
         elif form.errors: response.flash='Erro em seu formulário'
         row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
         # aqui no if somente as tabelas que tem um select especial valeu
@@ -52,7 +52,7 @@ def cadlist():
                     db.auth_user.ALL,
                     left=db.auth_user.on(db.alocacao.aluno==db.auth_user.id),distinct=True
                 )
-                response.flash='Cadastra e Lista ' + tabela
+                response.flash='Lista ' + tabela.replace('_',' ')
                 return dict(registros=registros,form=form, tabela=tabela, list_turmas=list_turmas, list_alunos=list_alunos)
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
@@ -76,18 +76,16 @@ def cadlist():
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'plano_de_prova':
             if row_professor:
-                form2=crud.create(db.item_plano_de_prova)
-                professores=db(db.professor.id>0).select(db.professor.ALL)
                 registros=db(db.plano_de_prova.id>0).select(
-                    db.plano_de_prova.ALL,
-                    db.item_plano_de_prova.ALL,
-                    left=db.item_plano_de_prova.on(db.item_plano_de_prova.plano_de_prova==db.plano_de_prova.id)
+                    db.plano_de_prova.ALL
                 )
-                registros.db(db.plano_de_prova.taxionomia>0).select(db.taxionomia.ALL,
-                    left=db.plano_de_prova.on(db.plano_de_prova.taxionomia==db.taxionomia.id)
+            else:
+                redirect(URL(r=request,f='../default/erro_acesso'))
+        elif tabela == 'item_plano_de_prova':
+            if row_professor:
+                registros=db(db.item_plano_de_prova.id>0).select(
+                    db.item_plano_de_prova.ALL
                 )
-                response.flash='Lista Plano de Prova'
-                return dict(registros=registros, professores=professores, form=form, form2=form2, tabela=tabela)
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'prova':
@@ -114,9 +112,9 @@ def cadlist():
         form = ''
         return dict(form=form, registros='Não posso listar esta tabela!', tabela=tabela)
     if tabela == 'auth_user':
-        response.flash='Cadastra e Lista Usuario'
+        response.flash='Lista Usuario'
     else:
-        response.flash='Cadastra e Lista ' + tabela
+        response.flash='Lista ' + tabela.replace('_',' ')
     return dict(registros=registros,form=form, tabela=tabela)
 
 @auth.requires_login()
@@ -129,7 +127,7 @@ def edit():
         registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))
         registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
     #if not registros: raise HTTP(404)
-        form=crud.update(db[tabela],registros,next=url('Cadlist/'+ tabela))
+        form=crud.update(db[tabela],registros,next=url('cadlist/'+ tabela))
         return dict(form=form, tabela=tabela)
     else:
         redirect(URL(r=request,f='../default/erro_acesso'))
