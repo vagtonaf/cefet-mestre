@@ -2,6 +2,8 @@ is_phone = IS_MATCH('^(\+\d{2}\-)?[\d\-]*(\#\d+)?$')
 
 TASK_TYPES = ('Phone', 'Fax', 'Mail', 'Meet')
 LISTA_TAXIONOMIA = ('Analizar','Compreender','Lembrar','Aplicar','Avaliar','Criar')
+LISTA_DIFICULDADE = ('Fácil','Médio','Difícil')
+
 
 if auth.is_logged_in():
    me=auth.user.id
@@ -13,6 +15,7 @@ def advanced_editor(field, value):
     
 import datetime; now=datetime.datetime.now()
 
+        
 db.define_table('administrador',
         Field('usuario',db.auth_user)
         )
@@ -66,18 +69,24 @@ db.define_table('alocacao',
         Field('turma',db.turma),
         Field('data','datetime',default=request.now, writable=False)
         )
-#db.alocacao.aluno.requires=IS_IN_DB(db,'aluno.id','%(matricula)s - %(x)d' % {'x': #db(db.auth_user.id==aluno.id).select(db.auth_user.first_name)})
+db.alocacao.aluno.requires=IS_IN_DB(db,'aluno.id','aluno.matricula') #db(db.auth_user.id==aluno.id).select(db.auth_user.first_name)})
 db.alocacao.turma.requires=IS_IN_DB(db,'turma.id','turma.nome')
 
 db.define_table('taxionomia',
         Field('nome','string',requires=IS_IN_SET(["Analizar","Compreender","Lembrar","Aplicar","Avaliar","Criar"]))
         )
 db.taxionomia.nome.requires=[IS_NOT_IN_DB(db,'taxionomia.nome'),IS_IN_SET(LISTA_TAXIONOMIA)]    
+if not len(db().select(db.taxionomia.ALL)):
+    for taxonomia in LISTA_TAXIONOMIA:
+        db.taxionomia.insert(nome = taxonomia)
 
 db.define_table('dificuldade',
         Field('nivel','string',requires=IS_IN_SET(["Fácil","Médio","Difícil"]))
         )
-db.dificuldade.nivel.requires=IS_NOT_IN_DB(db,'dificuldade.nivel')         
+db.dificuldade.nivel.requires=IS_NOT_IN_DB(db,'dificuldade.nivel')  
+if not len(db().select(db.dificuldade.ALL)):
+    for dificuldade in LISTA_DIFICULDADE:
+        db.dificuldade.insert(nivel = dificuldade)
 
 db.define_table('topico',
         Field('nome',length=50,notnull=True)
@@ -108,7 +117,8 @@ db.define_table('plano_de_prova',
         Field('professor',db.professor)
         )
 db.plano_de_prova.referencia.requires=IS_NOT_IN_DB(db,'plano_de_prova.referencia')
-db.plano_de_prova.professor.requires=IS_IN_DB(db,'professor.id','professor.codigo_funcional')   
+#db.plano_de_prova.professor.requires=IS_IN_DB(db,'professor.id','professor.codigo_funcional')   
+db.plano_de_prova.professor.requires=IS_IN_DB(db,'professor.id','Codigo Funcional: %(codigo_funcional)s')
 
 db.define_table('item_plano_de_prova',
         Field('valor','double',default=10.0,requires=IS_FLOAT_IN_RANGE(0,10.0)),
