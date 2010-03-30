@@ -10,7 +10,11 @@ $(document).ready(function() {
 {{if tabela == 'auth_user': tabela='usuario'}}
 {{flayout=0}}
 {{if form != '':}}
-    <h1>Lista e Cadastra</h1>
+    <h1>Lista
+    {{if request.args(1) != 'list':}}
+         e Cadastra
+    {{pass}}
+    </h1>
     [<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
     <!--Link do cadastro-->
     {{if tabela == 'aluno':}}
@@ -32,6 +36,11 @@ $(document).ready(function() {
     {{pass}}
     {{if tabela == 'plano_de_prova':}}
         {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'item_plano_de_prova':}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
     {{pass}}
     {{if tabela == 'prova':}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
@@ -68,7 +77,7 @@ $(document).ready(function() {
     {{pass}}
     {{if request.args(1) != 'list':}}
         <div id="form">
-        <h2>Novo Registro de {{=tabela}}</h2>
+        <h2>Novo Registro de {{=tabela.replace('_',' ')}}</h2>
         {{=form}}
         </div>
     {{pass}}
@@ -217,59 +226,43 @@ $(document).ready(function() {
     </table>
 {{pass}}
 
-
 {{if tabela == 'plano_de_prova':}}
     {{flayout=1}}
-    <table border=1 class="smarttable">
+    <table class="smarttable">
     <thead>
     <tr>
-    <th colspan=3>[Professor]</th>
-    </tr> 
-    <tr>
-    <th>Cod. func.</th><th>Nome</th><th>Email</th><th>Ação</th>
+    <th>Referência</th><th>Professor</th><th>Ação</th>
     </tr>
     </thead>
     <tbody>
-    {{for professor in professores:}}
+    {{for planodeprova in registros:}}
         <tr>
-        <td>{{=A(professor.codigo_funcional,_href=url('cadlist/professor',professor.id))}}</td>
-        <td>{{=professor.usuario.first_name + ' ' + professor.usuario.last_name}}</td>
-        <td>{{=professor.usuario.email}}</td>
-        <td>{{=button('Alterar','edit/professor',professor.id)}}</td>
+        <td>{{=A(planodeprova.referencia,_href=url('cadlist/plano_de_prova',planodeprova.id))}}</td>
+        <td>{{=planodeprova.professor.usuario.first_name + ' ' + planodeprova.professor.usuario.last_name}}</td>
+        <td>{{=button('Alterar','edit/plano_de_prova',planodeprova.id)}}</td>
         </tr>
     {{pass}}
     </tbody>
     </table>
 {{pass}}
 
-{{if tabela == 'plano_de_prova':}}
+{{if tabela == 'item_plano_de_prova':}}
     {{flayout=1}}
-    <table border=1 class="smarttable">
-    <h1>Lista de itens de Planos de Prova Cadastrados</h1>
-    [<a href="#nil2" onclick="jQuery('#form2').slideToggle();">Cadastro</a>]
-    {{=button('Lista Alocação','cadlist/alocacao')}}
-    <div id="form2">
-    <h2>Novo item de Plano de Prova</h2>
-    {{=form2}}
-    </div>
-    </table>
-    <table border=1 class="smarttable">
+    <table class="smarttable">
     <thead>
     <tr>
-    <th colspan=6>[Plano de Provar]</th>
-    </tr> 
-    <tr><th>Referência</th><th>Nome</th><th>Valor</th><th>Topico</th><th>Taxionomia</th><th>dificuldade</th><th>Ação</th></tr>
+    <th>Referência</th><th>Valor</th><th>Topico</th><th>Taxionomia</th><th>dificuldade</th><th>Ação</th>
+    </tr>
     </thead>
     <tbody>
     {{for planodeprova in registros:}}
         <tr>
-        <td>{{=A(planodeprova.plano_de_prova.referencia,_href=url('cadlist/plano_de_prova',planodeprova.plano_de_prova.id))}}</td>
-        <td>{{=planodeprova.plano_de_prova.professor.usuario.first_name + ' ' + planodeprova.plano_de_prova.professor.usuario.last_name}}</td>
-        <td>{{=planodeprova.item_plano_de_prova.valor}}</td>
-        <td>{{=planodeprova.item_plano_de_prova.topico}}</td>
-        <td>{{=planodeprova.item_plano_de_prova.taxionomia}}</td>
-        <td>{{=planodeprova.item_plano_de_prova.dificuldade}}</td>
-        <td>{{=button('Alterar','edit/plano_de_prova',planodeprova.plano_de_prova.id)}}</td>
+        <td>{{=A(planodeprova.plano_de_prova.referencia,_href=url('cadlist/plano_de_prova',planodeprova.plano_de_prova))}}</td>
+        <td>{{=planodeprova.valor}}</td>
+        <td>{{=planodeprova.topico.nome}}</td>
+        <td>{{=planodeprova.taxionomia.nome}}</td>
+        <td>{{=planodeprova.dificuldade.nivel}}</td>
+        <td>{{=button('Alterar','edit/item_plano_de_prova',planodeprova.id)}}</td>
         </tr>
     {{pass}}
     </tbody>
