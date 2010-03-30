@@ -145,7 +145,7 @@ if 'auth' in globals():
                  URL(request.application,'appcadastro','index'), [
                        ['Usuario', 
                             False, 
-                            URL(request.application,'mcrud','cadlist/usuario/List'), []
+                            URL(request.application,'mcrud','cadlist/auth_user/list'), []
                        ],
                        ['Professor', 
                             False, 
