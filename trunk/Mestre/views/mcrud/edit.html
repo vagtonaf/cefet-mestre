@@ -1,9 +1,9 @@
 {{extend 'layout.html'}}
 {{if tabela == 'auth_user': tabela='usuario'}}
-    <h1>Altera {{=tabela}}</h1>
+    <h1>Altera {{=tabela.replace('_',' ')}}</h1>
 {{=form}}
 {{if tabela == 'usuario': }}
     {{=button('Voltar para o cadastro de usuario','cadlist/auth_user')}}
 {{else:}}
-    {{=button('Voltar para o cadastro de ' + tabela,'cadlist/' + tabela)}}
+    {{=button('Voltar para o cadastro de ' + tabela.replace('_',' '),'cadlist/' + tabela)}}
 {{pass}}
