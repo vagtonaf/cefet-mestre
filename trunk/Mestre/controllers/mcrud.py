@@ -103,6 +103,13 @@ def cadlist():
                     redirect(URL(r=request,f='../default/erro_acesso'))
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
+        elif tabela == 'questao':
+               db.questao.enunciado.widget = advanced_editor
+               registros=db(db.questao.id>0).select(
+                     db.questao.ALL,
+                     db.alternativa.ALL,
+                     left=db.alternativa.on(db.questao.id==db.alternativa.questao)
+               )
         else:
             # esse é um select genérico, serve para a maioria das tabelas
             registros=db(db[tabela].id>0).select(db[tabela].ALL)
