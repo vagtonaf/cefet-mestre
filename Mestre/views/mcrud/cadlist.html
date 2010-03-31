@@ -47,6 +47,9 @@ $(document).ready(function() {
     {{if tabela == 'item_plano_de_prova':}}
         {{=button('Lista Alocação','cadlist/alocacao')}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Topico','cadlist/topico')}}
+        {{=button('Lista Dificuldade','cadlist/dificuldade')}}
+        {{=button('Lista Taxionomia','cadlist/taxionomia')}}
     {{pass}}
     {{if tabela == 'prova':}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
@@ -57,6 +60,7 @@ $(document).ready(function() {
         {{=button('Lista Curso','cadlist/curso')}}
         {{=button('Lista Turma','cadlist/turma')}}
         {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
     {{pass}}
     {{if tabela == 'turma':}}
         {{=button('Lista Disciplina','cadlist/disciplina')}}
@@ -78,9 +82,11 @@ $(document).ready(function() {
     {{if tabela == 'dificuldade':}}
         {{=button('Lista Topico','cadlist/topico')}}
         {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
     {{pass}}
     {{if tabela == 'taxionomia':}}
         {{=button('Plano de Prova','cadlist/Plano_de_Prova')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
     {{pass}}
     {{if tabela == 'questao':}}
        {{=button('Lista Prova','cadlist/prova')}}
@@ -104,13 +110,12 @@ $(document).ready(function() {
     <table class="smarttable">
     <thead>
     <tr>
-    <th>id</th><th>Nome</th><th>Email</th><th>Ação</th>
+    <th>Nome</th><th>Email</th><th>Ação</th>
     </tr>    
     </thead>
     <tbody>
     {{for usuario in registros:}}
       <tr>
-      <td>{{=A(usuario.id,_href=url('cadlist/auth_user',usuario.id))}}</td>
       <td>{{=usuario.first_name + ' ' + usuario.last_name}}</td>
       <td>{{=usuario.email}}</td>
       <td>{{=button('Alterar','edit/auth_user',usuario.id)}}</td>
@@ -184,7 +189,7 @@ $(document).ready(function() {
     </table>
     <table border=1 class="smarttable">
     <thead>
-    <tr><th colspan=4>[ Alunos ]</th></tr>
+    <tr><th colspan=4>[Alunos NÃO Alocados a Turma]</th></tr>
     <tr>
     <th>Nome</th><th>Matricula</th><th>Ação</th>
     </tr>
@@ -267,7 +272,15 @@ $(document).ready(function() {
     </tr>
     </thead>
     <tbody>
+    {{TOT=0}}
+    {{TOT2=0}}
+    {{ref1=''}}
+    {{flagv=0}}
     {{for planodeprova in registros:}}
+        {{if flagv==0:}}
+          {{ref1=ref2=planodeprova.plano_de_prova.referencia}}
+          {{flagv=1}}
+        {{pass}}
         <tr>
         <td>{{=A(planodeprova.plano_de_prova.referencia,_href=url('cadlist/plano_de_prova',planodeprova.plano_de_prova))}}</td>
         <td>{{=planodeprova.valor}}</td>
@@ -276,7 +289,17 @@ $(document).ready(function() {
         <td>{{=planodeprova.dificuldade.nivel}}</td>
         <td>{{=button('Alterar','edit/item_plano_de_prova',planodeprova.id)}}</td>
         </tr>
+        {{if planodeprova.plano_de_prova.referencia == ref1:}}
+             {{TOT=TOT + TOT2 + planodeprova.valor}}
+             {{TOT2=0}}
+        {{else:}}
+             <tr><td>{{=ref1}}</td><td>{{=TOT}}</td><td><b><= Valor Total</b></td></tr>
+             {{ref1=planodeprova.plano_de_prova.referencia}}
+             {{TOT2=TOT2 + planodeprova.valor}}
+             {{TOT=0}}
+        {{pass}}
     {{pass}}
+    <tr><td>{{=ref1}}</td><td>{{=TOT2 + TOT}}</td><td><b><= Valor Total</b></td></tr>
     </tbody>
     </table>
 {{pass}}

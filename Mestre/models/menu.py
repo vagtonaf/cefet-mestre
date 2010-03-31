@@ -15,11 +15,11 @@ response.subtitle = T('Mecanismo Sinergico de Treinamento')
 if 'auth' in globals():
     if not auth.is_logged_in():
        response.menu_auth = [
-           [T('Login'), False, auth.settings.login_url,
+           ['Logar', False, auth.settings.login_url,
                 [
-                   [T('Register'), False,
+                   ['Registrar', False,
                     URL(request.application,'default','user/register')],
-                   [T('Lost Password'), False,
+                   ['Esqueci a Senha', False,
                     URL(request.application,'default','user/retrieve_password')]]
             ],
        ]
@@ -34,20 +34,35 @@ if 'auth' in globals():
           ],
        ]
     else:
-       response.menu_auth = [
-            ['user: '+auth.user.first_name,False,None,
+       row_admins=db(db.administrador.usuario==auth.user.id).select(db.administrador.ALL)
+       if row_admins:
+          response.menu_auth = [
+            ['Usuario: '+auth.user.first_name,False,None,
                  [
-                    [T('Logout'), False, 
+                    ['Deslogar', False, 
                      URL(request.application,'default','user/logout')],
-                    [T('Edit Profile'), False, 
+                    ['Alterar Perfil', False, 
                      URL(request.application,'default','user/profile')],
-                    [T('Change Password'), False,
+                    ['Mudar a Senha', False,
                      URL(request.application,'default','user/change_password')],
-                    [T('Administration'), False,
-                     URL('admin','default','index')]           
+                    ['Menu de Administracao', False,
+                     URL('admin','default','index')],
+                    ['Administrador', False, URL(request.application,'mcrud','cadlist/administrador')]
+                ]
+             ],
+           ]
+       else:
+          response.menu_auth = [
+            ['Usuario: '+auth.user.first_name,False,None,
+                 [
+                    [T('Deslogar'), False, 
+                     URL(request.application,'default','user/logout')],
+                    [T('Alterar Perfil'), False, 
+                     URL(request.application,'default','user/profile')],
+
                  ]
              ],
-       ]
+           ]
        row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
        if row_professor:
          response.menu = [
@@ -98,8 +113,6 @@ if 'auth' in globals():
                     
             ]
                        ],
-
-
                        ['Plano de Prova', 
                             False, 
                             URL(request.application,'mcrud','cadlist/plano_de_prova'), [
@@ -262,7 +275,7 @@ if 'auth' in globals():
 ##########################################
 
 response.menu_edit=[
-  [T('Edit'), False, URL('admin', 'default', 'design/%s' % request.application),
+  [T('Alterar'), False, URL('admin', 'default', 'design/%s' % request.application),
    [
             [T('Controller'), False, 
              URL('admin', 'default', 'edit/%s/controllers/default.py' \

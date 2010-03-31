@@ -15,6 +15,7 @@ def cadlist():
         if form.accepts(request.vars,session): 
             redirect(URL(r=request,f='cadlist/' + tabela))
         elif form.errors: response.flash='Erro em seu formulário'
+        row_admins=db(db.administrador.usuario==auth.user.id).select(db.administrador.ALL)
         row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
         # aqui no if somente as tabelas que tem um select especial valeu
         if tabela == 'aluno':
@@ -84,7 +85,7 @@ def cadlist():
         elif tabela == 'item_plano_de_prova':
             if row_professor:
                 registros=db(db.item_plano_de_prova.id>0).select(
-                    db.item_plano_de_prova.ALL
+                    db.item_plano_de_prova.ALL,orderby=db.item_plano_de_prova.plano_de_prova
                 )
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
@@ -112,7 +113,10 @@ def cadlist():
                )
         else:
             # esse é um select genérico, serve para a maioria das tabelas
-            registros=db(db[tabela].id>0).select(db[tabela].ALL)
+            if row_admins:
+               registros=db(db[tabela].id>0).select(db[tabela].ALL)
+            else:
+               redirect(URL(r=request,f='../default/erro_admin'))
     except KeyError, NameError:
         tabela='error'
         response.flash='Tabela Inexistente!'
