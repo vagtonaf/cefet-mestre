@@ -31,6 +31,11 @@ def erro_acesso():
   form = "Só acessado por professores valeu!"
   return dict(form=form)        
 
+def erro_admin():
+  response.flash="Só acessado por professores valeu!"
+  form = "Só acessado por administradores valeu!"
+  return dict(form=form)
+
 def index():
     return dict()
         
