@@ -1,0 +1,14 @@
+(dp1
+S'professor'
+p2
+S'REFERENCES professor(id) ON DELETE CASCADE'
+p3
+sS'referencia'
+p4
+S'CHAR(50) NOT NULL'
+p5
+sS'id'
+p6
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p7
+s.

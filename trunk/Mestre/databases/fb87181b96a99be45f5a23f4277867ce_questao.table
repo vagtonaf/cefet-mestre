@@ -1,0 +1,22 @@
+(dp1
+S'topico'
+p2
+S'REFERENCES topico(id) ON DELETE CASCADE'
+p3
+sS'taxionomia'
+p4
+S'REFERENCES taxionomia(id) ON DELETE CASCADE'
+p5
+sS'id'
+p6
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p7
+sS'dificuldade'
+p8
+S'REFERENCES dificuldade(id) ON DELETE CASCADE'
+p9
+sS'enunciado'
+p10
+S'TEXT NOT NULL'
+p11
+s.
