@@ -144,13 +144,17 @@ db.prova.referencia.requires=IS_NOT_IN_DB(db,'prova.referencia')
 db.prova.turma.requires=IS_IN_DB(db,'turma.id','turma.nome')
 db.prova.plano_de_prova.requires=IS_IN_DB(db,'plano_de_prova.id','plano_de_prova.referencia') 
 
+db.define_table('prova_aplicada',
+        Field('prova',db.prova),
+        Field('data','datetime')
+        )
+db.prova_aplicada.prova.requires=IS_IN_DB(db,'prova.id','Ref: %(referencia)s - Tipo: %(tipo)s')
 
 db.define_table('prova_gerada',
         Field('data','datetime',default=request.now, writable=False),
         Field('aluno',db.aluno),
         Field('prova',db.prova)
         )
-
 db.prova_gerada.aluno.requires=IS_IN_DB(db,'aluno.id','aluno.matricula')
 db.prova_gerada.prova.requires=IS_IN_DB(db,'prova.id','prova.referencia')
 

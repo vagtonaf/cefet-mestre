@@ -49,5 +49,7 @@
 'selected': 'selected',
 'state': 'estado',
 'table': 'table',
+'true': 'certo',
+'false': 'errado',
 'unable to parse csv file': 'n\xc3\xa3o foi poss\xc3\xadvel carregar ficheiro csv',
 }
