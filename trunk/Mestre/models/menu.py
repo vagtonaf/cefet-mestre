@@ -139,7 +139,7 @@ if 'auth' in globals():
                 
                             ['Aplicar Prova', 
                                     False, 
-                                    URL(request.application,'aplicaprova','aplicar_prova'), []
+                                    URL(request.application,'mcrud','cadlist/prova_aplicada'), []
                             ],
                             ['Realiza Prova', 
                                     False, 

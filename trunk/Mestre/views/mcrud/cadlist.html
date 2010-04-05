@@ -495,7 +495,7 @@ $(document).ready(function() {
       <tr>
       <td>{{=alternativa.questao.enunciado}}</td>
       <td>{{=alternativa.resposta}}</td>
-      <td>{{=T(alternativa.correta)}}</td>
+      <td>{{=alternativa.correta}}</td>
       <td>{{=button('Alterar','edit/alternativa',alternativa.id)}}</td>
       </tr>
    {{pass}}
@@ -503,7 +503,28 @@ $(document).ready(function() {
 </table>
 {{pass}}
 
-
+{{if tabela == 'prova_aplicada':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Referência</th><th>Turma</th><th>Tipo</th><th>Plano</th><th>Data</th><th>Acão</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for prova_aplicada in registros:}}
+      <tr>
+      <td>{{=prova_aplicada.prova.referencia}}</td>
+      <td>{{=prova_aplicada.prova.turma.nome}}</td>
+      <td>{{=prova_aplicada.prova.tipo}}</td>
+      <td>{{=prova_aplicada.prova.plano_de_prova.referencia}}</td>
+      <td>{{=prova_aplicada.data}}</td>
+      <td>{{=button('Alterar','edit/prova_aplicada',prova_aplicada.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
 
 {{if flayout == 0:}}
     <table class="smarttable">
