@@ -492,10 +492,14 @@ $(document).ready(function() {
     </thead>
     <tbody>
     {{for alternativa in registros:}}
+       {{resp=''}}
+       {{resp=str(alternativa.correta)}}
+       {{if resp=='True': resp='Sim'}}
+       {{if resp=='False': resp='Não'}}
       <tr>
       <td>{{=alternativa.questao.enunciado}}</td>
       <td>{{=alternativa.resposta}}</td>
-      <td>{{=alternativa.correta}}</td>
+      <td>{{=resp}}</td>
       <td>{{=button('Alterar','edit/alternativa',alternativa.id)}}</td>
       </tr>
    {{pass}}
