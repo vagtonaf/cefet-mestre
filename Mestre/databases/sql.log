@@ -386,3 +386,10 @@ CREATE TABLE plugin_tagging_tag_link(
     record_id INTEGER
 );
 success!
+timestamp: 2010-04-04T20:37:23.020000
+CREATE TABLE prova_aplicada(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data TIMESTAMP,
+    prova REFERENCES prova(id) ON DELETE CASCADE
+);
+success!
