@@ -93,15 +93,9 @@ $(document).ready(function() {
        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
        {{=button('Lista Alternativa','cadlist/alternativa')}}
     {{pass}}
-    {{if tabela == 'prova_aplicada':}}
-       {{=button('Lista Prova','cadlist/prova')}}
-       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
-       {{=button('Lista Prova Gerada','cadlist/prova_gerada')}}
-    {{pass}}
     {{if tabela == 'prova_gerada':}}
        {{=button('Lista Prova','cadlist/prova')}}
        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
-       {{=button('Lista Prova Aplicada','cadlist/prova_aplicada')}}
        {{=button('Lista item de Prova Gerada','cadlist/item_prova_gerada/list')}}
     {{pass}}
     {{if tabela == 'item_prova_gerada':}}
@@ -553,3 +547,5 @@ $(document).ready(function() {
     </tbody>
     </table>
 {{pass}}
+
+{{print tabela}}
