@@ -139,7 +139,7 @@ if 'auth' in globals():
                 
                             ['Aplicar Prova', 
                                     False, 
-                                    URL(request.application,'aplicarprova','aplicar_prova'), []
+                                    URL(request.application,'aplicaprova','aplicar_prova'), []
                             ],
                             ['Lista Prova Gerada', 
                                     False, 

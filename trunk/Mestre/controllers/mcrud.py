@@ -84,9 +84,14 @@ def cadlist():
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'item_plano_de_prova':
             if row_professor:
-                registros=db(db.item_plano_de_prova.id>0).select(
-                    db.item_plano_de_prova.ALL,orderby=db.item_plano_de_prova.plano_de_prova
-                )
+                if request.args(1):
+                  registros=db(db.item_plano_de_prova.plano_de_prova==request.args(1)).select(
+                      db.item_plano_de_prova.ALL,orderby=db.item_plano_de_prova.plano_de_prova
+                  )
+                else:
+                  registros=db(db.item_plano_de_prova.id>0).select(
+                      db.item_plano_de_prova.ALL,orderby=db.item_plano_de_prova.plano_de_prova
+                  )
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'prova':
