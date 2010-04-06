@@ -138,17 +138,12 @@ db.define_table('prova',
         Field('referencia',length=50,notnull=True),
         Field('turma',db.turma),
         Field('plano_de_prova',db.plano_de_prova),
-        Field('tipo','string',requires=IS_IN_SET(["P1","SCHP1","P2","SCHP2","P3","SCHP3","PF","SCHPF","PR",]))
+        Field('tipo','string',requires=IS_IN_SET(["P1","SCHP1","P2","SCHP2","P3","SCHP3","PF","SCHPF","PR",])),
+        Field('data_aplicacao','datetime')
         )
 db.prova.referencia.requires=IS_NOT_IN_DB(db,'prova.referencia') 
 db.prova.turma.requires=IS_IN_DB(db,'turma.id','turma.nome')
 db.prova.plano_de_prova.requires=IS_IN_DB(db,'plano_de_prova.id','plano_de_prova.referencia') 
-
-db.define_table('prova_aplicada',
-        Field('prova',db.prova),
-        Field('data','datetime')
-        )
-db.prova_aplicada.prova.requires=IS_IN_DB(db,'prova.id','Ref: %(referencia)s - Tipo: %(tipo)s')
 
 db.define_table('prova_gerada',
         Field('data','datetime',default=request.now, writable=False),
@@ -161,8 +156,9 @@ db.prova_gerada.prova.requires=IS_IN_DB(db,'prova.id','prova.referencia')
 db.define_table('item_prova_gerada',
         Field('prova_gerada',db.prova_gerada),
         Field('questao',db.questao),
-        Field('alternativa_correta',db.alternativa)
+        Field('alternativa_escolhida',db.alternativa)
         )
 
+db.item_prova_gerada.prova_gerada.requeres=IS_IN_DB(db,'prova_gerada.id','prova_gerada.data')
 db.item_prova_gerada.questao.requires=IS_IN_DB(db,'questao.id','questao.enunciado')
-db.item_prova_gerada.alternativa_correta.requires=IS_IN_DB(db,'alternativa.id','alternativa.resposta',db(db.alternativa.id==db.item_prova_gerada.questao))
+db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db,'alternativa.id','alternativa.resposta',db(db.alternativa.id==db.item_prova_gerada.questao))

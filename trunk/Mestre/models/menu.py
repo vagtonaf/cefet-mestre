@@ -37,7 +37,7 @@ if 'auth' in globals():
        row_admins=db(db.administrador.usuario==auth.user.id).select(db.administrador.ALL)
        if row_admins:
           response.menu_auth = [
-            ['Usuario: '+auth.user.first_name,False,None,
+            ['Admin: '+auth.user.first_name,False,None,
                  [
                     ['Deslogar', False, 
                      URL(request.application,'default','user/logout')],
@@ -139,11 +139,11 @@ if 'auth' in globals():
                 
                             ['Aplicar Prova', 
                                     False, 
-                                    URL(request.application,'mcrud','cadlist/prova_aplicada'), []
+                                    URL(request.application,'aplicarprova','aplicar_prova'), []
                             ],
-                            ['Realiza Prova', 
+                            ['Lista Prova Gerada', 
                                     False, 
-                                    URL(request.application,'realizaprova','realizar_prova'), []
+                                    URL(request.application,'mcrud','cadlist/prova_gerada/list'), []
                             ],
 
                     ]

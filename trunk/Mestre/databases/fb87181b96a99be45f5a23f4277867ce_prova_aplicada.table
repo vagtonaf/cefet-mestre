@@ -1,0 +1,14 @@
+(dp1
+S'prova'
+p2
+S'REFERENCES prova(id) ON DELETE CASCADE'
+p3
+sS'data'
+p4
+S'TIMESTAMP'
+p5
+sS'id'
+p6
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p7
+s.
