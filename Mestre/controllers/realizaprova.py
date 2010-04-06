@@ -103,11 +103,14 @@ def realizar_prova():
         #recupera o Plano de Prova selecionado
         PlanoProva =  realizar_prova.vars.PlanoProva
         #buscar Taxionomia, Topico e Dificuldade do plano de prova
-        row_planoprova = db(db.plano_de_prova.referencia==PlanoProva).select(db.plano_de_prova.taxionomia,db.plano_de_prova.topico,db.plano_de_prova.dificuldade)
+        row_planoprova = db(db.plano_de_prova.referencia==PlanoProva).select(
+                              db.plano_de_prova.ALL, 
+                              db.item_plano_de_prova.ALL,
+                              left=db.item_plano_de_prova.on(db.plano_de_prova.id==db.item_plano_de_prova.id))
         for plpr in row_planoprova:
-          idTax = plpr.taxionomia
-          idTop = plpr.topico 
-          idDif = plpr.dificuldade  
+          idTax = plpr.item_plano_de_prova.taxionomia
+          idTop = plpr.item_plano_de_prova.topico 
+          idDif = plpr.item_plano_de_prova.dificuldade  
           #selecionar todas as questão que tenham como caracteristicas a Taxionomia, Topico e Dificuldade
           row_questao=db((db.questao.topico==idTop)&(db.questao.taxionomia==idTax)&(db.questao.dificuldade==idDif)).select(db.questao.id)
           lista_Questao = [0] *  len(row_questao)

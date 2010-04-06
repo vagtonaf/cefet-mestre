@@ -393,3 +393,27 @@ CREATE TABLE prova_aplicada(
     prova REFERENCES prova(id) ON DELETE CASCADE
 );
 success!
+timestamp: 2010-04-05T22:47:40.249000
+ALTER TABLE prova_gerada ADD prova_aplicada REFERENCES prova_aplicada(id) ON DELETE CASCADE;
+timestamp: 2010-04-05T23:27:24.495000
+CREATE TABLE prova_aplicada(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    prova REFERENCES prova(id) ON DELETE CASCADE,
+    data TIMESTAMP
+);
+timestamp: 2010-04-05T23:27:25.612000
+CREATE TABLE prova_aplicada(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    prova REFERENCES prova(id) ON DELETE CASCADE,
+    data TIMESTAMP
+);
+timestamp: 2010-04-05T23:27:47.444000
+CREATE TABLE prova_aplicada(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    prova REFERENCES prova(id) ON DELETE CASCADE,
+    data TIMESTAMP
+);
+timestamp: 2010-04-05T23:46:44.337000
+ALTER TABLE item_prova_gerada ADD alternativa_escolhida REFERENCES alternativa(id) ON DELETE CASCADE;
+timestamp: 2010-04-06T00:50:41.716000
+ALTER TABLE prova ADD data_aplicacao TIMESTAMP;
