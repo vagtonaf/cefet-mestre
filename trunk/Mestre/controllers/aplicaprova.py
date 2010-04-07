@@ -45,7 +45,7 @@ def aplicar_prova():
        TR('Professor:', nome + ' '+ sobrenome),
        TR('Codigo Funcional:',codigo_funcional),
        TR('Qual a Prova?', SELECT([OPTION(pr.referencia,_value=pr.referencia) for pr in db().select(db.prova.referencia,distinct=True)],_name='Prova',requires=IS_IN_DB(db,'prova.referencia'))),
-       TR('Aplicar Prova?', SELECT(['Não','Sim'],_name='opcao',requires=IS_IN_SET(['Não','Sim']))),
+       TR('Aplicar Prova?', SELECT(['Não','Sim','Cancelar'],_name='opcao',requires=IS_IN_SET(['Não','Sim','Cancelar']))),
        TR(INPUT(_type='hidden', _name='idProfessor', _value=idProfessor)),
        TR(INPUT(_type='hidden', _name='data_aplicacao', _value=hoje)),
        TR(INPUT(_type='hidden', _name='total_prova', _value=n)),
@@ -57,7 +57,25 @@ def aplicar_prova():
           #Escreve no banco a desistência do professor
           response.flash = 'O Professor Desistiu da ação, posso aqui retornar para o menu!'
           realizar_prova = FORM(TABLE(TR('Retorne ao menu e selecione outra atividade!')))
-          return dict(aplicar_prova=aplicar_prova)        
+          return dict(aplicar_prova=aplicar_prova)
+       elif (sopcao == 'Cancelar'):
+          #recupera o Prova selecionado
+          Prova =  aplicar_prova.vars.Prova
+          row_prova = db(db.prova.referencia==Prova).select(
+                              db.prova.ALL, 
+                              db.plano_de_prova.ALL, 
+                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
+          for plpr in row_prova:
+             idProva = plpr.prova.id
+             # criar o update do campo data_aplicada da tabela prova para o professor para cada idProva
+             hoje = aplicar_prova.vars.data_aplicacao
+             db(db.prova.id==idProva).update(data_aplicacao='')
+          row_prova = db(db.prova.referencia==Prova).select(
+                              db.prova.ALL, 
+                              db.plano_de_prova.ALL, 
+                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
+          aplicar_prova = FORM(TABLE('faz o Update, cancela o campo data_aplicacao',TR(row_prova)))  
+          response.flash = 'Prova cancelada pelo professor!'
        else:
           #recupera o Prova selecionado
           Prova =  aplicar_prova.vars.Prova
@@ -68,13 +86,18 @@ def aplicar_prova():
           for plpr in row_prova:
              idProva = plpr.prova.id
              # criar o update do campo data_aplicada da tabela prova para o professor para cada idProva
-          aplicar_prova = FORM(TABLE('Ainda não faz o Update, mas sabe em quem deve colocar ' + hoje + ' no campo data_aplicacao',TR(row_prova)))  
-        
+             hoje = aplicar_prova.vars.data_aplicacao
+             db(db.prova.id==idProva).update(data_aplicacao=datetime.datetime.now())
+          row_prova = db(db.prova.referencia==Prova).select(
+                              db.prova.ALL, 
+                              db.plano_de_prova.ALL, 
+                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
+          aplicar_prova = FORM(TABLE('faz o Update, colocar ' + hoje + ' no campo data_aplicacao',TR(row_prova)))  
           response.flash = 'Prova aplicada pelo professor!'
     elif aplicar_prova.errors:
           response.flash = 'Formulário Inválido'
     else:
-          response.flash = 'Professor por favor, Verifique se seus dados estão corretos, quando estiver pronto, selecionar se quer "Aplicar a Prova" e clique em "Continuar"!'
+          response.flash = 'Professor por favor, Verifique se seus dados estão corretos, quando estiver pronto, confirme se quer "Aplicar a Prova" e clique em "Aplicar"!'
     return dict(aplicar_prova=aplicar_prova, vars = aplicar_prova.vars)    
   else:  
     #realizar_prova = FORM(TABLE(TR('Usuario não Logado')))        

@@ -28,11 +28,12 @@ def realizar_prova():
     #pega o Aluno  
     nome=auth.user.first_name
     lastname=auth.user.last_name
-    idAluno=auth.user.id
+    idUsuario=auth.user.id
     #testa se é um aluno
-    row_aluno=db(db.aluno.usuario==idAluno).select(db.aluno.matricula)
+    row_aluno=db(db.aluno.usuario==idUsuario).select(db.aluno.ALL)
     if row_aluno:
        for al in row_aluno:
+          idAluno=al.id
           matricula=al.matricula
     else:
        response.flash = 'O usuário não é um aluno cadastrado!'
@@ -61,7 +62,7 @@ def realizar_prova():
             realizar_prova = FORM(TABLE(TR('Aluno não alocado a turma!')))
             return dict(realizar_prova=realizar_prova)
     #testa se foi gerado uma prova para essa turma
-    row_prova = db(db.prova.turma==idTurma).select(db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
+    row_prova = db(db.prova.turma==idTurma and db.prova.data_aplicacao!='').select(db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
     if row_prova:
             for pl in row_prova:
                 idProva=pl.id
@@ -120,16 +121,16 @@ def realizar_prova():
               i = i + 1
               
         realizar_prova = FORM(TABLE(TR(row_planoprova,row_questao)))  #Temporariamente aqui para mostrar os resultados 
-        
-        #lista_Questao=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22]  #aqui vamos pegar os daos do Banco de dados em um select 
-        QuestoesSelecionadas = geraProva(lista_Questao)
-        
-        # criar uma prova para o aluno responder 'insert into provaGerada' com base em QuestoesSelecionadas
-        #prg_dtr       data
-        #prg_alu_cod   aluno
-        #prg_pla_cod   planoprova
-        #prg_que_cod   questao
-        
+        # Teste para não precissar gerar as questoes
+        lista_Questao=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22]  #aqui vamos pegar os daos do Banco de dados em um select 
+        #gerador da lista de questoes OK
+        #QuestoesSelecionadas = geraProva(lista_Questao)
+        if QuestoesSelecionadas:
+           idProvaGerada=db.prova_gerada.insert(data=datetime.datetime.now(),aluno=idAluno,prova=realizar_prova.vars.idProva)
+           row_prova_gerada = db(db.prova_gerada.id==idProvaGerada).select(db.prova_gerada.ALL)
+           if row_prova_gerada:
+              for n in QuestoesSelecionadas:
+                  db.item_prova_gerada.insert(prova_gerada=idProvaGerada,questao=n)
         response.flash = 'Os 10 Indices de Questões Gerados - %s '%QuestoesSelecionadas
     elif realizar_prova.errors:
         response.flash = 'Formulário Inválido'
@@ -140,14 +141,3 @@ def realizar_prova():
     #realizar_prova = FORM(TABLE(TR('Usuario não Logado')))        
     #response.flash = 'Usuário não Logado'
     redirect(URL(r=request, f='../default/user/login'))
-  
-    
-    #Ações corretas o aluno apenas clica em um botão Realizar Prova
-    #Aluno - Uid *
-    #--Aloca
-    #----Turma
-    #-------Prova *
-    #---------PlanoProva
-    #-----------(dif,top,Tax)
-    #---------Questao *
-    #------------ProvaGerada  --> enviar para o form para resolução da prova
