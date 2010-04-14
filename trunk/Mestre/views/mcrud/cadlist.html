@@ -540,6 +540,49 @@ $(document).ready(function() {
 </table>
 {{pass}}
 
+{{if tabela == 'prova_gerada':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Data</th><th>Aluno</th><th>Prova</th><th>Acão</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for prova_gerada in registros:}}
+      <tr>
+      <td>{{=prova_gerada.data}}</td>
+      <td>{{=prova_gerada.aluno.usuario.first_name + " " + prova_gerada.aluno.usuario.last_name }}</td>
+      <td>{{=A(prova_gerada.prova.referencia,_href=url('cadlist/item_prova_gerada/list',prova_gerada.id))}}</td>
+      <td>{{=button('Alterar','edit/prova_gerada',prova_gerada.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+
+{{if tabela == 'item_prova_gerada':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Prova data</th><th>Questão</th><th>Alternativa</th><th>Acão</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for item_prova_gerada in registros:}}
+      <tr>
+      <td>{{=item_prova_gerada.prova_gerada.data}}</td>
+      <td>{{=item_prova_gerada.questao.enunciado}}</td>
+      <td>{{=A(item_prova_gerada.alternativa_escolhida.resposta,_href=url('cadlist/item_prova_gerada/list',item_prova_gerada.id))}}</td>
+      <td>{{=button('Alterar','edit/item_prova_gerada',item_prova_gerada.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
 {{if flayout == 0:}}
     <table class="smarttable">
     <tbody>
