@@ -15,6 +15,7 @@
 'Current response': 'Current response',
 'Current session': 'Current session',
 'DB Model': 'DB Model',
+'Data Aplica\xe7\xe3o': 'Data Aplica\xe7\xe3o',
 'Database': 'Database',
 'Delete:': 'Delete:',
 'Description': 'Description',

@@ -12,9 +12,26 @@ $(document).ready(function() {
   jQuery('.smarttable').dataTable(); 
 });
 </script>
-<h1>Aplica Prova</h1>
+        <div id="form">
+        <h2>Aplica Prova</h2>
+        {{=aplicar_prova}}
+        </div>
 <table class="smarttable">
-    <tbody>
-    {{=aplicar_prova}}
-    </tbody>
+<thead>
+<tr>
+<th>Prova</th><th>Turma</th><th>Plano de Prova</th><th>Tipo</th><th>Data Aplicacao</th>
+</tr>    
+</thead>
+<tbody>
+{{for prova in row_prova:}}
+      <tr>
+      <td>{{=prova.prova.referencia}}</td>
+      <td>{{=prova.prova.turma.nome}}</td>
+      <td>{{=prova.plano_de_prova.referencia}}</td>
+      <td>{{=prova.prova.tipo}}</td>
+      <td>{{=prova.prova.data_aplicacao}}</td>
+      </tr>
+{{pass}}
+</tbody>
+<tr><td>{{=button('Atualizar','aplicar_prova')}}</td></tr>
 </table>
