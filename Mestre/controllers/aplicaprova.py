@@ -55,9 +55,9 @@ def aplicar_prova():
        sopcao=aplicar_prova.vars.opcao
        if (sopcao == 'Não'):
           #Escreve no banco a desistência do professor
-          response.flash = 'O Professor Desistiu da ação, posso aqui retornar para o menu!'
+          response.flash = 'Professor, você tem que confirmar se quer aplicar a prova agora!'
           realizar_prova = FORM(TABLE(TR('Retorne ao menu e selecione outra atividade!')))
-          return dict(aplicar_prova=aplicar_prova)
+          return dict(aplicar_prova=aplicar_prova, row_prova=row_prova)
        elif (sopcao == 'Cancelar'):
           #recupera o Prova selecionado
           Prova =  aplicar_prova.vars.Prova
@@ -74,8 +74,9 @@ def aplicar_prova():
                               db.prova.ALL, 
                               db.plano_de_prova.ALL, 
                               left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
-          aplicar_prova = FORM(TABLE('faz o Update, cancela o campo data_aplicacao',TR(row_prova)))  
+          #aplicar_prova = FORM(TABLE('faz o Update, cancela o campo data_aplicacao',TR(row_prova)))  
           response.flash = 'Prova cancelada pelo professor!'
+          return dict(aplicar_prova=aplicar_prova, row_prova=row_prova, vars = aplicar_prova.vars)
        else:
           #recupera o Prova selecionado
           Prova =  aplicar_prova.vars.Prova
@@ -92,13 +93,18 @@ def aplicar_prova():
                               db.prova.ALL, 
                               db.plano_de_prova.ALL, 
                               left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
-          aplicar_prova = FORM(TABLE('faz o Update, colocar ' + hoje + ' no campo data_aplicacao',TR(row_prova)))  
+          #aplicar_prova = FORM(TABLE('faz o Update, colocar ' + hoje + ' no campo data_aplicacao',TR(row_prova)))  
           response.flash = 'Prova aplicada pelo professor!'
+          return dict(aplicar_prova=aplicar_prova, row_prova=row_prova, vars = aplicar_prova.vars)
     elif aplicar_prova.errors:
           response.flash = 'Formulário Inválido'
     else:
           response.flash = 'Professor por favor, Verifique se seus dados estão corretos, quando estiver pronto, confirme se quer "Aplicar a Prova" e clique em "Aplicar"!'
-    return dict(aplicar_prova=aplicar_prova, vars = aplicar_prova.vars)    
+    row_prova = db().select(
+                              db.prova.ALL, 
+                              db.plano_de_prova.ALL, 
+                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
+    return dict(aplicar_prova=aplicar_prova, row_prova=row_prova, vars = aplicar_prova.vars)
   else:  
     #realizar_prova = FORM(TABLE(TR('Usuario não Logado')))        
     #response.flash = 'Usuário não Logado'
