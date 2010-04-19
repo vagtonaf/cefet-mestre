@@ -4,6 +4,7 @@ import random
 import datetime
 
 def geraProva(lista, numQuestoes):
+ #testa se o numero de questoes da lista é maior do que o numero de questões para retorno
  if len(lista) >= numQuestoes: 
   s = [0] * numQuestoes
   for i in range(numQuestoes):
@@ -82,8 +83,8 @@ def realizar_prova():
             response.flash = 'A turma não possui um plano de prova elaborado!'
             realizar_prova = FORM(TABLE(TR('A turma não possui um plano de prova elaborado!')))
             return dict(realizar_prova=realizar_prova)        
+    #Permite ao aluno iniciar a prova ou não 
     realizar_prova = FORM(TABLE(
-        #certo é selecionar o aluno, sem combo
         TR('Email:',semail,'Aluno:', nome + ' '+ lastname),
         TR('Matricula:',matricula,'Turma:',nome_turma),
         TR('Prova:',prova, 'Plano de Prova:',PlanoProva),
@@ -126,8 +127,8 @@ def realizar_prova():
               
           # Teste para não precissar gerar as questoes
           # lista_Questao=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22,222,232,66,88]  #Só para teste, aqui vamos pegar os daos do Banco de dados em um select 
-          realizar_prova = FORM(TABLE(TR(row_planoprova,row_questao)))  #Temporariamente aqui para mostrar os resultados 
-          #Escolhe da lista de questoes as questoes que vao popular o prova_gerada
+          # realizar_prova = FORM(TABLE(TR(row_planoprova,row_questao)))
+          # Escolhe da lista de questoes as questoes que vao popular o prova_gerada
           QuestoesSelecionadas = geraProva(lista_Questao,1)
           if QuestoesSelecionadas==0:
               response.flash = 'Não existe questão para (topico, dificuldade e taxionomia) para o plano de prova ' + PlanoProva + ' Valor: ' + str(nValor)
@@ -140,6 +141,12 @@ def realizar_prova():
                  for n in QuestoesSelecionadas:
                    db.item_prova_gerada.insert(prova_gerada=idProvaGerada,questao=n)
         response.flash = 'As Questões foram Geradas aleatoriamente para você responder - %s '%QuestoesSelecionadas
+        #Mostra as questões criadas para o aluno
+        realizar_prova = db(db.item_prova_gerada.prova_gerada==idProvaGerada and db.prova_gerada.aluno==idAluno).select(
+                              db.prova_gerada.ALL, 
+                              db.item_prova_gerada.ALL,
+                              left=db.item_prova_gerada.on(db.prova_gerada.id==db.item_prova_gerada.id))
+        return dict(realizar_prova=realizar_prova, vars = realizar_prova.vars)
     elif realizar_prova.errors:
         response.flash = 'Formulário Inválido'
     else:
