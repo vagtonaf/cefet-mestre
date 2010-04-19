@@ -3,10 +3,10 @@
 import random
 import datetime
 
-def geraProva(lista):
- if len(lista) >= 10: 
-  s = [0] * 10
-  for i in range(10):
+def geraProva(lista, numQuestoes):
+ if len(lista) >= numQuestoes: 
+  s = [0] * numQuestoes
+  for i in range(numQuestoes):
    while s[i]==0:
     r = random.choice (lista)
     t=0
@@ -16,7 +16,7 @@ def geraProva(lista):
        s[i]=r
   s.sort()
  else:
-  s="Menos de 10 questões" 
+  s=0
  return s
 
 
@@ -53,7 +53,8 @@ def realizar_prova():
     if row_alocacao:
             for alo in row_alocacao:
                 idTurma=alo.turma
-                row_turma = db(db.turma.id==idTurma).select(db.turma.nome)
+                print "IdTurma:" + str(idTurma)
+		row_turma = db(db.turma.id==idTurma).select(db.turma.nome)
                 if row_turma:
                    for tu in row_turma:
                      nome_turma=tu.nome
@@ -62,15 +63,15 @@ def realizar_prova():
             realizar_prova = FORM(TABLE(TR('Aluno não alocado a turma!')))
             return dict(realizar_prova=realizar_prova)
     #testa se foi gerado uma prova para essa turma
-    row_prova = db(db.prova.turma==idTurma and db.prova.data_aplicacao!='').select(db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
+    row_prova = db(db.prova.turma==idTurma and db.prova.data_aplicacao>0).select(db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
     if row_prova:
             for pl in row_prova:
                 idProva=pl.id
                 prova=pl.referencia
                 idPlanoProva=pl.plano_de_prova
     else:
-            response.flash = 'A turma não possui uma prova relacionada!'
-            realizar_prova = FORM(TABLE(TR('A turma não possui uma prova relacionada!')))
+            response.flash = 'Sua turma não possui uma prova relacionada ou aplicada pelo professor!'
+            realizar_prova = FORM(TABLE(TR('Sua turma não possui uma prova relacionada ou aplicada pelo professor!')))
             return dict(realizar_prova=realizar_prova)
     #testa se foi gerado uma plano de prova
     row_planoprova = db(db.plano_de_prova.id==idPlanoProva).select(db.plano_de_prova.id,db.plano_de_prova.referencia)
@@ -108,30 +109,37 @@ def realizar_prova():
                               db.plano_de_prova.ALL, 
                               db.item_plano_de_prova.ALL,
                               left=db.item_plano_de_prova.on(db.plano_de_prova.id==db.item_plano_de_prova.id))
+        #Seleciona o Plano de Prova e seus itens
         for plpr in row_planoprova:
+          nValor = plpr.item_plano_de_prova.valor
           idTax = plpr.item_plano_de_prova.taxionomia
           idTop = plpr.item_plano_de_prova.topico 
           idDif = plpr.item_plano_de_prova.dificuldade  
           #selecionar todas as questão que tenham como caracteristicas a Taxionomia, Topico e Dificuldade
           row_questao=db((db.questao.topico==idTop)&(db.questao.taxionomia==idTax)&(db.questao.dificuldade==idDif)).select(db.questao.id)
+          #cria uma lista de questões
           lista_Questao = [0] *  len(row_questao)
           i=0
           for que in row_questao:
               lista_Questao[i] = int(que.id)
               i = i + 1
               
-        realizar_prova = FORM(TABLE(TR(row_planoprova,row_questao)))  #Temporariamente aqui para mostrar os resultados 
-        # Teste para não precissar gerar as questoes
-        lista_Questao=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22]  #aqui vamos pegar os daos do Banco de dados em um select 
-        #gerador da lista de questoes OK
-        #QuestoesSelecionadas = geraProva(lista_Questao)
-        if QuestoesSelecionadas:
-           idProvaGerada=db.prova_gerada.insert(data=datetime.datetime.now(),aluno=idAluno,prova=realizar_prova.vars.idProva)
-           row_prova_gerada = db(db.prova_gerada.id==idProvaGerada).select(db.prova_gerada.ALL)
-           if row_prova_gerada:
-              for n in QuestoesSelecionadas:
-                  db.item_prova_gerada.insert(prova_gerada=idProvaGerada,questao=n)
-        response.flash = 'Os 10 Indices de Questões Gerados - %s '%QuestoesSelecionadas
+          # Teste para não precissar gerar as questoes
+          # lista_Questao=[2,3,55,57,9,11,13,15,28,33,44,90,18,10,100,133,22,222,232,66,88]  #Só para teste, aqui vamos pegar os daos do Banco de dados em um select 
+          realizar_prova = FORM(TABLE(TR(row_planoprova,row_questao)))  #Temporariamente aqui para mostrar os resultados 
+          #Escolhe da lista de questoes as questoes que vao popular o prova_gerada
+          QuestoesSelecionadas = geraProva(lista_Questao,1)
+          if QuestoesSelecionadas==0:
+              response.flash = 'Não existe questão para (topico, dificuldade e taxionomia) para o plano de prova ' + PlanoProva + ' Valor: ' + str(nValor)
+              realizar_prova = FORM(TABLE(TR('Favor informar ao professor para verificar o cadastro de questões!')))
+              return dict(realizar_prova=realizar_prova)        
+          if QuestoesSelecionadas:
+              idProvaGerada=db.prova_gerada.insert(data=datetime.datetime.now(),aluno=idAluno,prova=realizar_prova.vars.idProva)
+              row_prova_gerada = db(db.prova_gerada.id==idProvaGerada).select(db.prova_gerada.ALL)
+              if row_prova_gerada:
+                 for n in QuestoesSelecionadas:
+                   db.item_prova_gerada.insert(prova_gerada=idProvaGerada,questao=n)
+        response.flash = 'As Questões foram Geradas aleatoriamente para você responder - %s '%QuestoesSelecionadas
     elif realizar_prova.errors:
         response.flash = 'Formulário Inválido'
     else:
