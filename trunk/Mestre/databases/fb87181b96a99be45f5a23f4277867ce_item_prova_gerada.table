@@ -1,19 +1,19 @@
 (dp1
-S'id'
+S'questao'
 p2
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p3
-sS'questao'
-p4
 S'REFERENCES questao(id) ON DELETE CASCADE'
-p5
+p3
 sS'alternativa_escolhida'
+p4
+S'REFERENCES alternativa(id) ON DELETE CASCADE'
+p5
+sS'alternativa_correta'
 p6
 S'REFERENCES alternativa(id) ON DELETE CASCADE'
 p7
-sS'alternativa_correta'
+sS'id'
 p8
-S'REFERENCES alternativa(id) ON DELETE CASCADE'
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p9
 sS'prova_gerada'
 p10
