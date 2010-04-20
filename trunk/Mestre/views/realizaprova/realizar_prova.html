@@ -19,11 +19,14 @@ $(document).ready(function() {
 <table class="smarttable">
 <thead>
 <tr>
-<th>Questao</th><th>Resposta</th><th>Ação</th>
+<th>Prova</th><th>Questao</th><th>Resposta</th><th>Ação</th>
 </tr>    
 </thead>
 <tbody>
+    {{if row_prova:}}
+         {{=row_prova}}
+    {{pass}}
+<tr><td>{{=button('Concluir Prova','aplicar_prova/concluir')}}</td></tr>
 </tbody>
-<tr><td>{{=button('Concluir','aplicar_prova/concluir')}}</td></tr>
 </table>
 

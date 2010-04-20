@@ -134,43 +134,41 @@ def realizar_prova():
           # realizar_prova = FORM(TABLE(TR(row_planoprova,row_questao)))
           # Escolhe randomicamente da lista de questoes a questao que vai atender ao plano de prova selecionado
           #seleciona uma questão da lista selecionada
-          QuestoesSelecionadas = geraProva(lista_Questao,1)
+          QuestaoSelecionada = geraProva(lista_Questao,1)
           #Verifica se conseguiu achar uma questão que atenda a exigencia, 0 = não consegui
-          print 'Questoes Selecionadas:' + str(QuestoesSelecionadas)
-          if QuestoesSelecionadas==0:
+          print 'Questoes Selecionadas:' + str(QuestaoSelecionada)
+          if QuestaoSelecionada==0:
               response.flash = 'Não existe questão para (topico, dificuldade e taxionomia) para o plano de prova ' + PlanoProva + ' Valor: ' + str(nValor)
               realizar_prova = FORM(TABLE(TR('Favor informar ao professor para verificar o cadastro de questões!')))
               return dict(realizar_prova=realizar_prova)        
-          if QuestoesSelecionadas>0:
+          if QuestaoSelecionada>0:
               #verifica se a prova gerada existe e se não foi finalizada pelo aluno
-              row_prova_gerada = db(db.prova_gerada.data<>None
-                                                and db.prova_gerada.aluno==idAluno
+              row_prova_gerada = db(db.prova_gerada.aluno==idAluno
                                                 and db.prova_gerada.prova==idProva
                                                 ).select(db.prova_gerada.ALL)
-              if row_prova_gerada:
-                     response.flash = 'Prova finalizada'
-                     realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
-                     return dict(realizar_prova=realizar_prova)
+              for provger in row_prova_gerada:
+                     if provger.data!=None:
+                        response.flash = 'Prova finalizada'
+                        realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
+                        return dict(realizar_prova=realizar_prova)
               #se houver uma questão selecionada pesquisar se a prova gerada para o aluno nesta data
-              row_prova_gerada = db(db.prova_gerada.data==dataprova
-                                                and db.prova_gerada.aluno==idAluno
+              row_prova_gerada = db(db.prova_gerada.aluno==idAluno
                                                 and db.prova_gerada.prova==idProva
                                                 ).select(db.prova_gerada.ALL)
               #se haver prova gerada pega o id, se não inclui uma prova_gerada
               if row_prova_gerada:
-                    idProvaGerada = row_prova_gerada[0].id
+                         idProvaGerada = row_prova_gerada[0].id
               else: 
                     idProvaGerada = db.prova_gerada.insert(aluno=idAluno,prova=idProva)
-              for n in QuestoesSelecionadas:
                     #se haver item de prova gerada pega o id, se não gera um
-                    row_item_prova_gerada = db(db.item_prova_gerada.prova_gerada==idProvaGerada
-                                                and db.item_prova_gerada.questao==n
+              row_item_prova_gerada = db(db.item_prova_gerada.prova_gerada==idProvaGerada
+                                               and db.item_prova_gerada.questao==QuestaoSelecionada[0]
                                                 ).select(db.item_prova_gerada.ALL)
-                    if row_item_prova_gerada:
-                            iditemProvaGerada = row_item_prova_gerada[0].id
-                    else:
-                            idItemProvaGerada = db.item_prova_gerada.insert(prova_gerada=idProvaGerada,questao=n)
-        response.flash = 'As Questões foram Geradas aleatoriamente para você responder - %s '%QuestoesSelecionadas
+              if row_item_prova_gerada:
+                         iditemProvaGerada = row_item_prova_gerada[0].id
+              else:
+                   idItemProvaGerada = db.item_prova_gerada.insert(prova_gerada=idProvaGerada, questao=QuestaoSelecionada[0])
+        response.flash = 'As Questões foram Geradas aleatoriamente para você responder - %s '%QuestaoSelecionada
         #Mostra as questões criadas para o aluno
         realizar_prova = db(db.prova_gerada.aluno==idAluno
                                and db.prova_gerada.data==dataprova
