@@ -159,6 +159,6 @@ db.define_table('item_prova_gerada',
         Field('alternativa_escolhida',db.alternativa)
         )
 
-db.item_prova_gerada.prova_gerada.requeres=IS_IN_DB(db,'prova_gerada.id','prova_gerada.data')
+db.item_prova_gerada.prova_gerada.requeres=IS_IN_DB(db,'prova_gerada.id','%(aluno)s %(prova)s')
 db.item_prova_gerada.questao.requires=IS_IN_DB(db,'questao.id','questao.enunciado')
-db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db,'alternativa.id','alternativa.resposta',db(db.alternativa.id==db.item_prova_gerada.questao))
+db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db,'alternativa.id','alternativa.resposta')

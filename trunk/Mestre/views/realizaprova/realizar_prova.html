@@ -1,3 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
 {{extend 'layout.html'}}
-<h1>Realizar Prova</h1>
-{{=realizar_prova}}
+</head>
+<script>
+$(document).ready(function() { 
+  jQuery('.smarttable').dataTable(); 
+});
+</script>
+        <div id="form">
+        <h2>Realiza Prova</h2>
+           {{=realizar_prova}}
+        </div>
+<table class="smarttable">
+<thead>
+<tr>
+<th>Questao</th><th>Resposta</th><th>Ação</th>
+</tr>    
+</thead>
+<tbody>
+</tbody>
+<tr><td>{{=button('Concluir','aplicar_prova/concluir')}}</td></tr>
+</table>
+
