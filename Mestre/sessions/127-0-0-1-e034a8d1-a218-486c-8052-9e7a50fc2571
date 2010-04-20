@@ -1,0 +1,443 @@
+(dp1
+S'recent_companies'
+p2
+(lp3
+sS'_formkey[item_plano_de_prova_create]'
+p4
+S'f83a1c97-982f-4af0-a73e-bfad6543f31d'
+p5
+sS'_formkey[item_prova_gerada_create]'
+p6
+S'a412640f-9909-4c27-aa88-2994f921ff24'
+p7
+sS'auth'
+p8
+ccopy_reg
+_reconstructor
+p9
+(cgluon.storage
+Storage
+p10
+c__builtin__
+dict
+p11
+(dp12
+S'remember'
+p13
+I00
+sS'expiration'
+p14
+I3600
+sS'last_visit'
+p15
+cdatetime
+datetime
+p16
+(S'\x07\xda\x04\x13\x16+!\x00\x98X'
+tRp17
+sS'user'
+p18
+g9
+(g10
+g11
+(dp19
+S'reset_password_key'
+p20
+S''
+sS'first_name'
+p21
+S'Vagton'
+p22
+sS'last_name'
+p23
+S'Ferreira'
+p24
+sS'password'
+p25
+S'1242fe501776e9770dac9989e8c8e834b31999ebb728b3127b729895256ed11404a76ffd726cf6a91aba4f52e8ca1f9149eab74fc94dc84c4098023e87435b0f'
+p26
+sS'registration_key'
+p27
+S''
+sS'email'
+p28
+S'vagtonaf@gmail.com'
+p29
+sS'id'
+p30
+I1
+stRp31
+(dp32
+g20
+S''
+sg21
+g22
+sg23
+g24
+sg25
+g26
+sg27
+S''
+sg28
+g29
+sg30
+I1
+sbstRp33
+(dp34
+g13
+I00
+sg14
+I3600
+sg15
+g17
+sg18
+g31
+sbsS'last_orderby'
+p35
+NsS'_formkey[plano_de_prova_create]'
+p36
+S'318ae26e-f155-4f42-b61a-0fb61a9cbb69'
+p37
+sS'_formkey[item_prova_gerada/None]'
+p38
+S'ad63b065-5ba3-4066-8b70-33cad23e693e'
+p39
+sS'_formkey[prova_gerada/None]'
+p40
+S'a46150f5-8a36-4a5f-a009-2d07952d0df7'
+p41
+sS'_formkey[questao_create]'
+p42
+S'a412bdab-f085-40d3-aba7-7fbf954f208f'
+p43
+sS'_formkey[alternativa_create]'
+p44
+S'75509d4f-df6d-4715-8731-b7b54bc7dc03'
+p45
+sS'_formkey[login]'
+p46
+S'eec4a5cf-7267-454c-aa48-e7fd7e3e47f6'
+p47
+sS'_formkey[questao/None]'
+p48
+S'3b06ae81-03a5-4bd0-931b-417440053023'
+p49
+sS'_formkey[item_plano_de_prova/None]'
+p50
+S'3d4d43b2-f9ca-460a-90a1-e82c91f897f4'
+p51
+sS'last_query'
+p52
+S'db.prova_gerada.id>0'
+p53
+sS'_formkey[prova_gerada_create]'
+p54
+S'64c52f64-0095-4b11-8cc9-325b22c91114'
+p55
+sS'flash'
+p56
+NsS'_formkey[prova_gerada_12]'
+p57
+S'ed6cddbb-1ef1-4d0f-9ac5-1df97825ac7d'
+p58
+sS'recent_persons'
+p59
+(lp60
+sS'_formkey[plano_de_prova/None]'
+p61
+S'c804ca39-4ccf-490e-815d-e2687cdbaf0b'
+p62
+sS'_formkey[alternativa/None]'
+p63
+S'7ceb9cf8-2df4-4416-85e3-e04da9fbbaa6'
+p64
+sS'_formkey[default]'
+p65
+S'e213b767-134b-44ff-9500-af67e9d628d3'
+p66
+s.p66
+s.74991'
+p67
+s.0.3'
+p75
+sS'current_languages'
+p76
+(lp77
+S'en'
+p78
+asS'accepted_language'
+p79
+g70
+sS't'
+(dp80
+S'Logged in'
+p81
+g81
+sS'Index'
+p82
+g82
+sS'selected'
+p83
+g83
+sS'Deslogar'
+p84
+g84
+sS'Layout'
+p85
+g85
+sS'Creditos'
+p86
+g86
+sS"Password fields don't match"
+p87
+g87
+sS'Table name'
+p88
+g88
+sS'table'
+p89
+g89
+sS'Edit current record'
+p90
+g90
+sS'Submit'
+p91
+g91
+sS'record id'
+p92
+g92
+sS'E-mail'
+p93
+g93
+sS'Stylesheet'
+p94
+g94
+sS'Role'
+p95
+g95
+sS'Registration key'
+p96
+g96
+sS'Record %(id)s updated'
+p97
+g97
+sS'Data Aplica\xe7\xe3o'
+p98
+g98
+sS'export as csv file'
+p99
+g99
+sS'Invalid login'
+p100
+g100
+sS'insert new %s'
+p101
+g101
+sS'New Record'
+p102
+g102
+sS'Logged out'
+p103
+g103
+sS'DB Model'
+p104
+g104
+sS'Internal State'
+p105
+g105
+sS'User %(id)s Registered'
+p106
+g106
+sS'Current response'
+p107
+g107
+sS'Client IP'
+p108
+g108
+sS'Record %(id)s created'
+p109
+g109
+sS'Timestamp'
+p110
+g110
+sS'Reset Password key'
+p111
+g111
+sS'Group ID'
+p112
+g112
+sS'state'
+p113
+g113
+sS'Mecanismo Sinergico de Treinamento'
+p114
+g114
+sS'Current request'
+p115
+g115
+sS'Remember me (for 30 days)'
+p116
+g116
+sS'First name'
+p117
+g117
+sS'Controller'
+p118
+g118
+sS'User ID'
+p119
+g119
+sS'%Y-%m-%d'
+p120
+g120
+sS'%Y-%m-%d %H:%M:%S'
+p121
+g121
+sS'or import from csv file'
+p122
+g122
+sS'Password'
+p123
+g123
+sS'Invalid email'
+p124
+g124
+sS'Record Created'
+p125
+g125
+sS'Record ID'
+p126
+g126
+sS'Sure you want to delete this object?'
+p127
+g127
+sS'Name'
+p128
+g128
+sS'done!'
+p129
+g129
+sS'Database'
+p130
+g130
+sS'Last name'
+p131
+g131
+sS'Import/Export'
+p132
+g132
+sS'db'
+p133
+g133
+sS'User %(id)s Logged-out'
+p134
+g134
+sS'Alterar'
+p135
+g135
+sS'User %(id)s Logged-in'
+p136
+g136
+sS'Query:'
+p137
+g137
+sS'Alterar Perfil'
+p138
+g138
+sS'Use (...)&(...) for AND, (...)|(...) for OR, and ~(...)  for NOT to build more complex queries.'
+p139
+g139
+sS'Available databases and tables'
+p140
+g140
+sS'Cannot be empty'
+p141
+g141
+sS'database %s select'
+p142
+g142
+sS'"update" is an optional expression like "field1=\'newvalue\'". You cannot update or delete the results of a JOIN'
+p143
+g143
+sS'Description'
+p144
+g144
+sS'Origin'
+p145
+g145
+sS'View'
+p146
+g146
+sS'Verify Password'
+p147
+g147
+sS'database'
+p148
+g148
+sS'Update:'
+p149
+g149
+sS'record does not exist'
+p150
+g150
+sS'%s rows deleted'
+p151
+g151
+sS'Menu Model'
+p152
+g152
+sS'The "query" is a condition like "db.table1.field1==\'value\'". Something like "db.table1.field1==db.table2.field2" results in a SQL JOIN.'
+p153
+g153
+sS'Record Updated'
+p154
+g154
+sS'Delete:'
+p155
+g155
+sS'design'
+p156
+g156
+sS'Check to delete:'
+p157
+g157
+sS'insert new'
+p158
+g158
+sS'Current session'
+p159
+g159
+sS'Rows in table'
+p160
+g160
+sS'Check to delete'
+p161
+g161
+ssS'language_file'
+p162
+S'C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/languages/pt-br.py'
+p163
+sS'folder'
+p164
+S'C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/'
+p165
+sbsbsS'_formkey[prova_gerada_12]'
+p166
+S'ed6cddbb-1ef1-4d0f-9ac5-1df97825ac7d'
+p167
+sS'recent_persons'
+p168
+(lp169
+sS'_formkey[plano_de_prova/None]'
+p170
+S'c804ca39-4ccf-490e-815d-e2687cdbaf0b'
+p171
+sS'_formkey[alternativa/None]'
+p172
+S'7ceb9cf8-2df4-4416-85e3-e04da9fbbaa6'
+p173
+sS'_formkey[default]'
+p174
+S'7e9d05a3-3f1d-4221-ac22-46b1a1274991'
+p175
+s.

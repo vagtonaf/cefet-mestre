@@ -71,6 +71,7 @@
 'database %s select': 'database %s select',
 'db': 'db',
 'design': 'design',
+'done!': 'done!',
 'export as csv file': 'export as csv file',
 'insert new': 'insert new',
 'insert new %s': 'insert new %s',
