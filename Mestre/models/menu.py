@@ -77,7 +77,7 @@ if 'auth' in globals():
                        ['Usuario', 
                             False, 
                             URL(request.application,'mcrud','cadlist/auth_user'), [
-                ['Professor', 
+                            ['Professor', 
                                     False, 
                                     URL(request.application,'mcrud','cadlist/professor'), []
                             ],
@@ -85,9 +85,7 @@ if 'auth' in globals():
                                     False, 
                                     URL(request.application,'mcrud','cadlist/aluno'), []
                             ],          
-                    
-                    
-            ]
+                           ]
                        ],
                        ['Instituicao', 
                             False, 
@@ -107,20 +105,23 @@ if 'auth' in globals():
                                             False, 
                                             URL(request.application,'mcrud','cadlist/alocacao'), []
                                     ],                      
-                        
-                        ]
+                                   ]
                             ],                  
-                    
-            ]
+                           ]
                        ],
                        ['Plano de Prova', 
                             False, 
                             URL(request.application,'mcrud','cadlist/plano_de_prova'), [
-                            ['Prova', 
-                                    False, 
-                                    URL(request.application,'mcrud','cadlist/prova'), [
-                        
-                        ['Topico', 
+                                    ['Item Plano de Prova', 
+                                            False, 
+                                            URL(request.application,'mcrud','cadlist/item_plano_de_prova'), []
+                                    ],                        
+                                   ]
+                       ],                  
+                       ['Prova', 
+                            False, 
+                            URL(request.application,'mcrud','cadlist/prova'), [
+                                    ['Topico', 
                                             False, 
                                             URL(request.application,'mcrud','cadlist/topico'), []
                                     ],
@@ -132,26 +133,17 @@ if 'auth' in globals():
                                             False, 
                                             URL(request.application,'mcrud','cadlist/alternativa'), []
                                     ],
-                        
-                        
-                    ]
-                            ],                  
-                
-                            ['Aplicar Prova', 
-                                    False, 
-                                    URL(request.application,'aplicaprova','aplicar_prova'), []
-                            ],
-                            ['Lista Prova Gerada', 
-                                    False, 
-                                    URL(request.application,'mcrud','cadlist/prova_gerada/list'), []
-                            ],
-
-                    ]
-                       ],
-
-
-                      ]
-
+                                    ['Aplicar Prova', 
+                                            False, 
+                                            URL(request.application,'aplicaprova','aplicar_prova'), []
+                                    ],
+                                    ['Lista Prova Gerada', 
+                                            False, 
+                                            URL(request.application,'mcrud','cadlist/prova_gerada/list'), []
+                                    ],
+                                   ]
+                       ],  
+                      ]             
                ],
                ['Relatorios', 
                  False, 
