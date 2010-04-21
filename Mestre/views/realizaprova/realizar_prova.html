@@ -14,19 +14,29 @@ $(document).ready(function() {
 </script>
         <div id="form">
         <h2>Realiza Prova</h2>
-           {{=realizar_prova}}
+         Prova:{{=realizar_prova}}
         </div>
 <table class="smarttable">
 <thead>
 <tr>
-<th>Prova</th><th>Questao</th><th>Resposta</th><th>Ação</th>
+<th>Prova</th><th>Questao</th><th>Resposta</th>
 </tr>    
 </thead>
 <tbody>
-    {{if row_prova:}}
-         {{=row_prova}}
-    {{pass}}
+<tr>
+    {{=row_prova}}
 <tr><td>{{=button('Concluir Prova','aplicar_prova/concluir')}}</td></tr>
 </tbody>
 </table>
-
+<table class="smarttable">
+<tbody>
+<tr>
+{{for al in raluno:}} 
+    <td>{{=al.usuario.first_name + ' ' + al.usuario.last_name}}</td>
+{{pass}}
+{{for pr in rprova:}} 
+    <td>{{=pr.referencia}}</td>
+{{pass}}
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,390 @@
+(dp1
+S'recent_companies'
+p2
+(lp3
+sS'_formkey[item_plano_de_prova_create]'
+p4
+S'baac5fe7-d70f-4525-8d33-44bb1d7a7c3f'
+p5
+sS'_formkey[prova_create]'
+p6
+S'26008dbe-943d-4628-b772-0eb08426f5dd'
+p7
+sS'_formkey[taxionomia_2]'
+p8
+S'49078970-e66e-4d66-8b8c-6174109bfd23'
+p9
+sS'_formkey[plano_de_prova_1]'
+p10
+S'fd95a64e-7905-4644-be6d-3b420d09d7ff'
+p11
+sS'_formkey[questao_5]'
+p12
+S'f954e493-28ca-4ce3-8c1c-b1f854c6fe63'
+p13
+sS'_formkey[questao_4]'
+p14
+S'ab523a84-63cd-4940-9ea8-e634178eff3d'
+p15
+sS'_formkey[administrador/None]'
+p16
+S'9e7d7cc5-43ea-46a7-9b4d-0db452f51793'
+p17
+sS'_formkey[taxionomia_1]'
+p18
+S'63ef7416-b654-47a1-8634-01042f7f9c9b'
+p19
+sS'_formkey[item_prova_gerada_create]'
+p20
+S'9781d550-0ec2-4d11-8f9d-a6b3fca34bf0'
+p21
+sS'last_orderby'
+p22
+NsS'_formkey[plano_de_prova_create]'
+p23
+S'c4b2347a-02dc-4602-81de-8f64bff5478a'
+p24
+sS'auth'
+p25
+ccopy_reg
+_reconstructor
+p26
+(cgluon.storage
+Storage
+p27
+c__builtin__
+dict
+p28
+(dp29
+S'remember'
+p30
+I00
+sS'expiration'
+p31
+I3600
+sS'last_visit'
+p32
+cdatetime
+datetime
+p33
+(S'\x07\xda\x04\x15\x01\x17.\x00\xf20'
+tRp34
+sS'user'
+p35
+g26
+(g27
+g28
+(dp36
+S'reset_password_key'
+p37
+S''
+sS'first_name'
+p38
+S'Vagton'
+p39
+sS'last_name'
+p40
+S'Ferreira'
+p41
+sS'password'
+p42
+S'1242fe501776e9770dac9989e8c8e834b31999ebb728b3127b729895256ed11404a76ffd726cf6a91aba4f52e8ca1f9149eab74fc94dc84c4098023e87435b0f'
+p43
+sS'registration_key'
+p44
+S''
+sS'email'
+p45
+S'vagtonaf@gmail.com'
+p46
+sS'id'
+p47
+I1
+stRp48
+(dp49
+g37
+S''
+sg38
+g39
+sg40
+g41
+sg42
+g43
+sg44
+S''
+sg45
+g46
+sg47
+I1
+sbstRp50
+(dp51
+g30
+I00
+sg31
+I3600
+sg32
+g34
+sg35
+g48
+sbsS'_formkey[login]'
+p52
+S'8d2c63a9-2878-4c4d-9ef0-5501a840b902'
+p53
+sS'_formkey[item_plano_de_prova/None]'
+p54
+S'6272cd7d-d2fa-4426-9923-8512100e85cb'
+p55
+sS'last_query'
+p56
+S'db.item_plano_de_prova.id>0'
+p57
+sS'_formkey[register]'
+p58
+S'9aa0d34f-529a-492b-9d5f-5f5a7f242ba8'
+p59
+sS'_formkey[prova/None]'
+p60
+S'0b9ce75b-8d38-4482-8626-f9c0b960a185'
+p61
+sS'_formkey[administrador_create]'
+p62
+S'645e92bc-795f-41ad-b9fd-4f3455008cf0'
+p63
+sS'flash'
+p64
+NsS'_formkey[prova_gerada_13]'
+p65
+S'6e463ed5-9a8d-44ef-a9d1-819ba795ab92'
+p66
+sS'_formkey[dificuldade_2]'
+p67
+S'510bbbd2-3de7-4a4c-b5e9-6624aa165042'
+p68
+sS'recent_persons'
+p69
+(lp70
+sS'_formkey[item_prova_gerada_79]'
+p71
+S'16f918f0-f6c8-47f0-8405-c1f00cfdd003'
+p72
+sS'_formkey[plano_de_prova/None]'
+p73
+S'fe4a5f08-3c60-4fa9-87dc-4c6e6c9f63ba'
+p74
+sS'_formkey[default]'
+p75
+S'd3cad302-c48b-45f8-9f1d-6301932c993f'
+p76
+sS'_formkey[dificuldade_1]'
+p77
+S'fdd08b79-a014-419c-9066-cc781d96c974'
+p78
+s.
+s.
+s.c974'
+p79
+s.ogged out'
+p97
+g97
+sS'DB Model'
+p98
+g98
+sS'Internal State'
+p99
+g99
+sS'User %(id)s Registered'
+p100
+g100
+sS'Current response'
+p101
+g101
+sS'Client IP'
+p102
+g102
+sS'Record %(id)s created'
+p103
+g103
+sS'Timestamp'
+p104
+g104
+sS'Reset Password key'
+p105
+g105
+sS'Group ID'
+p106
+g106
+sS'state'
+p107
+g107
+sS'Mecanismo Sinergico de Treinamento'
+p108
+g108
+sS'Current request'
+p109
+g109
+sS'Remember me (for 30 days)'
+p110
+g110
+sS'First name'
+p111
+g111
+sS'Controller'
+p112
+g112
+sS'User ID'
+p113
+g113
+sS'%Y-%m-%d'
+p114
+g114
+sS'%Y-%m-%d %H:%M:%S'
+p115
+g115
+sS'or import from csv file'
+p116
+g116
+sS'Password'
+p117
+g117
+sS'Invalid email'
+p118
+g118
+sS'Record Created'
+p119
+g119
+sS'Record ID'
+p120
+g120
+sS'Sure you want to delete this object?'
+p121
+g121
+sS'Name'
+p122
+g122
+sS'done!'
+p123
+g123
+sS'Database'
+p124
+g124
+sS'Last name'
+p125
+g125
+sS'Import/Export'
+p126
+g126
+sS'db'
+p127
+g127
+sS'User %(id)s Logged-out'
+p128
+g128
+sS'Alterar'
+p129
+g129
+sS'User %(id)s Logged-in'
+p130
+g130
+sS'Query:'
+p131
+g131
+sS'Alterar Perfil'
+p132
+g132
+sS'Use (...)&(...) for AND, (...)|(...) for OR, and ~(...)  for NOT to build more complex queries.'
+p133
+g133
+sS'Available databases and tables'
+p134
+g134
+sS'Cannot be empty'
+p135
+g135
+sS'database %s select'
+p136
+g136
+sS'"update" is an optional expression like "field1=\'newvalue\'". You cannot update or delete the results of a JOIN'
+p137
+g137
+sS'Description'
+p138
+g138
+sS'Origin'
+p139
+g139
+sS'View'
+p140
+g140
+sS'Verify Password'
+p141
+g141
+sS'database'
+p142
+g142
+sS'Update:'
+p143
+g143
+sS'record does not exist'
+p144
+g144
+sS'%s rows deleted'
+p145
+g145
+sS'Menu Model'
+p146
+g146
+sS'The "query" is a condition like "db.table1.field1==\'value\'". Something like "db.table1.field1==db.table2.field2" results in a SQL JOIN.'
+p147
+g147
+sS'Record Updated'
+p148
+g148
+sS'Delete:'
+p149
+g149
+sS'design'
+p150
+g150
+sS'Check to delete:'
+p151
+g151
+sS'insert new'
+p152
+g152
+sS'Current session'
+p153
+g153
+sS'Rows in table'
+p154
+g154
+sS'Check to delete'
+p155
+g155
+ssS'language_file'
+p156
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\novo\\web2py\\applications\\Mestre/languages/pt-br.py'
+p157
+sS'folder'
+p158
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\novo\\web2py\\applications\\Mestre/'
+p159
+sbsbsS'_formkey[prova_gerada_13]'
+p160
+S'dd48af84-391d-48c3-89e9-49c8f9dd9120'
+p161
+sS'recent_persons'
+p162
+(lp163
+sS'_formkey[item_prova_gerada_79]'
+p164
+S'547d9064-c49c-4170-a606-0349c7900f86'
+p165
+sS'_formkey[plano_de_prova/None]'
+p166
+S'fe4a5f08-3c60-4fa9-87dc-4c6e6c9f63ba'
+p167
+sS'_formkey[default]'
+p168
+S'fdd58543-766a-4fc1-984e-567aedcf1b66'
+p169
+s.
