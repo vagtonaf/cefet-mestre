@@ -1,0 +1,60 @@
+{{extend 'layout.html'}}
+
+<h1>Grafico de Notas Por Turma</h1>
+<BR>
+<BR>
+ <script type="text/javascript"
+src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script>
+<script type="text/javascript">
+
+var alunos_notas = [
+  { name: "Elizabeth", start: 7.6, },
+  { name: "James I", start: 6.0, },
+  { name: "Charles I", start: 6.2, },
+  { name: "Cromwell", start: 6.4, },
+  { name: "Charles II", start: 6.6, },
+  { name: "James II", start: 6.8, },
+  { name: "W&M", start: 6.8, },
+  { name: "Anne", start: 7.0, },
+  { name: "George I", start: 7.1, },
+  { name: "George II", start: 1.2, },
+  { name: "George III", start: 7.6, },
+  { name: "George IV", start: 8.2, }
+];
+
+var grafico = new pv.Panel()
+    .width(600)
+    .height(500)
+    .right(60)
+    .bottom(20)
+
+grafico.add(pv.Bar)
+     .data(alunos_notas)
+     .top(function(d) (this.index * 40))
+     .height(25)
+     .left(90)
+     .width(function(d) d.start*30)
+  .add(pv.Label)
+      .left(25)
+      .top(function(d) (this.index * 40))
+      .textBaseline("top")
+      .textMargin(6)
+      .font("italic 10px serif")
+      .text(function(d) d.name);
+
+var linhas = grafico.add(pv.Rule)
+    .data(pv.range(0, 10, .5))
+    .left(function(d) d * 30 + 90)
+    .strokeStyle(function(d) d ? "white" : "black")
+    
+var label_notas = grafico.add(pv.Label)
+    .left(function() grafico.width()+80)
+    .top(function() grafico.top()+ grafico.height()/2)
+    .textAlign("center")
+    .textBaseline("top")
+    .textStyle("black");
+
+grafico.render();
+
+
+</script>
