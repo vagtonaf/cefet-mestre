@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+{{for turma in v_turmas:}}
+
+{{=turma.id}} - <a href ='{{=URL(r=request,f='rel_aluno_nota',args=[turma.id])}}'> {{=turma.nome}}</a><BR>
+
+{{pass}}
