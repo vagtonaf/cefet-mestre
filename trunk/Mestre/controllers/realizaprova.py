@@ -20,6 +20,19 @@ def geraProva(lista, numQuestoes):
   s=0
  return s
 
+def editprovagerada():
+	#só deixa editar se for aluno
+	row_aluno=db(db.aluno.usuario==auth.user.id).select(db.aluno.ALL)
+	if row_aluno:
+		tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
+		registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))
+		registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
+	#if not registros: raise HTTP(404)
+		crud.settings.update_deletable = False
+		form=crud.update(db[tabela],registros,next=url('realizar_prova'))
+		return dict(form=form, tabela=tabela)
+	else:
+		redirect(URL(r=request,f='../default/erro_acesso'))
 
 
 def realizar_prova():
@@ -40,7 +53,7 @@ def realizar_prova():
 			else:
 				response.flash = 'O usuário não é um aluno cadastrado!'
 				realizar_prova = FORM(TABLE(TR('Aluno não cadastrado, procure seu professor!')))
-				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 			#testa se tem um email cadastrado para um possível contato
 			row_email=db(db.auth_user.id==idAluno).select(db.auth_user.email)
 			if row_email:
@@ -49,7 +62,7 @@ def realizar_prova():
 			else:
 				response.flash = 'Aluno não possui email cadastrado!'
 				realizar_prova = FORM(TABLE(TR('Aluno não possui email cadastrado!')))
-				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 			#testa se o aluno está alocado a uma turma   
 			row_alocacao = db(db.alocacao.aluno==idAluno).select(db.alocacao.turma)
 			if row_alocacao:
@@ -61,7 +74,7 @@ def realizar_prova():
 			else:
 				response.flash = 'Aluno não está alocado a uma turma!'
 				realizar_prova = FORM(TABLE(TR('Aluno não alocado a turma!')))
-				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 			#testa se foi gerado uma prova para essa turma
 			row_prova = db(db.prova.turma==idTurma and db.prova.data_aplicacao>0).select(
 						db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
@@ -82,7 +95,7 @@ def realizar_prova():
 			else:
 				response.flash = 'A turma não possui um plano de prova elaborado!'
 				realizar_prova = FORM(TABLE(TR('A turma não possui um plano de prova elaborado!')))
-				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 			#Permite ao aluno iniciar a prova ou não 
 			realizar_prova = FORM(TABLE(
 				TR('Email:',semail,'Aluno:', nome + ' '+ lastname),
@@ -111,7 +124,7 @@ def realizar_prova():
 					#Escreve no banco a desistência do aluno
 					response.flash = 'O Aluno Desistiu da prova!'
 					realizar_prova = FORM(TABLE(TR('Vai receber uma nota zero!')))
-					return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+					return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 				#recupera o Plano de Prova selecionado
 				PlanoProva =  realizar_prova.vars.PlanoProva
 				#buscar Taxionomia, Topico e Dificuldade do plano de prova
@@ -143,7 +156,7 @@ def realizar_prova():
 					if QuestaoSelecionada==0:
 						response.flash = 'Não existe questão para (topico, dificuldade e taxionomia) para o plano de prova ' + PlanoProva + ' Valor: ' + str(nValor)
 						realizar_prova = FORM(TABLE(TR('Favor informar ao professor para verificar o cadastro de questões!')))
-						return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+						return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 					if QuestaoSelecionada>0:
 						#verifica se a prova gerada existe e se não foi finalizada pelo aluno
 						row_prova_gerada = db(db.prova_gerada.aluno==idAluno
@@ -154,11 +167,12 @@ def realizar_prova():
 							if provger.data!=None:
 								response.flash = 'Prova finalizada'
 								realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
-								return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova)
+								return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 						#se houver uma questão selecionada pesquisar se a prova gerada para o aluno nesta data
 						row_prova_gerada = db(db.prova_gerada.aluno==idAluno and db.prova_gerada.prova==idProva).select(db.prova_gerada.ALL)
 						#se haver prova gerada pega o id, se não inclui uma prova_gerada
 						if row_prova_gerada:
+							gerada = row_prova_gerada[0].gerada
 							idProvaGerada = row_prova_gerada[0].id
 						else: 
 							#busca objeto aluno
@@ -168,31 +182,37 @@ def realizar_prova():
 							for rr in rAluno:
 								for rrr in rProva: 
 									idProvaGerada = db.prova_gerada.insert(aluno=rr.id, prova=rrr.id)
-						#se haver item de prova gerada pega o id, se não gera um
-						row_item_prova_gerada = db(db.item_prova_gerada.prova_gerada==idProvaGerada
+						if gerada:
+							response.flash = 'Prova ja foi gerada, o aluno só pode realizar a prova no moneto da geração'
+							realizar_prova = FORM(TABLE(TR('Prova Gerada, se houve algum problema peça para o professor para gerar nova prova')))
+						else:
+							#se haver item de prova gerada pega o id, se não gera um
+							row_item_prova_gerada = db(db.item_prova_gerada.prova_gerada==idProvaGerada
 								and db.item_prova_gerada.questao==QuestaoSelecionada[0]).select(
 								db.item_prova_gerada.ALL
 							)
-						#busca objeto questao
-						rQuestao = db(db.questao.id==QuestaoSelecionada[0]).select(db.questao.id)
-						#busca objeto Prova Gerada
-						rProvaGerada = db(db.prova_gerada.id==idProvaGerada).select(db.prova_gerada.id)
-						for rr2 in rProvaGerada:
-							for rrr2 in rQuestao: 
-								idItemProvaGerada = db.item_prova_gerada.insert(
-									prova_gerada=rr2.id, questao=rrr2.id
-								)
+							#busca objeto questao
+							rQuestao = db(db.questao.id==QuestaoSelecionada[0]).select(db.questao.id)
+							#busca objeto Prova Gerada
+							rProvaGerada = db(db.prova_gerada.id==idProvaGerada).select(db.prova_gerada.id)
+							for rr2 in rProvaGerada:
+								for rrr2 in rQuestao: 
+									idItemProvaGerada = db.item_prova_gerada.insert(
+										prova_gerada=rr2.id, questao=rrr2.id
+									)
+				#bloqueia a prova já gerada
+				db(db.prova_gerada.id==idProvaGerada).update(gerada=True)
 				#response.flash = 'As Questões foram Geradas aleatoriamente para você responder - %s '%QuestaoSelecionada
 				#Mostra as questões criadas para o aluno
 				aluno = db(db.aluno.id==idAluno).select(db.aluno.ALL)
 				prova = db(db.prova.id==idProva).select(db.prova.ALL)
 				row_prova = db(db.item_prova_gerada.prova_gerada==idProvaGerada).select(db.item_prova_gerada.ALL)
-				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=aluno, rprova=prova)
+				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=aluno, rprova=prova, tabela='prova')
 			elif realizar_prova.errors:
 				response.flash = 'Formulário Inválido'
 			else:
 				response.flash = 'Por favor, Verifique se seus dados estão corretos, quando estiver pronto, selecionar se quer "Realizar a Prova" e clique em "Continuar ou Iniciar a Prova" para responder as perguntas ou Desistir!'
-				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, vars = realizar_prova.vars)    
+				return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, vars = realizar_prova.vars, tabela='solicitacao')    
 		else:
 			#realizar_prova = FORM(TABLE(TR('Usuario não Logado')))        
 			#response.flash = 'Usuário não Logado'

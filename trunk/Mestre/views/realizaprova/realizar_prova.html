@@ -12,31 +12,29 @@ $(document).ready(function() {
   jQuery('.smarttable').dataTable(); 
 });
 </script>
-        <div id="form">
-        <h2>Realiza Prova</h2>
-         Prova:{{=realizar_prova}}
-        </div>
-<table class="smarttable">
-<thead>
-<tr>
-<th>Prova</th><th>Questao</th><th>Resposta</th>
-</tr>    
-</thead>
-<tbody>
-<tr>
-    {{=row_prova}}
-<tr><td>{{=button('Concluir Prova','aplicar_prova/concluir')}}</td></tr>
-</tbody>
-</table>
-<table class="smarttable">
-<tbody>
-<tr>
-{{for al in raluno:}} 
-    <td>{{=al.usuario.first_name + ' ' + al.usuario.last_name}}</td>
+	<div id="form">
+	<h2>Realiza Prova</h2>
+		{{=realizar_prova}}
+	</div>
+{{if tabela == 'prova':}}
+	<table class="smarttable">
+	<thead>
+	<tr>
+	<th>Prova</th><th>Plano</th><th>Questao</th><th>Resposta</th>
+	</tr>    
+	</thead>
+	<tbody>
+	{{for prova in row_prova:}}
+		<tr>
+		<td>{{=prova.prova_gerada.prova.referencia}}</td>
+		<td>{{=prova.prova_gerada.prova.plano_de_prova.referencia}}</td>
+		<td>{{=A(prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada',prova.id))}}</td>
+		{{if prova.alternativa_escolhida:}}</td>
+			<td>{{=prova.alternativa_escolhida.resposta}}</td>
+		{{else:}}
+			<td>Falta Responder</td>
+		{{pass}}
+	{{pass}}
+	</tbody>
+	</table>
 {{pass}}
-{{for pr in rprova:}} 
-    <td>{{=pr.referencia}}</td>
-{{pass}}
-</tr>
-</tbody>
-</table>
