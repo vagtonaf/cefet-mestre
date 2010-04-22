@@ -47,6 +47,8 @@ if 'auth' in globals():
                      URL(request.application,'default','user/change_password')],
                     ['Menu de Administracao', False,
                      URL('admin','default','index')],
+                    ['Tabelas', False, 
+                     URL(request.application,'appadmin','index')],
                     ['Administrador', False, URL(request.application,'mcrud','cadlist/administrador')]
                 ]
              ],

@@ -115,6 +115,28 @@ $(document).ready(function() {
 
 <br /><br />
 
+
+{{if tabela == 'administrador':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for admin in registros:}}
+        <tr>
+        <td>{{=admin.usuario.first_name + ' ' + admin.usuario.last_name}}</td>
+        <td>{{=admin.usuario.email}}</td>
+        <td>{{=button('Alterar','edit/administrador',admin.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+
 {{if tabela == 'usuario':}}
     {{flayout=1}}
     <table class="smarttable">
