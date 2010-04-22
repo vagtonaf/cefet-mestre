@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\CEFET-MESTRE\\web2py\\applications\\Mestre/controllers/relatorios.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\nimport random\n\n\ndef index():\n    c_turmas=db().select(db.turma.ALL)\n    return { 'v_turmas' : c_turmas}\n\ndef rel_aluno_nota():\n    aluno_nota=[]\n    from applications.Mestre.modules.graf1 import gera_grafico   \n    turma_id = request.args[0]\n    query=(db.aluno.id == db.alocacao.aluno)&(db.turma.id==db.alocacao.turma)&(db.turma.id==turma_id)\n    alocacao = db(query).select(db.aluno.matricula)\n    print db(query)._select(db.aluno.matricula)\n    for aluno in alocacao:\n        novo_aluno = {'nome':aluno.matricula,'nota':random.random()*10}\n        aluno_nota.append(novo_aluno)\n        print novo_aluno \n    gera_grafico(aluno_nota,'Turma 01 - Notas','Alunos','Notas','applications/Mestre/static/turma01.png')\n    return dict(imagem = 'turma01.png')\n    \ndef graf_bar():\n    return dict()\n\nresponse._vars=response._caller(rel_aluno_nota)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\CEFET-MESTRE\\web2py\\gluon\\restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\CEFET-MESTRE\\web2py\\applications\\Mestre/controllers/relatorios.py", line 27, in <module>\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\CEFET-MESTRE\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "D:\\cefet\\2009.2, 2010.1\\LocalHostWeb2Py\\CEFET-MESTRE\\web2py\\applications\\Mestre/controllers/relatorios.py", line 12, in rel_aluno_nota\n    from applications.Mestre.modules.graf1 import gera_grafico\nImportError: No module named graf1\n'
+p8
+s.

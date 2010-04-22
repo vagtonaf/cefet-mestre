@@ -108,7 +108,7 @@ def realizar_prova():
 				TR(INPUT(_type='hidden', _name='idProva', _value=idProva)),
 				TR(INPUT(_type='hidden', _name='idAluno', _value=idAluno)),
 				TR('Responder as Perguntas -> ', INPUT(_type='submit', _value='Continuar ou Iniciar a Prova')),
-			))
+				))
 			if realizar_prova.accepts(request.vars, session):
 				#pega identificação do aluno
 				idAluno=realizar_prova.vars.idAluno
@@ -221,3 +221,4 @@ def realizar_prova():
 		#realizar_prova = FORM(TABLE(TR('Usuario não Autenticado')))        
 		#response.flash = 'Usuário não Autenticado'
 		redirect(URL(r=request, f='../default/user/login'))
+
