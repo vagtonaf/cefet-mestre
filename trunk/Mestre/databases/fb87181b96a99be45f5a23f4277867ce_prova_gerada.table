@@ -3,17 +3,17 @@ S'prova'
 p2
 S'REFERENCES prova(id) ON DELETE CASCADE'
 p3
-sS'prova_aplicada'
+sS'aluno'
 p4
-S'REFERENCES prova_aplicada(id) ON DELETE CASCADE'
+S'REFERENCES aluno(id) ON DELETE CASCADE'
 p5
 sS'gerada'
 p6
 S'CHAR(1)'
 p7
-sS'aluno'
+sS'prova_aplicada'
 p8
-S'REFERENCES aluno(id) ON DELETE CASCADE'
+S'REFERENCES prova_aplicada(id) ON DELETE CASCADE'
 p9
 sS'data'
 p10
