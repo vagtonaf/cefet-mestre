@@ -419,3 +419,17 @@ timestamp: 2010-04-06T00:50:41.716000
 ALTER TABLE prova ADD data_aplicacao TIMESTAMP;
 timestamp: 2010-04-21T15:15:06.883000
 ALTER TABLE prova_gerada ADD gerada CHAR(1);
+timestamp: 2010-04-24T17:58:57.171000
+CREATE TABLE alternativa(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    questao REFERENCES questao(id) ON DELETE CASCADE,
+    resposta TEXT NOT NULL,
+    correta CHAR(1)
+);
+timestamp: 2010-04-24T17:59:33.281000
+CREATE TABLE alternativa(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    questao REFERENCES questao(id) ON DELETE CASCADE,
+    resposta TEXT NOT NULL,
+    correta CHAR(1)
+);

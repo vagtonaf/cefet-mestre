@@ -23,18 +23,28 @@ def geraProva(lista, numQuestoes):
 
 def editprovagerada():
     #só deixa editar se for aluno
-    row_aluno=db(db.aluno.usuario==auth.user.id).select(db.aluno.ALL)
-    if row_aluno:
-        tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
-        registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))
-        registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
-    #if not registros: raise HTTP(404)
-        crud.settings.update_deletable = False
-        form=crud.update(db[tabela],registros,next=url('realizar_prova'))
-        return dict(form=form, tabela=tabela)
+    if auth.user:
+        row_aluno=db(db.aluno.usuario==auth.user.id).select(db.aluno.ALL)
+        if row_aluno:
+            tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
+            registro_id=request.args(2) or redirect(URL(r=request,f='../default/error'))
+            registro_id2=request.args(1) or redirect(URL(r=request,f='../default/error'))
+            registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
+         #if not registros: raise HTTP(404)
+            crud.settings.update_deletable = False
+            crud.messages.submit_button = 'Responder' 
+            tabela_delecionada = db[tabela]
+            tabela_delecionada.prova_gerada.writable=False
+            tabela_delecionada.questao.writable=False
+            item_prova_gerada=db(db.item_prova_gerada.id==registro_id).select(db.item_prova_gerada.ALL)
+            questao=db(db.questao.id==registro_id2).select(db.questao.ALL)
+            respostas=db(db.alternativa.questao==registro_id2).select(db.alternativa.ALL)
+            form=crud.update(tabela_delecionada,registros,next=url('realizar_prova'))
+            return dict(form=form, tabela=tabela, item_prova_gerada=item_prova_gerada, questao=questao, respostas=respostas)
+        else:
+            redirect(URL(r=request,f='../default/erro_acesso'))
     else:
-        redirect(URL(r=request,f='../default/erro_acesso'))
-
+        redirect(URL(r=request,f='../default/error'))
 
 def realizar_prova():
     #somente para teste e estudo
@@ -122,10 +132,16 @@ def realizar_prova():
                     #verifica se o aluno quer fazer a prova
                     sopcao=realizar_prova.vars.opcao
                     if(sopcao=='Não'):
-                        #Escreve no banco a desistência do aluno
-                        response.flash = 'O Aluno Desistiu da prova!'
-                        realizar_prova = FORM(TABLE(TR('Vai receber uma nota zero!')))
-                        return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
+                        prova_aluno=db(db.prova_gerada.aluno==idAluno and db.prova_gerada.prova==idProva).select(db.prova_gerada.ALL)
+                        if prova_aluno:
+                           response.flash = 'O Aluno já possui uma prova criada, favor finaliza-la na tela de realizar prova!'
+                           realizar_prova = FORM(TABLE(TR('O Aluno já possui uma prova criada, favor finaliza-la na tela de realizar prova (Sim)!'),A('Realizar Prova',_href=url('realizar_prova',0))))
+                           return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
+                        else:
+                           idProvaGerada = db.prova_gerada.insert(aluno=idAluno, prova=idProva,data=datetime.datetime.now())
+                           response.flash = 'O Aluno Desistiu da prova!'
+                           realizar_prova = FORM(TABLE(TR('A prova foi finalizada, o Aluno desistiu da prova!')))
+                           return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                     #recupera o Plano de Prova selecionado
                     PlanoProva =  realizar_prova.vars.PlanoProva
                     #buscar Taxionomia, Topico e Dificuldade do plano de prova
