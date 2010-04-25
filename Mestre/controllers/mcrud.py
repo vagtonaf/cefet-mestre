@@ -11,6 +11,7 @@ def button(text,action,args=[]):
 def cadlist():
     try:
         tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
+        crud.messages.submit_button = 'Cadastrar'
         form=crud.create(db[tabela])
         if form.accepts(request.vars,session): 
             redirect(URL(r=request,f='cadlist/' + tabela))
@@ -136,6 +137,7 @@ def cadlist():
 @auth.requires_login()
 # Edita tabela simples
 def edit():
+  if auth.user:
     #só deixa editar se for professor
     row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
     if row_professor:
@@ -143,7 +145,10 @@ def edit():
         registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))
         registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
     #if not registros: raise HTTP(404)
+        crud.messages.submit_button = 'Alterar / Deletar'
         form=crud.update(db[tabela],registros,next=url('cadlist/'+ tabela))
         return dict(form=form, tabela=tabela)
     else:
         redirect(URL(r=request,f='../default/erro_acesso'))
+  else:
+   redirect(URL(r=request,f='../default/error'))

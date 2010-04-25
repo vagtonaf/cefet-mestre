@@ -11,6 +11,7 @@
 $(document).ready(function() { 
   jQuery('.smarttable').dataTable(); 
 });
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Prova</a>]
 </script>
 	<div id="form">
 	<h2>Realiza Prova</h2>
@@ -28,7 +29,7 @@ $(document).ready(function() {
 		<tr>
 		<td>{{=prova.prova_gerada.prova.referencia}}</td>
 		<td>{{=prova.prova_gerada.prova.plano_de_prova.referencia}}</td>
-		<td>{{=A(prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada',prova.id))}}</td>
+		<td>{{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}</td>
 		{{if prova.alternativa_escolhida:}}</td>
 			<td>{{=prova.alternativa_escolhida.resposta}}</td>
 		{{else:}}
@@ -39,7 +40,7 @@ $(document).ready(function() {
 	</tbody>
 	</table><table>
 		<tr>
-			<td colspan=4 >{{=button('Concluir','concluir',prova.prova_gerada)}}</center></td>
+			<td colspan=4 >{{=button('Finalizar Prova "Concluir"','concluir',prova.prova_gerada)}}</center></td>
 		</tr>
 	</table>
 {{pass}}

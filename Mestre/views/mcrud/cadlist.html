@@ -340,9 +340,9 @@ $(document).ready(function() {
     {{flayout=1}}
     <table border=1 class="smarttable">
     <thead>
-    <tr><th colspan=4>[ Prova ]</th></tr>
+    <tr><th colspan=5>[ Prova ]</th></tr>
     <tr>
-    <th>Referência</th><th>Turma</th><th>Plano de Prova</th><th>Tipo</th><th>Ação</th>
+    <th>Referência</th><th>Turma</th><th>Plano de Prova</th><th>Tipo</th><th>Data Aplicação</th><th>Ação</th>
     </tr>
     </thead>
     <tbody>
@@ -352,6 +352,7 @@ $(document).ready(function() {
         <td>{{=prova.turma.nome}}</td>
         <td>{{=prova.plano_de_prova.referencia}}</td>
         <td>{{=prova.tipo}}</td>
+        <td>{{=prova.data_aplicacao}}</td>
         <td>{{=button('Alterar','edit/prova',prova.id)}}</td>
         </tr>
     {{pass}}
@@ -567,15 +568,17 @@ $(document).ready(function() {
      <table class="smarttable">
      <thead>
     <tr>
-       <th>Data</th><th>Aluno</th><th>Prova</th><th>Acão</th>
+       <th>Id Prova</th><th>Data Fechamento</th><th>Gerada</th><th>Aluno</th><th>Prova</th><th>Acão</th>
     </tr>    
     </thead>
     <tbody>
     {{for prova_gerada in registros:}}
       <tr>
+      <td>{{=prova_gerada.id}}</td>
       <td>{{=prova_gerada.data}}</td>
-      <td>{{=prova_gerada.aluno.usuario.first_name + " " + prova_gerada.aluno.usuario.last_name }}</td>
-      <td>{{=A(prova_gerada.prova.referencia,_href=url('cadlist/item_prova_gerada/list',prova_gerada.id))}}</td>
+      <td>{{=T(str(prova_gerada.gerada))}}</td>
+	  <td>{{=A(prova_gerada.aluno.usuario.first_name + " " + prova_gerada.aluno.usuario.last_name,_href=url('cadlist/item_prova_gerada/list',prova_gerada.id))}}</td>
+      <td>{{=prova_gerada.prova.referencia}}</td>
       <td>{{=button('Alterar','edit/prova_gerada',prova_gerada.id)}}</td>
       </tr>
    {{pass}}
@@ -589,15 +592,15 @@ $(document).ready(function() {
      <table class="smarttable">
      <thead>
     <tr>
-       <th>Prova data</th><th>Questão</th><th>Alternativa</th><th>Acão</th>
+       <th>Id Prova</th><th>Questão</th><th>Alternativa</th><th>Acão</th>
     </tr>    
     </thead>
     <tbody>
     {{for item_prova_gerada in registros:}}
       <tr>
-      <td>{{=item_prova_gerada.prova_gerada.data}}</td>
+      <td>{{=A(item_prova_gerada.prova_gerada,_href=url('cadlist/prova_gerada/list',item_prova_gerada.prova_gerada))}}</td>
       <td>{{=item_prova_gerada.questao.enunciado}}</td>
-      <td>{{=A(item_prova_gerada.alternativa_escolhida.resposta,_href=url('cadlist/item_prova_gerada/list',item_prova_gerada.id))}}</td>
+      <td>{{=item_prova_gerada.alternativa_escolhida.resposta}}</td>
       <td>{{=button('Alterar','edit/item_prova_gerada',item_prova_gerada.id)}}</td>
       </tr>
    {{pass}}

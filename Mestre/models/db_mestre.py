@@ -110,7 +110,8 @@ db.define_table('alternativa',
         Field('correta','boolean') 
         )
 db.alternativa.questao.requires=IS_IN_DB(db,'questao.id','questao.enunciado')
-db.alternativa.resposta.requires=IS_NOT_IN_DB(db, 'alternativa.resposta')
+db.alternativa.resposta.requires=IS_NOT_IN_DB(db(db.alternativa.questao==request.vars.questao),db.alternativa.resposta)
+#db.alternativa.resposta.requires=IS_NOT_IN_DB(db, 'alternativa.resposta')
 
 db.define_table('plano_de_prova',
         Field('referencia',length=50,notnull=True),
@@ -162,4 +163,5 @@ db.define_table('item_prova_gerada',
 
 db.item_prova_gerada.prova_gerada.requeres=IS_IN_DB(db,'prova_gerada.id')
 db.item_prova_gerada.questao.requires=IS_IN_DB(db,'questao.id','questao.enunciado')
+#db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db(db.alternativa.questao==db.item_prova_gerada.questao),db.alternativa.resposta)
 db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db,'alternativa.id','alternativa.resposta')
