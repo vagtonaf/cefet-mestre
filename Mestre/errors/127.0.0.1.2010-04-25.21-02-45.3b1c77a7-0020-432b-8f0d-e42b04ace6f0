@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\nimport random\n\n\ndef index():\n    c_turmas=db().select(db.turma.ALL)\n    return { 'v_turmas' : c_turmas}\n\ndef rel_aluno_nota():\n    aluno_nota=[]\n    from applications.Mestre.modules.graf1 import gera_grafico   \n    turma_id = request.args[0]\n    query=(db.aluno.id == db.alocacao.aluno)&(db.turma.id==db.alocacao.turma)&(db.turma.id==turma_id)\n    alocacao = db(query).select(db.aluno.matricula)\n    print db(query)._select(db.aluno.matricula)\n    for aluno in alocacao:\n        novo_aluno = {'nome':aluno.matricula,'nota':random.random()*10}\n        aluno_nota.append(novo_aluno)\n        print novo_aluno \n    gera_grafico(aluno_nota,'Turma 01 - Notas','Alunos','Notas','applications/Mestre/static/turma01.png')\n    return dict(imagem = 'turma01.png')\n    \ndef graf_bar():\n    return dict()\n\ndef resultado_prova():\n    idAluno=request.args(0)\n    usuario = db(db.aluno.id==idAluno).select(db.aluno.usuario)\n    for u in usuario:\n         Aluno=u.usuario.first_name + ' ' + u.usuario.last_name\n    else:\n\t return dict(aluno='N\xe3o \xe9 aluno cadastrado.')\n    total=0\n    provarealizada = db(db.prova_gerada.aluno==idAluno).select(db.prova_gerada.ALL, db.item_prova_gerada.ALL,\n        left=db.item_prova_gerada.on(db.item_prova_gerada.prova_gerada==db.prova_gerada.id))\n    for ipr in provarealizada:\n\tProva=ipr.item_prova_gerada.prova_gerada.prova.referencia\n\tData1 = ipr.item_prova_gerada.prova_gerada.prova.data_aplicacao\n\tData2 = ipr.item_prova_gerada.prova_gerada.data\n\tPlanodeProva=ipr.item_prova_gerada.prova_gerada.prova.plano_de_prova.referencia\n        alternativa=db(db.alternativa.questao==ipr.item_prova_gerada.questao and db.alternativa.id==ipr.item_prova_gerada.alternativa_escolhida).select(db.questao.ALL, db.alternativa.ALL, \n                    left=db.alternativa.on(db.alternativa.questao==db.questao.id))\n        for ssa in alternativa:\n                itemplanoprova=db(db.item_plano_de_prova.plano_de_prova==ipr.prova_gerada.prova.plano_de_prova).select(db.item_plano_de_prova.ALL)\n\t\tfor resp in itemplanoprova:\n                    if resp.topico==ssa.questao.topico:\n                       if resp.dificuldade==ssa.questao.dificuldade:\n                          if resp.taxionomia==ssa.questao.taxionomia:\n\t\t\t\tif ssa.alternativa.correta==True:\n\t\t\t\t\ttotal = total + resp.valor\n    return dict(aluno=Aluno, prova=Prova, Plano_de_Prova=PlanodeProva, Data_Final=str(Data2), Data_Aplicacao=str(Data1), total=str(total))\n\nresponse._vars=response._caller(resultado_prova)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\gluon\\restricted.py", line 171, in restricted\n    ccode = compile(code.replace(\'\\r\\n\', \'\\n\'), layer, \'exec\')\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py", line 0\nSyntaxError: unknown encoding: utf8 (Mestre/controllers/relatorios.py, line 0)\n'
+p8
+s.

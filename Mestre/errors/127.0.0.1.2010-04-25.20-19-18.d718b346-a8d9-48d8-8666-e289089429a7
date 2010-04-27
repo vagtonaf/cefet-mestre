@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\nimport random\n\n\ndef index():\n    c_turmas=db().select(db.turma.ALL)\n    return { 'v_turmas' : c_turmas}\n\ndef rel_aluno_nota():\n    aluno_nota=[]\n    from applications.Mestre.modules.graf1 import gera_grafico   \n    turma_id = request.args[0]\n    query=(db.aluno.id == db.alocacao.aluno)&(db.turma.id==db.alocacao.turma)&(db.turma.id==turma_id)\n    alocacao = db(query).select(db.aluno.matricula)\n    print db(query)._select(db.aluno.matricula)\n    for aluno in alocacao:\n        novo_aluno = {'nome':aluno.matricula,'nota':random.random()*10}\n        aluno_nota.append(novo_aluno)\n        print novo_aluno \n    gera_grafico(aluno_nota,'Turma 01 - Notas','Alunos','Notas','applications/Mestre/static/turma01.png')\n    return dict(imagem = 'turma01.png')\n    \ndef graf_bar():\n    return dict()\n\ndef resultado_prova():\n    idAluno=request.args(0)\n    provarealizada = db(db.prova_gerada.aluno==idAluno).select(db.prova_gerada.ALL, db.item_prova_gerada.ALL,\n        left=db.item_prova_gerada.on(db.item_prova_gerada.prova_gerada==db.prova_gerada.id))\n    for ipr in provarealizada:\n \talternativa=db(db.alternativa.questao==ipr.item_prova_gerada.questao and db.alternativa.id==ipr.item_prova_gerada.alternativa_escolhida).select(db.questao.ALL, db.alternativa.ALL, \n\t   left=db.alternativa.on(db.alternativa.questao==db.questao.id))\n        for ssa in alternativa:\n                itplpr=db(db.item_plano_de_prova.plano_de_prova==ipr.prova_gerada.prova.plano_de_prova).select(db.item_plano_de_prova.ALL)\n\t\tdb.trplpr.select(db.item_plano_de_prova.topico==ssa.questao.topico)\n\t\treturn dict(provarealizada=provarealizada, alternativa=alternativa, itplpr=itplpr)\n\nresponse._vars=response._caller(resultado_prova)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\gluon\\restricted.py", line 173, in restricted\n    exec ccode in environment\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py", line 39, in <module>\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\gluon\\globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py", line 36, in resultado_prova\n    db.trplpr.select(db.item_plano_de_prova.topico==ssa.questao.topico)\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\gluon\\sql.py", line 1295, in __getattr__\n    return dict.__getitem__(self,key)\nKeyError: \'trplpr\'\n'
+p8
+s.
