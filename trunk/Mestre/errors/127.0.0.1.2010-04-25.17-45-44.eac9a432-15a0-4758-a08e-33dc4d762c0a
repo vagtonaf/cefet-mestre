@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py'
+p4
+sS'code'
+p5
+S"# coding: utf8\n# try something like\nimport random\n\n\ndef index():\n    c_turmas=db().select(db.turma.ALL)\n    return { 'v_turmas' : c_turmas}\n\ndef rel_aluno_nota():\n    aluno_nota=[]\n    from applications.Mestre.modules.graf1 import gera_grafico   \n    turma_id = request.args[0]\n    query=(db.aluno.id == db.alocacao.aluno)&(db.turma.id==db.alocacao.turma)&(db.turma.id==turma_id)\n    alocacao = db(query).select(db.aluno.matricula)\n    print db(query)._select(db.aluno.matricula)\n    for aluno in alocacao:\n        novo_aluno = {'nome':aluno.matricula,'nota':random.random()*10}\n        aluno_nota.append(novo_aluno)\n        print novo_aluno \n    gera_grafico(aluno_nota,'Turma 01 - Notas','Alunos','Notas','applications/Mestre/static/turma01.png')\n    return dict(imagem = 'turma01.png')\n    \ndef graf_bar():\n    return dict()\n\ndef resultado_prova():\n\tidAluno=request.args(0)\n\tres = db(db.prova_gerada.aluno==idAluno).select(db.prova_gerada.ALL,\n\t\t\t\t\t\t\t\t\t\tdb.item_prova_gerada.ALL,\n\t\tleft=db.item_prova_gerada.on(db.item_prova_gerada.prova_gerada==db.prova_gerada.id))\n\tquestoes=db(db.alternativa.questao.belongs(db.res.item_prova_gerada.questao[0]))).alternativa.select(db.alternativa.ALL)\n\treturn dict(res=res, questoes=questoes)\n\nresponse._vars=response._caller(resultado_prova)\n"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\gluon\\restricted.py", line 171, in restricted\n    ccode = compile(code.replace(\'\\r\\n\', \'\\n\'), layer, \'exec\')\n  File "C:\\cefet\\2009.2,2010.1\\LocalHostWeb2Py\\cefet-mestre\\web2py\\applications\\Mestre/controllers/relatorios.py", line 32\n    questoes=db(db.alternativa.questao.belongs(db.res.item_prova_gerada.questao[0]))).alternativa.select(db.alternativa.ALL)\n                                                                                    ^\nSyntaxError: invalid syntax\n'
+p8
+s.
