@@ -1,3 +1,5 @@
+import datetime; now=datetime.datetime.now()
+
 is_phone = IS_MATCH('^(\+\d{2}\-)?[\d\-]*(\#\d+)?$')
 
 TASK_TYPES = ('Phone', 'Fax', 'Mail', 'Meet')
@@ -13,8 +15,6 @@ else:
 def advanced_editor(field, value):
     return TEXTAREA(_id = str(field).replace('.','_'), _name=field.name, _class='text ckeditor', value=value, _cols=80, _rows=10)
     
-import datetime; now=datetime.datetime.now()
-
         
 db.define_table('administrador',
         Field('usuario',db.auth_user)
@@ -109,7 +109,7 @@ db.define_table('alternativa',
         Field('resposta','text',notnull=True),
         Field('correta','boolean') 
         )
-db.alternativa.questao.requires=IS_IN_DB(db,'questao.id','questao.enunciado')
+db.alternativa.questao.requires=IS_IN_DB(db,'questao.id','questao.id')
 db.alternativa.resposta.requires=IS_NOT_IN_DB(db(db.alternativa.questao==request.vars.questao),db.alternativa.resposta)
 #db.alternativa.resposta.requires=IS_NOT_IN_DB(db, 'alternativa.resposta')
 

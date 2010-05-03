@@ -3,6 +3,7 @@
 <head>
     <title>{{=response.title or request.application}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
 {{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
 {{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
 {{extend 'layout.html'}}
@@ -12,7 +13,6 @@ $(document).ready(function() {
   jQuery('.smarttable').dataTable(); 
 });
 </script>
-
 {{if tabela == 'auth_user': tabela='usuario'}}
 {{flayout=0}}
 {{if form != '':}}
@@ -50,6 +50,7 @@ $(document).ready(function() {
         {{=button('Lista Topico','cadlist/topico')}}
         {{=button('Lista Dificuldade','cadlist/dificuldade')}}
         {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+        {{=button('Lista Questão','cadlist/questao')}}
     {{pass}}
     {{if tabela == 'prova':}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
@@ -92,6 +93,13 @@ $(document).ready(function() {
        {{=button('Lista Prova','cadlist/prova')}}
        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
        {{=button('Lista Alternativa','cadlist/alternativa')}}
+       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'alternativa':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Questão','cadlist/questao')}}
+       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
     {{pass}}
     {{if tabela == 'prova_gerada':}}
        {{=button('Lista Prova','cadlist/prova')}}
@@ -496,19 +504,42 @@ $(document).ready(function() {
      <table class="smarttable">
      <thead>
     <tr>
-       <th>Enunciado</th><th>Tópico</th><th>Taxionomia</th><th>Dificuldade</th><th>Resposta</th><th>Correta</th><th>Acão</th>
+       <th>Questão</th><th>Enunciado</th><th>Tópico</th><th>Taxionomia</th><th>Dificuldade</th><th>Resposta</th><th>Correta</th><th>Acão</th>
     </tr>    
     </thead>
     <tbody>
     {{for questao in registros:}}
       <tr>
-      <td>{{=questao.questao.enunciado}}</td>
+      <td>{{=questao.questao.id}}</td>
+      <td>
+      {{enunciado1=''}}
+      {{enunciado2=''}}
+      {{i=0}}
+      {{n=0}}
+      {{n=len(questao.questao.enunciado)}}
+      {{enunciado1 = str(questao.questao.enunciado)}}
+      {{if n >= 80:}}
+         {{while (i <= 80):}}
+            {{enunciado2 = enunciado2 + enunciado1[i]}}
+            {{i = i + 1}}
+         {{pass}}
+         {{=A(enunciado2 + ' ...',_href=url('edit/questao',questao.questao.id))}}
+      {{else:}}
+         {{=questao.questao.enunciado}}
+      {{pass}}
+      </td>
       <td>{{=questao.questao.topico.nome}}</td>
       <td>{{=questao.questao.taxionomia.nome}}</td>
       <td>{{=questao.questao.dificuldade.nivel}}</td>
-      <td>{{=questao.alternativa.resposta}}</td>
+      <td>
+      {{if questao.alternativa.resposta == None:}}
+          {{=questao.alternativa.resposta}}
+      {{else:}}
+          {{=A(questao.alternativa.resposta,_href=url('edit/alternativa',questao.alternativa.id))}}
+      {{pass}}
+      </td>    
       <td>{{=questao.alternativa.correta}}</td>
-      <td>{{=button('Alterar','edit/questao',questao.questao.id)}}</td>
+      <td>{{=button('Alterar/Enunciado','edit/questao',questao.questao.id)}}</td>
       </tr>
    {{pass}}
 </tbody>
@@ -520,7 +551,7 @@ $(document).ready(function() {
      <table class="smarttable">
      <thead>
     <tr>
-       <th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Acão</th>
+       <th>Questão</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Acão</th>
     </tr>    
     </thead>
     <tbody>
@@ -530,10 +561,43 @@ $(document).ready(function() {
        {{if resp=='True': resp='Sim'}}
        {{if resp=='False': resp='Não'}}
       <tr>
-      <td>{{=alternativa.questao.enunciado}}</td>
-      <td>{{=alternativa.resposta}}</td>
+      <td>{{=A(alternativa.questao,_href=url('edit/questao',alternativa.questao))}}</td>
+      <td>
+      {{enunciado1=''}}
+      {{enunciado2=''}}
+      {{i=0}}
+      {{n=0}}
+      {{n=len(alternativa.questao.enunciado)}}
+      {{enunciado1 = str(alternativa.questao.enunciado)}}
+      {{if n >= 80:}}
+         {{while (i <= 80):}}
+            {{enunciado2 = enunciado2 + enunciado1[i]}}
+            {{i = i + 1}}
+         {{pass}}
+         {{=A(enunciado2 + ' ...',_href=url('edit/questao',alternativa.questao))}}
+      {{else:}}
+         {{=alternativa.questao.enunciado}}
+      {{pass}}
+      </td>
+      <td>
+      {{resposta1=''}}
+      {{resposta2=''}}
+      {{i=0}}
+      {{n=0}}
+      {{n=len(alternativa.resposta)}}
+      {{resposta1 = str(alternativa.resposta)}}
+      {{if n >= 80:}}
+         {{while (i <= 80):}}
+            {{resposta2 = resposta2 + resposta1[i]}}
+            {{i = i + 1}}
+         {{pass}}
+         {{=A(resposta2 + ' ...',_href=url('edit/alternativa',alternativa.id))}}
+      {{else:}}
+         {{=alternativa.resposta}}
+      {{pass}}
+      </td>
       <td>{{=resp}}</td>
-      <td>{{=button('Alterar','edit/alternativa',alternativa.id)}}</td>
+      <td>{{=button('Alterar/Resposta','edit/alternativa',alternativa.id)}}</td>
       </tr>
    {{pass}}
 </tbody>
@@ -577,7 +641,7 @@ $(document).ready(function() {
       <td>{{=prova_gerada.id}}</td>
       <td>{{=prova_gerada.data}}</td>
       <td>{{=T(str(prova_gerada.gerada))}}</td>
-	  <td>{{=A(prova_gerada.aluno.usuario.first_name + " " + prova_gerada.aluno.usuario.last_name,_href=url('cadlist/item_prova_gerada/list',prova_gerada.id))}}</td>
+      <td>{{=A(prova_gerada.aluno.usuario.first_name + " " + prova_gerada.aluno.usuario.last_name,_href=url('cadlist/item_prova_gerada/list',prova_gerada.id))}}</td>
       <td>{{=prova_gerada.prova.referencia}}</td>
       <td>{{=button('Alterar','edit/prova_gerada',prova_gerada.id)}}</td>
       </tr>

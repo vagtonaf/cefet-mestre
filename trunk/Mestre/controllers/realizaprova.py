@@ -32,14 +32,16 @@ def editprovagerada():
             registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
          #if not registros: raise HTTP(404)
             crud.settings.update_deletable = False
-            crud.messages.submit_button = 'Responder' 
-            tabela_delecionada = db[tabela]
-            tabela_delecionada.prova_gerada.writable=False
-            tabela_delecionada.questao.writable=False
+            crud.messages.submit_button = 'Responder'
+            if tabela == 'questao':
+                db.questao.enunciado.widget = advanced_editor 
+            tabela_selecionada = db[tabela]
+            tabela_selecionada.prova_gerada.writable=False
+            tabela_selecionada.questao.writable=False
             item_prova_gerada=db(db.item_prova_gerada.id==registro_id).select(db.item_prova_gerada.ALL)
             questao=db(db.questao.id==registro_id2).select(db.questao.ALL)
             respostas=db(db.alternativa.questao==registro_id2).select(db.alternativa.ALL)
-            form=crud.update(tabela_delecionada,registros,next=url('realizar_prova'))
+            form=crud.update(tabela_selecionada,registros,next=url('realizar_prova'))
             return dict(form=form, tabela=tabela, item_prova_gerada=item_prova_gerada, questao=questao, respostas=respostas)
         else:
             redirect(URL(r=request,f='../default/erro_acesso'))
@@ -66,7 +68,7 @@ def realizar_prova():
                     realizar_prova = FORM(TABLE(TR('Aluno não cadastrado, procure seu professor!')))
                     return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                 #testa se tem um email cadastrado para um possível contato
-                row_email=db(db.auth_user.id==idAluno).select(db.auth_user.email)
+                row_email=db(db.auth_user.id==idUsuario).select(db.auth_user.email)
                 if row_email:
                     for se in row_email:
                         semail=se.email

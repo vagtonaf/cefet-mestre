@@ -12,6 +12,11 @@ def cadlist():
     try:
         tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
         crud.messages.submit_button = 'Cadastrar'
+        if tabela == 'questao':
+            db.questao.enunciado.widget = advanced_editor
+        if tabela == 'alternativa':
+            db.alternativa.resposta.widget = advanced_editor
+            #db.alternativa.questao.writable=False    
         form=crud.create(db[tabela])
         if form.accepts(request.vars,session): 
             redirect(URL(r=request,f='cadlist/' + tabela))
@@ -111,8 +116,7 @@ def cadlist():
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'questao':
-               db.questao.enunciado.widget = advanced_editor
-               registros=db(db.questao.id>0).select(
+              registros=db(db.questao.id>0).select(
                      db.questao.ALL,
                      db.alternativa.ALL,
                      left=db.alternativa.on(db.questao.id==db.alternativa.questao)
@@ -146,6 +150,12 @@ def edit():
         registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
     #if not registros: raise HTTP(404)
         crud.messages.submit_button = 'Alterar / Deletar'
+        if tabela == 'questao':
+            db.questao.enunciado.widget = advanced_editor
+        if tabela == 'alternativa':
+            #db.alternativa.questao.writable = False  
+            #db.alternativa.questao.widget = advanced_editor  
+            db.alternativa.resposta.widget = advanced_editor
         form=crud.update(db[tabela],registros,next=url('cadlist/'+ tabela))
         return dict(form=form, tabela=tabela)
     else:
