@@ -3,6 +3,7 @@
 <head>
     <title>{{=response.title or request.application}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
 {{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
 {{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
 {{extend 'layout.html'}}
@@ -13,34 +14,34 @@ $(document).ready(function() {
 });
 [<a href="#nil" onclick="jQuery('#form').slideToggle();">Prova</a>]
 </script>
-	<div id="form">
-	<h2>Realiza Prova</h2>
-		{{=realizar_prova}}
-	</div>
+    <div id="form">
+    <h2>Realiza Prova</h2>
+        {{=realizar_prova}}
+    </div>
 {{if tabela == 'prova':}}
-	<table class="smarttable">
-	<thead>
-	<tr>
-	<th>Prova</th><th>Plano</th><th>Questao</th><th>Resposta</th>
-	</tr>    
-	</thead>
-	<tbody>
-	{{for prova in row_prova:}}
-		<tr>
-		<td>{{=prova.prova_gerada.prova.referencia}}</td>
-		<td>{{=prova.prova_gerada.prova.plano_de_prova.referencia}}</td>
-		<td>{{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}</td>
-		{{if prova.alternativa_escolhida:}}</td>
-			<td>{{=prova.alternativa_escolhida.resposta}}</td>
-		{{else:}}
-			<td>Falta Responder</td>
-		{{pass}}
-		</tr>
-	{{pass}}
-	</tbody>
-	</table><table>
-		<tr>
-			<td colspan=4 >{{=button('Finalizar Prova "Concluir"','concluir',prova.prova_gerada)}}</center></td>
-		</tr>
-	</table>
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Prova</th><th>Plano</th><th>Questao</th><th>Resposta</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for prova in row_prova:}}
+        <tr>
+        <td>{{=prova.prova_gerada.prova.referencia}}</td>
+        <td>{{=prova.prova_gerada.prova.plano_de_prova.referencia}}</td>
+        <td>{{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}</td>
+        {{if prova.alternativa_escolhida:}}</td>
+            <td>{{=prova.alternativa_escolhida.resposta}}</td>
+        {{else:}}
+            <td>Falta Responder</td>
+        {{pass}}
+        </tr>
+    {{pass}}
+    </tbody>
+    </table><table>
+        <tr>
+            <td colspan=4 >{{=button('Finalizar Prova "Concluir"','concluir',prova.prova_gerada)}}</center></td>
+        </tr>
+    </table>
 {{pass}}

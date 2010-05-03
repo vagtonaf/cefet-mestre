@@ -1,4 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
 {{extend 'layout.html'}}
+    {{if tabela == 'aluno':}}
+        {{=button('Lista Usuario','cadlist/auth_user')}}
+        {{=button('Lista de Alocação','cadlist/alocacao')}}
+    {{pass}}
+    {{if tabela == 'professor':}}
+        {{=button('Lista Usuario','cadlist/auth_user')}}
+        {{=button('Lista de Alocação','cadlist/alocacao')}}    
+    {{pass}}
+    {{if tabela == 'alocacao':}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Aluno','cadlist/aluno')}}    
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'disciplina':}}
+        {{=button('Lista Curso','cadlist/curso')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'plano_de_prova':}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'item_plano_de_prova':}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Topico','cadlist/topico')}}
+        {{=button('Lista Dificuldade','cadlist/dificuldade')}}
+        {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+        {{=button('Lista Questão','cadlist/questao')}}
+    {{pass}}
+    {{if tabela == 'prova':}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Professor','cadlist/professor')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'topico':}}
+        {{=button('Lista Curso','cadlist/curso')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'turma':}}
+        {{=button('Lista Disciplina','cadlist/disciplina')}}
+        {{=button('Lista Curso','cadlist/curso')}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+    {{pass}}
+    {{if tabela == 'curso':}}
+        {{=button('Lista Instituicao','cadlist/instituicao')}}
+        {{=button('Lista Disciplina','cadlist/disciplina')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'instituicao':}}
+        {{=button('Lista Curso','cadlist/curso')}}
+    {{pass}}
+    {{if tabela == 'usuario':}}
+        {{=button('Lista Professor','cadlist/professor')}}
+        {{=button('Lista Aluno','cadlist/aluno')}}
+    {{pass}}
+    {{if tabela == 'dificuldade':}}
+        {{=button('Lista Topico','cadlist/topico')}}
+        {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'taxionomia':}}
+        {{=button('Plano de Prova','cadlist/Plano_de_Prova')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'questao':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Alternativa','cadlist/alternativa')}}
+       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'alternativa':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Questão','cadlist/questao')}}
+       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'prova_gerada':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista item de Prova Gerada','cadlist/item_prova_gerada/list')}}
+    {{pass}}
+    {{if tabela == 'item_prova_gerada':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Prova Gerada','cadlist/prova_gerada/list')}}
+    {{pass}}
 {{if tabela == 'auth_user': tabela='usuario'}}
     <h1>Altera {{=tabela.replace('_',' ')}}</h1>
 {{=form}}
@@ -7,4 +103,3 @@
 {{else:}}
     {{=button('Voltar para o cadastro de ' + tabela.replace('_',' '),'cadlist/' + tabela)}}
 {{pass}}
-{{=vars}}
