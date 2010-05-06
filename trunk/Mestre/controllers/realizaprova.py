@@ -37,7 +37,9 @@ def editprovagerada():
                 db.questao.enunciado.widget = advanced_editor 
             tabela_selecionada = db[tabela]
             tabela_selecionada.prova_gerada.writable=False
+            tabela_selecionada.prova_gerada.readable=False
             tabela_selecionada.questao.writable=False
+            tabela_selecionada.questao.readable=False
             item_prova_gerada=db(db.item_prova_gerada.id==registro_id).select(db.item_prova_gerada.ALL)
             questao=db(db.questao.id==registro_id2).select(db.questao.ALL)
             respostas=db(db.alternativa.questao==registro_id2).select(db.alternativa.ALL)
