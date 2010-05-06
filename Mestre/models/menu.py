@@ -198,7 +198,11 @@ if 'auth' in globals():
                             False, 
                             URL(request.application,'mcrud','cadlist/prova/list'), []
                        ],
-                       ['Gerar Relatorio por Aluno', 
+                       ['Resultado da Prova', 
+                            False, 
+                            URL(request.application,'resultadoprova','resultadoprova'), []
+                       ],
+		       ['Gerar Relatorio por Aluno', 
                             False, 
                             URL(request.application,'aluno','ver_relAluno'), []
                        ],

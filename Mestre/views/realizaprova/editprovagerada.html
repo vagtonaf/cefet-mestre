@@ -15,12 +15,12 @@ $(document).ready(function() {
 </script>
 {{if tabela == 'auth_user': tabela='usuario'}}
     <h1>Resposta da quest&atilde;o</h1>
-    <table border=1 class="smarttable">
+    <table border=0 class="smarttable">
     <tbody><tr>
        <th><b>Quest&atilde;o:</b></th></tr>
     {{for q in questao:}}
     <tr>
-       <td>{{=q.id}})&nbsp;{{=q.enunciado}}</td>
+       <td><textarea rows="6" cols="80">{{=q.id}})&nbsp;{{=q.enunciado}}</textarea></td>
     </tr>
     {{pass}}
     <tr>

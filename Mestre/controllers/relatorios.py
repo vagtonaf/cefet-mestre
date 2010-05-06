@@ -27,6 +27,7 @@ def graf_bar():
 @auth.requires_login()
 def resultado_prova():
     total=0
+    tot=''
     idAluno=request.args(0)
     usuario = db(db.aluno.id==idAluno).select(db.aluno.usuario)
     if usuario:

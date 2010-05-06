@@ -30,11 +30,27 @@ $(document).ready(function() {
         <tr>
         <td>{{=prova.prova_gerada.prova.referencia}}</td>
         <td>{{=prova.prova_gerada.prova.plano_de_prova.referencia}}</td>
-        <td>{{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}</td>
-        {{if prova.alternativa_escolhida:}}</td>
-            <td>{{=prova.alternativa_escolhida.resposta}}</td>
+        <td>
+        {{enunciado1=''}}
+        {{enunciado2=''}}
+        {{i=0}}
+        {{n=0}}
+        {{n=len(str(prova.questao.id) + ') ' + prova.questao.enunciado)}}
+        {{enunciado1 = str(str(prova.questao.id) + ') ' + prova.questao.enunciado)}}
+        {{if n >= 80:}}
+             {{while (i <= 80):}}
+                {{enunciado2 = enunciado2 + enunciado1[i]}}
+                {{i = i + 1}}
+             {{pass}}
+             {{=A(enunciado2 + ' ...',_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}
         {{else:}}
-            <td>Falta Responder</td>
+             {{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}
+        {{pass}}
+        </td>
+        {{if prova.alternativa_escolhida:}}
+            <td><textarea rows="4" cols="40">{{=prova.alternativa_escolhida.resposta}}</textarea></td>
+        {{else:}}
+            <td><b><font size="3" color="red">Falta Responder</b></font></td>
         {{pass}}
         </tr>
     {{pass}}
