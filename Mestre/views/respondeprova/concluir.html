@@ -1,0 +1,11 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+<h1>Prova Concluida</h1>
+{{=BEAUTIFY(realizar_prova)}}
