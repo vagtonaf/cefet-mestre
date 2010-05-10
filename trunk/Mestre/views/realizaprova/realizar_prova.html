@@ -42,9 +42,9 @@ $(document).ready(function() {
                 {{enunciado2 = enunciado2 + enunciado1[i]}}
                 {{i = i + 1}}
              {{pass}}
-             {{=A(enunciado2 + ' ...',_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}
+             {{=A(enunciado2 + ' ...',_href=url('../respondeprova/editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}
         {{else:}}
-             {{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}
+             {{=A(str(prova.questao.id) + ') ' + prova.questao.enunciado,_href=url('../respondeprova/editprovagerada/item_prova_gerada/' + str(prova.questao),prova.id))}}
         {{pass}}
         </td>
         {{if prova.alternativa_escolhida:}}
@@ -61,3 +61,4 @@ $(document).ready(function() {
         </tr>
     </table>
 {{pass}}
+{{=vars}}
