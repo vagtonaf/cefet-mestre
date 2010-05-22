@@ -9,7 +9,7 @@ import os, traceback, datetime
 try:
     from gluon.contrib.gql import *         # if running on Google App Engine
 except:
-    db=SQLDB('sqlite://storage.db')         # if not, use SQLite or other DB
+    db=SQLDB('sqlite://storagez.db')         # if not, use SQLite or other DB
     #db = DAL('mysql://admin:010101@localhost:3306/mestre')  # if not, use SQLite or other DB
 else:
     db=GQLDB()                              # connect to Google BigTable

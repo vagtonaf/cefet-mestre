@@ -19,7 +19,7 @@ def executesql2(self, query, args):
         return None
 
 def resultadoprova():
-    results = db.executesql("""SELECT a.id, c.referencia as prova, g.referencia as plano_de_prova, e.first_name,  e.last_name, c.data_aplicacao, b.data as data_conclusao, b.gerada, f.enunciado, h.resposta, h.correta, i.valor
+    resposta = db.executesql("""SELECT a.id, c.referencia as prova, g.referencia as plano_de_prova, e.first_name,  e.last_name, c.data_aplicacao, b.data as data_conclusao, b.gerada, f.enunciado, h.resposta, h.correta, i.valor
                                            FROM item_prova_gerada as a  
                                            left join prova_gerada as b on a.prova_gerada==b.id 
                                            left join prova as c on b.prova==c.id 
@@ -42,4 +42,4 @@ def resultadoprova():
                                            left join alternativa as h on a.alternativa_escolhida==h.id
                                            left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T"
                                            """)
-    return dict(resposta=results, totaliza=totaliza)
+    return dict(resposta=resposta, totaliza=totaliza)

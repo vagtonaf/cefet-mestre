@@ -16,27 +16,30 @@ $(document).ready(function() {
 <h1>Resultado das Provas</h1>
 <table border=1 class="smarttable">
 <thead>
-<tr><th>Item</th><th>ID</th><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Aplicacao</th><th>Conclusao</th><th>Gerada</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Valor</th></tr>
+<tr><th>Item</th><th>ID</th><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Aplicação</th><th>Conclusão</th><th>Gerada</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Valor</th></tr>
 </thead>
 <tbody>
-{{if resposta:}}
-  {{for item, res in enumerate(resposta):}}
+{{
+def Capitalize(texto):
+     return " ".join([i.lower()!="de" and i.capitalize() or "de" for i in texto.split()])
+}}
+{{for item, res in enumerate(resposta):}}
      <tr>
      <td>{{=item+1}}</td>
      <td>{{=res[0]}})</td>
      <td>{{=res[1]}}</td>
      <td>{{=res[2]}}</td>
-     <td>{{=res[3] + ' ' + res[4]}}</td>
+     <td>{{=A(Capitalize(res[3] + ' ' + res[4]))}}</td>
      <td>
          {{if res[5]==None:}}
-             {{="Nao Aplicada"}}
+             {{="Não Aplicada"}}
          {{else:}}
              {{=res[5]}}
          {{pass}}    
      </td>
      <td>
         {{if res[6]==None:}}
-             {{="Nao Finalizada"}}
+             {{="Não Finalizada"}}
          {{else:}}
              {{=res[6]}}
          {{pass}}    
@@ -45,13 +48,13 @@ $(document).ready(function() {
          {{if res[7]=="T" or res[7]==None:}}
              {{="Sim"}}
          {{else:}}
-             {{="Nao"}}
+             {{="Não"}}
          {{pass}}    
      </td>
      <td>{{=res[8]}}</td>
      <td><p>
          {{if res[9]==None:}}
-             {{="Nao Respondida"}}
+             {{="Não Respondida"}}
          {{else:}}
              {{=res[9]}}
          {{pass}}
@@ -61,31 +64,30 @@ $(document).ready(function() {
          {{if res[10]=="T":}}
              {{="Sim"}}
          {{elif res[10]==None:}}
-             {{="Nao Respondida"}}
+             {{="Não Respondida"}}
          {{else:}}
-             {{="Nao"}}
+             {{="Não"}}
          {{pass}}
      </td>
      <td>{{=res[11]}}</td>
      </tr>
-  {{pass}}
-  </tbody>     
-  </table>
-  <br>
-  <table border=1 class="smarttable">
-  <thead>
-  <tr><td colspan=4>Resultado da Prova</td></tr>
-  <tr><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Total de Pontos</th></tr>
-  </thead>
-  <tbody>
-  {{for res in totaliza:}}
+{{pass}}
+</tbody>     
+</table>
+<br>
+<table border=1 class="smarttable">
+<thead>
+<tr><td colspan=4>Resultado da Prova</td></tr>
+<tr><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Total de Pontos</th></tr>
+</thead>
+<tbody>
+{{for res in totaliza:}}
      <tr>
      <td>{{=res[1]}}</td>
      <td>{{=res[2]}}</td>
-     <td>{{=res[3] + ' ' + res[4]}}</td>
+     <td>{{=A(Capitalize(res[3] + ' ' + res[4]))}}</td>
      <td>{{=float(res[11])}}</td>
      </tr>
-  {{pass}}   
 {{pass}}   
 </tbody>  
 </table>

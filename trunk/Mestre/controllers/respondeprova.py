@@ -26,15 +26,15 @@ def editprovagerada():
     if auth.user:
         row_aluno=db(db.aluno.usuario==auth.user.id).select(db.aluno.ALL)
         if row_aluno:
-            tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
-            registro_id=request.args(2) or redirect(URL(r=request,f='../default/error'))
-            registro_id2=request.args(1) or redirect(URL(r=request,f='../default/error'))
+            tabela=request.args(0) or redirect(URL(r=request,f='../default/error')) #tabela
+            registro_id=request.args(2) or redirect(URL(r=request,f='../default/error')) #id_item_prova_gerada
+            registro_id2=request.args(1) or redirect(URL(r=request,f='../default/error')) #id_questao
             registros=db[tabela][registro_id] or redirect(URL(r=request,f='../default/error'))
-         #if not registros: raise HTTP(404)
+        #if not registros: raise HTTP(404)
             crud.settings.update_deletable = False
             crud.messages.submit_button = 'Responder'
-            if tabela == 'questao':
-                db.questao.enunciado.widget = advanced_editor 
+            #if tabela == 'questao':
+            #    db.questao.enunciado.widget = advanced_editor 
             tabela_selecionada = db[tabela]
             tabela_selecionada.prova_gerada.writable=False
             tabela_selecionada.prova_gerada.readable=False
@@ -47,19 +47,18 @@ def editprovagerada():
             consulta = db((db.questao.id == registro_id2) & (db.alternativa.questao == db.questao.id)).select()
             options = [OPTION(linha.alternativa.resposta, _value=linha.alternativa.id) for linha in consulta]
             form = FORM(TABLE(TR(SELECT(linha.alternativa.resposta, options,_name='Alternativa_escolhida')),
-	             TR(INPUT(_type='hidden', _name='itemProvaGerada', _value=registro_id)),
-		     TR(INPUT(_type='submit', _value='responder'))))
-	    if form.accepts(request.vars, session):
+                 TR(INPUT(_type='hidden', _name='itemProvaGerada', _value=registro_id)),
+                 TR(INPUT(_type='submit', _value='responder'))))
+            if form.accepts(request.vars, session):
                 #salvar o registro
-		try: 
-			alternativa_id=request.vars.Alternativa_escolhida
-			db(db.item_prova_gerada.id == request.vars.itemProvaGerada).update(alternativa_escolhida=alternativa_id) or redirect(URL(r=request,f='responder_prova'))
-			redirect(URL(r=request,f='responder_prova'))
-		except ValueError:
-			response.flash = 'Selecione uma das resposta possiveis!'
-                ##form=crud.update(tabela_selecionada,registros,next=url('responder_prova'))
-	    elif form.errors:
-			redirect(URL(r=request,f='responder_prova'))
+                try: 
+                   alternativa_id=request.vars.Alternativa_escolhida
+                   db(db.item_prova_gerada.id == request.vars.itemProvaGerada).update(alternativa_escolhida=alternativa_id)
+                   redirect(URL(r=request,f='responder_prova'))
+                except ValueError:
+                   response.flash = 'Selecione uma das resposta possiveis!'
+            elif form.errors:
+                redirect(URL(r=request,f='responder_prova'))
             return dict(form=form, tabela=tabela, item_prova_gerada=item_prova_gerada, questao=questao, respostas=respostas)
         else:
             redirect(URL(r=request,f='../default/erro_acesso'))

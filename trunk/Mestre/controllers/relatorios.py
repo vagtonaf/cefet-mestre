@@ -2,7 +2,35 @@
 # try something like
 import random
 
+def executesql(self, query): 
+    self['_lastsql'] = query    
+    self._execute(query)
+    try:        
+        return self._cursor.fetchall()
+    except:
+        return None
 
+
+def relnota():
+ if 'auth' in globals():
+    if auth.is_logged_in():
+        resultado = db.executesql("""SELECT h.referencia, j.first_name as nome, sum(i.valor) as nota
+                                     FROM item_prova_gerada as a  
+                                     inner join prova_gerada as b on a.prova_gerada=b.id
+                                     inner join aluno as c on b.aluno=c.id
+                                     inner join questao as d on a.questao=d.id
+                                     inner join alternativa as e on d.id=e.id
+                                     inner join alternativa as f on a.alternativa_escolhida=f.id
+                                     inner join prova_gerada as g on a.prova_gerada=g.id
+                                     inner join prova as h on g.prova=h.id
+                                     inner join item_plano_de_prova as i on h.plano_de_prova=i.plano_de_prova
+                                     inner join auth_user as j on c.usuario==j.id
+                                     where e.correta=f.correta and i.taxionomia=d.taxionomia and i.topico=d.topico and i.dificuldade=d.dificuldade
+                                     """)
+    else:   
+        resultado = None
+    return dict(resultado=resultado)
+    
 def index():
     c_turmas=db().select(db.turma.ALL)
     return { 'v_turmas' : c_turmas}
@@ -22,7 +50,27 @@ def rel_aluno_nota():
     return dict(imagem = 'turma01.png')
     
 def graf_bar():
-    return dict()
+    #resposta = db.executesql("""SELECT j.first_name as name, sum(i.valor) as start
+    #                                 FROM item_prova_gerada as a  
+    #                                 inner join prova_gerada as b on a.prova_gerada=b.id
+    #                                 inner join aluno as c on b.aluno=c.id
+    #                                 inner join questao as d on a.questao=d.id
+    #                                 inner join alternativa as e on d.id=e.id
+    #                                 inner join alternativa as f on a.alternativa_escolhida=f.id
+    #                                 inner join prova_gerada as g on a.prova_gerada=g.id
+    #                                 inner join prova as h on g.prova=h.id
+    #                                 inner join item_plano_de_prova as i on h.plano_de_prova=i.plano_de_prova
+    #                                 inner join auth_user as j on c.usuario==j.id
+    #                                where e.correta=f.correta and i.taxionomia=d.taxionomia and i.topico=d.topico and i.dificuldade=d.dificuldade
+    #                                 """)
+    dado = ["vagton", 8.0, "Jose Roberto", 9.0,"Zezaum", 10.0,]
+    #dado = ["Zezaum", 10.0]
+    names = [x for i, x in enumerate(dado) if not i % 2]
+    starts = [x for i, x in enumerate(dado) if i % 2]
+    resposta = []
+    for name, start in zip(names, starts):
+        resposta.append({'name': name, 'start': start})
+    return dict(resposta=resposta)
 
 @auth.requires_login()
 def resultado_prova():
