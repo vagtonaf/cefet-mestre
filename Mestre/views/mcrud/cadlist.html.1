@@ -21,9 +21,7 @@ $(document).ready(function() {
          e Cadastra
     {{pass}}
     </h1>
-    {{if request.args(1) != 'list':}}
-         [<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
-    {{pass}}     
+    [<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
     <!--Link do cadastro-->
     {{if tabela == 'aluno':}}
         {{=button('Lista Usuario','cadlist/auth_user')}}
@@ -95,12 +93,6 @@ $(document).ready(function() {
        {{=button('Lista Prova','cadlist/prova')}}
        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
        {{=button('Lista Alternativa','cadlist/alternativa')}}
-       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
-    {{pass}}
-    {{if tabela == 'alternativa':}}
-       {{=button('Lista Prova','cadlist/prova')}}
-       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
-       {{=button('Lista Questão','cadlist/questao')}}
        {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
     {{pass}}
     {{if tabela == 'prova_gerada':}}
@@ -525,7 +517,7 @@ $(document).ready(function() {
             {{enunciado2 = enunciado2 + enunciado1[i]}}
             {{i = i + 1}}
          {{pass}}
-         {{=A(enunciado2 + ' ...',_href=url('edit/questao',questao.questao.id))}}
+         {{=enunciado2 + ' ...'}}
       {{else:}}
          {{=questao.questao.enunciado}}
       {{pass}}
@@ -563,7 +555,7 @@ $(document).ready(function() {
        {{if resp=='True': resp='Sim'}}
        {{if resp=='False': resp='Não'}}
       <tr>
-      <td>{{=A(alternativa.questao,_href=url('edit/questao',alternativa.questao))}}</td>
+      <td>{{=A(alternativa.questao,_href=url('edit/questao',alternativa.questao)}}</td>
       <td>
       {{enunciado1=''}}
       {{enunciado2=''}}
@@ -576,28 +568,12 @@ $(document).ready(function() {
             {{enunciado2 = enunciado2 + enunciado1[i]}}
             {{i = i + 1}}
          {{pass}}
-         {{=A(enunciado2 + ' ...',_href=url('edit/questao',alternativa.questao))}}
+         {{=enunciado2 + ' ...'}}
       {{else:}}
          {{=alternativa.questao.enunciado}}
       {{pass}}
       </td>
-      <td>
-      {{resposta1=''}}
-      {{resposta2=''}}
-      {{i=0}}
-      {{n=0}}
-      {{n=len(alternativa.resposta)}}
-      {{resposta1 = str(alternativa.resposta)}}
-      {{if n >= 80:}}
-         {{while (i <= 80):}}
-            {{resposta2 = resposta2 + resposta1[i]}}
-            {{i = i + 1}}
-         {{pass}}
-         {{=A(resposta2 + ' ...',_href=url('edit/alternativa',alternativa.id))}}
-      {{else:}}
-         {{=alternativa.resposta}}
-      {{pass}}
-      </td>
+      <td>{{=A(alternativa.resposta,_href=url('edit/alternativa',alternativa.id)}}</td>
       <td>{{=resp}}</td>
       <td>{{=button('Alterar/Resposta','edit/alternativa',alternativa.id)}}</td>
       </tr>

@@ -9,11 +9,11 @@
 {{extend 'layout.html'}}
     {{if tabela == 'aluno':}}
         {{=button('Lista Usuario','cadlist/auth_user')}}
-        {{=button('Lista de AlocaÁ„o','cadlist/alocacao')}}
+        {{=button('Lista de Aloca√ß√£o','cadlist/alocacao')}}
     {{pass}}
     {{if tabela == 'professor':}}
         {{=button('Lista Usuario','cadlist/auth_user')}}
-        {{=button('Lista de AlocaÁ„o','cadlist/alocacao')}}    
+        {{=button('Lista de Aloca√ß√£o','cadlist/alocacao')}}    
     {{pass}}
     {{if tabela == 'alocacao':}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
@@ -25,16 +25,16 @@
         {{=button('Lista Turma','cadlist/turma')}}
     {{pass}}
     {{if tabela == 'plano_de_prova':}}
-        {{=button('Lista AlocaÁ„o','cadlist/alocacao')}}
+        {{=button('Lista Aloca√ß√£o','cadlist/alocacao')}}
         {{=button('Lista Item de Plano de Prova','cadlist/item_plano_de_prova')}}
     {{pass}}
     {{if tabela == 'item_plano_de_prova':}}
-        {{=button('Lista AlocaÁ„o','cadlist/alocacao')}}
+        {{=button('Lista Aloca√ß√£o','cadlist/alocacao')}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
         {{=button('Lista Topico','cadlist/topico')}}
         {{=button('Lista Dificuldade','cadlist/dificuldade')}}
         {{=button('Lista Taxionomia','cadlist/taxionomia')}}
-        {{=button('Lista Quest„o','cadlist/questao')}}
+        {{=button('Lista Quest√£o','cadlist/questao')}}
     {{pass}}
     {{if tabela == 'prova':}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
@@ -44,13 +44,13 @@
     {{if tabela == 'topico':}}
         {{=button('Lista Curso','cadlist/curso')}}
         {{=button('Lista Turma','cadlist/turma')}}
-        {{=button('Lista AlocaÁ„o','cadlist/alocacao')}}
+        {{=button('Lista Aloca√ß√£o','cadlist/alocacao')}}
         {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
     {{pass}}
     {{if tabela == 'turma':}}
         {{=button('Lista Disciplina','cadlist/disciplina')}}
         {{=button('Lista Curso','cadlist/curso')}}
-        {{=button('Lista AlocaÁ„o','cadlist/alocacao')}}
+        {{=button('Lista Aloca√ß√£o','cadlist/alocacao')}}
     {{pass}}
     {{if tabela == 'curso':}}
         {{=button('Lista Instituicao','cadlist/instituicao')}}
@@ -82,7 +82,7 @@
     {{if tabela == 'alternativa':}}
        {{=button('Lista Prova','cadlist/prova')}}
        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
-       {{=button('Lista Quest„o','cadlist/questao')}}
+       {{=button('Lista Quest√£o','cadlist/questao')}}
        {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
     {{pass}}
     {{if tabela == 'prova_gerada':}}

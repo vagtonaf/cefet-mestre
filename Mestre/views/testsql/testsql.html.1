@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+</head>
+<h1>Resultado da Prova</h1>
+<table class="smarttable">
+<thead>
+<tr><th>Item</th><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Aplicação</th><th>Conclusão</th><th>Gerada</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Valor</th></tr>
+<thead>
+<tbody>
+{{for item, res in enumerate(resposta):}}
+     <tr>
+     <td>{{=item+1}}</td>
+     <td>{{=res[0]}}</td>
+     <td>{{=res[1]}}</td>
+     <td>{{=res[2] + ' ' + res[3]}}</td>
+     <td>{{=res[4]}}</td>
+     <td>{{=res[5]}}</td>
+     <td>{{=res[6]}}</td>
+     <td>{{=res[7]}}</td>
+     <td>{{=res[8]}}</td>
+     <td>{{=res[9]}}</td>
+     <td>{{=res[10]}}</td>
+     </tr>
+{{pass}}
+</tbody>     
+</table>
+<br>
+<table class="smarttable">
+<tr><td>Item</td><td>Prova</td><td>Plano&nbsp;de&nbsp;Prova</td><td>Nome</td><td>Aplicação</td><td>Conclusão</td><td>Gerada</td><td>Enunciado</td><td>Resposta</td><td>Correta</td><td>Valor</td></tr>
+{{for item, res in enumerate(totaliza):}}
+     <tr>
+     <td>{{=item+1}}</td>
+     <td>{{=res[0]}}</td>
+     <td>{{=res[1]}}</td>
+     <td>{{=res[2] + ' ' + res[3]}}</td>
+     <td>{{=res[4]}}</td>
+     <td>{{=res[5]}}</td>
+     <td>{{=res[6]}}</td>
+     <td>{{=res[7]}}</td>
+     <td>{{=res[8]}}</td>
+     <td>{{=res[9]}}</td>
+     <td>{{=res[10]}}</td>
+     </tr>
+{{pass}}     
+</table>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+</head>
+<script>
+$(document).ready(function() { 
+  jQuery('.smarttable').dataTable(); 
+});
+[<a href="#nil" onclick="jQuery('#form').slideToggle();">Prova</a>]
+</script>
+<h1>Relatôrio {{=referencia.replace('_',' ')}} Prof. {{=nome.capitalize()}}</h1>
+{{if resultado is None:}}
+    <table class="smarttable"><thead><tr><td>Nenhum resultado</td></tr></thead></table>
+{{else:}}
+    {{if referencia=='Turma_Aluno':}}
+        <table class="smarttable">
+        <thead>  
+            <tr>
+              <th>Turma</th><th>Turno</th><th>Matricula</th><th>Aluno</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{for linha in resultado:}}
+            <tr>
+            <td>{{=linha[0].capitalize()}}</td>
+            <td>{{=linha[1].capitalize()}}</td>
+            <td>{{=linha[2]}}</td>
+            <td>{{=linha[3].capitalize()}}&nbsp;{{=linha[4].capitalize()}}</td>
+            </tr>
+        {{pass}}
+        </tbody>
+        </table>
+    {{elif referencia=='Turma_Aluno_Disciplina':}}
+        <table class="smarttable">
+        <thead>  
+            <tr>
+              <th>Turma</th><th>Turno</th><th>Matricula</th><th>Aluno</th><th>Disciplina</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{for linha in resultado:}}
+            <tr>
+            <td>{{=linha[0].capitalize()}}</td>
+            <td>{{=linha[1].capitalize()}}</td>
+            <td>{{=linha[2]}}</td>
+            <td>{{=linha[3].capitalize()}}&nbsp;{{=linha[4].capitalize()}}</td>
+            <td>{{=linha[5].capitalize()}}</td>
+            </tr>
+        {{pass}}
+        </tbody>
+        </table>
+    {{pass}}    
+{{pass}}
