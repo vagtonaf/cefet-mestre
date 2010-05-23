@@ -2,6 +2,18 @@
 # try something like
 import random
 
+class resultadoprova:
+   # Atributos   
+   def set_resultado(self, nome, nota):
+     self.nome = nome
+     self.nota = nota  
+   # Metodos
+   def get_nome(self):
+     return self.nome 
+   def get_nota(self):
+     return self.nota 
+   
+
 def executesql(self, query): 
     self['_lastsql'] = query    
     self._execute(query)
@@ -50,26 +62,45 @@ def rel_aluno_nota():
     return dict(imagem = 'turma01.png')
     
 def graf_bar():
-    #resposta = db.executesql("""SELECT j.first_name as name, sum(i.valor) as start
-    #                                 FROM item_prova_gerada as a  
-    #                                 inner join prova_gerada as b on a.prova_gerada=b.id
-    #                                 inner join aluno as c on b.aluno=c.id
-    #                                 inner join questao as d on a.questao=d.id
-    #                                 inner join alternativa as e on d.id=e.id
-    #                                 inner join alternativa as f on a.alternativa_escolhida=f.id
-    #                                 inner join prova_gerada as g on a.prova_gerada=g.id
-    #                                 inner join prova as h on g.prova=h.id
-    #                                 inner join item_plano_de_prova as i on h.plano_de_prova=i.plano_de_prova
-    #                                 inner join auth_user as j on c.usuario==j.id
-    #                                where e.correta=f.correta and i.taxionomia=d.taxionomia and i.topico=d.topico and i.dificuldade=d.dificuldade
-    #                                 """)
-    dado = ["vagton", 8.0, "Jose Roberto", 9.0,"Zezaum", 10.0,]
-    #dado = ["Zezaum", 10.0]
-    names = [x for i, x in enumerate(dado) if not i % 2]
-    starts = [x for i, x in enumerate(dado) if i % 2]
+    notabanco = db.executesql("""SELECT j.first_name as name, j.last_name as sobrenome, sum(i.valor) as start
+                                     FROM item_prova_gerada as a  
+                                     inner join prova_gerada as b on a.prova_gerada=b.id
+                                     inner join aluno as c on b.aluno=c.id
+                                     inner join questao as d on a.questao=d.id
+                                     inner join alternativa as e on d.id=e.id
+                                     inner join alternativa as f on a.alternativa_escolhida=f.id
+                                     inner join prova_gerada as g on a.prova_gerada=g.id
+                                     inner join prova as h on g.prova=h.id
+                                     inner join item_plano_de_prova as i on h.plano_de_prova=i.plano_de_prova
+                                     inner join auth_user as j on c.usuario==j.id
+                                    where f.correta=='T' and i.taxionomia=d.taxionomia and i.topico=d.topico and i.dificuldade=d.dificuldade
+                                     """)
+    
+    
+    resultado = resultadoprova()
     resposta = []
-    for name, start in zip(names, starts):
-        resposta.append({'name': name, 'start': start})
+    for resp in notabanco:
+        if resp[0]==None:
+           nome='-'
+        else:
+           nome=resp[0] + " " + resp[1]
+        if resp[2]==None:
+           nota = 0
+        else:
+           nota = float(resp[2]) 
+                               
+        resultado.set_resultado(nome,nota)
+        rr={}
+        rr['name']=str(resultado.nome)
+        rr['start']=resultado.nota
+        resposta.append(rr)
+  
+    #dado = ["vagton", 8.0, "Jose Roberto", 9.0,"Zezaum", 10.0,]
+    #dado = ["Zezaum", 10.0]
+    #names = [x for i, x in enumerate(dado) if not i % 2]
+    #starts = [x for i, x in enumerate(dado) if i % 2]
+    #for name, start in zip(names, starts):
+    #    resposta.append({'name': name, 'start': start})
     return dict(resposta=resposta)
 
 @auth.requires_login()
