@@ -88,6 +88,7 @@ def realizar_prova():
                       TR('Email:',semail,'Aluno:', nome + ' '+ lastname),
                       TR('Matricula:',matricula,'Turma:',nome_turma),
                       TR('Prova:',prova, 'Plano de Prova:',PlanoProva),
+                      TR('idProva:',idProva, 'idAluno:',idAluno),
                       #TR('Qual o Plano de Prova?', SELECT([OPTION(pro.referencia,_value=pro.referencia) for pro in db().select(db.plano_de_prova.referencia,distinct=True)],_name='planoprova',requires=IS_IN_DB(db,'plano_de_prova.referencia'))),
                       #TR('Qual a Turma?', SELECT([OPTION(tur.nome,_value=tur.nome) for tur in db().select(db.turma.nome,distinct=True)],_name='turma',requires=IS_IN_DB(db,'turma.nome'))),
                       TR('Realizar a Prova?', SELECT(['Sim','Não'],_name='opcao',requires=IS_IN_SET(['Sim','Não']))),
@@ -108,7 +109,7 @@ def realizar_prova():
                     #verifica se o aluno quer fazer a prova
                     sopcao=realizar_prova.vars.opcao
                     if(sopcao=='Não'):
-                        prova_aluno=db(db.prova_gerada.aluno==idAluno and db.prova_gerada.prova==idProva).select(db.prova_gerada.ALL)
+                        prova_aluno=db((db.prova_gerada.aluno==idAluno)&(db.prova_gerada.prova==idProva)).select(db.prova_gerada.ALL)
                         if prova_aluno:
                            response.flash = 'O Aluno já possui uma prova criada, favor finaliza-la na tela de realizar prova!'
                            realizar_prova = FORM(TABLE(TR('O Aluno já possui uma prova criada, favor finaliza-la na tela de realizar prova (Sim)!'),A('Realizar Prova',_href=url('realizar_prova',0))))
@@ -152,17 +153,16 @@ def realizar_prova():
                             return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                         if QuestaoSelecionada>0:
                             #verifica se a prova gerada existe e se não foi finalizada pelo aluno
-                            row_prova_gerada = db(db.prova_gerada.aluno==idAluno
-                                and db.prova_gerada.prova==idProva).select(
+                            row_prova_gerada = db((db.prova_gerada.aluno==idAluno)&(db.prova_gerada.prova==idProva)).select(
                                 db.prova_gerada.ALL
                             )
-                            for provger in row_prova_gerada:
-                                if provger.data!=None:
-                                    response.flash = 'Prova finalizada'
-                                    realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
-                                    return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
-                            #se houver uma questão selecionada pesquisar se a prova gerada para o aluno nesta data
-                            row_prova_gerada = db(db.prova_gerada.aluno==idAluno and db.prova_gerada.prova==idProva).select(db.prova_gerada.ALL)
+                            if row_prova_gerada:
+                               for provger in row_prova_gerada:
+                                  if provger.data!=None:
+                                      response.flash = 'Prova finalizada idaluno:' + idAluno + ' idProva:' + idProva + ' Data:' + str(provger.data)
+                                      realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
+                                      return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
+
                             #se haver prova gerada pega o id, se não inclui uma prova_gerada
                             if row_prova_gerada:
                                 gerada = row_prova_gerada[0].gerada
