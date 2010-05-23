@@ -80,14 +80,10 @@ def nota_aluno():
         if resp[6]==None:
            nota = '-'
         else:
-           nota = float(resp[6])                                  
+           nota = float(resp[6]) 
+        if conclusao=='-':
+           nota = 'Prova sendo realizada!'                                 
         resultado.set_resultado(prova,plano,nome,aplicacao,conclusao,nota)
 
-    prova = resultado.get_prova()
-    plano = resultado.get_plano()
-    nome = resultado.get_nome()
-    aplicacao = resultado.get_aplicacao()
-    conclusao = resultado.get_conclusao()
-    nota = resultado.get_nota()
-    resultado=resultado.minha_nota()
-    return dict(prova=prova, plano=plano, nome=nome, aplicacao=aplicacao, conclusao=conclusao, nota=nota, mensagem=resultado)
+    
+    return dict(resultado=resultado)
