@@ -42,12 +42,12 @@
             {{=MENU(response.menu)}}
             {{pass}}
             {{if not auth.user:}}
-            <a href="{{=URL(r=request,f='user/login')}}">login</a>
+            <a href="{{=URL(r=request,f='../default/user/login')}}">login</a>
             {{else:}}
             {{=auth.user.first_name}} |
-            <a href="{{=URL(r=request,f='user/logout')}}">logout</a> |
-            <a href="{{=URL(r=request,f='user/change_password')}}">password</a> |
-            <a href="{{=URL(r=request,f='user/profile')}}">profile</a>
+            <a href="{{=URL(r=request,f='../default/user/logout')}}">logout</a> |
+            <a href="{{=URL(r=request,f='../default/user/change_password')}}">password</a> |
+            <a href="{{=URL(r=request,f='../default/user/profile')}}">profile</a>
             {{pass}} 
             <br />
           </td>
