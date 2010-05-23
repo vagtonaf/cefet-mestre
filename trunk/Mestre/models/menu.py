@@ -235,14 +235,9 @@ if 'auth' in globals():
        ]
        else:
         response.menu = [
-               ['Aplicacoes', 
-                    False, 
-                    URL(request.application,'aplicaprova','realizar_prova'), [
-                               ['Realiza Prova', 
-                                False, 
-                                URL(request.application,'realizaprova','realizar_prova'), []
-                               ],
-                    ]
+               ['Realiza Prova', 
+                     False, 
+                     URL(request.application,'realizaprova','realizar_prova'), []
                ],
                ['Relatorios', 
                  False, 
@@ -259,7 +254,7 @@ if 'auth' in globals():
                ],
         [T('Creditos'), 
          False, 
-         URL(request.application,'default','creditos'), []
+         URL(request.application,'default','index'), []
         ],
        ]
 ##########################################
