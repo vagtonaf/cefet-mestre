@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+<h1>Resultado do Aluno</h1>
+<table border=1><tr>
+                 <td>Prova</td>
+                 <td>Plano&nbsp;de&nbsp;Prova</td>
+                 <td>Aluno</td>
+                 <td>Aplicacao</td>
+                 <td>Conclusao</td>
+                 <td>Nota</td>
+                </tr>
+                <tr>
+                  <td>{{=prova}}</td>
+                  <td>{{=plano}}</td>
+                  <td>{{=nome}}</td>
+                  <td>{{=aplicacao}}</td>
+                  <td>{{=conclusao}}</td>
+                  <td>{{=nota}}</td>
+                </tr>
+                <tr><td colspan=6>{{=mensagem}}</td></tr>
+</table>

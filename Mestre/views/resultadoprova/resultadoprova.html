@@ -78,14 +78,33 @@ $(document).ready(function() {
   <tr><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Total de Pontos</th></tr>
   </thead>
   <tbody>
-  {{for res in totaliza:}}
-     <tr>
-     <td>{{=res[1]}}</td>
-     <td>{{=res[2]}}</td>
-     <td>{{=res[3] + ' ' + res[4]}}</td>
-     <td>{{=float(res[11])}}</td>
-     </tr>
-  {{pass}}   
+  {{if totaliza:}}
+     {{for res in totaliza:}}
+         <tr>
+         {{if res[1]<>None:}}
+            <td>{{=res[1]}}</td>
+         {{else:}}
+            <td>-</td>   
+         {{pass}}
+         {{if res[2]<>None:}}
+            <td>{{=res[2]}}</td>
+         {{else:}}   
+            <td>-</td>
+         {{pass}}   
+         {{if res[3]<>None:}}
+            <td>{{=res[3] + ' ' + res[4]}}</td>
+         {{else:}}
+            <td>-</td>   
+         {{pass}}   
+         {{if res[11]<>None:}}
+            <td>{{=float(res[11])}}</td>
+         {{else:}}
+            <td>0</td>
+         {{pass}}   
+         </tr>
+     {{pass}} 
+  {{pass}}     
 {{pass}}   
 </tbody>  
 </table>
+
