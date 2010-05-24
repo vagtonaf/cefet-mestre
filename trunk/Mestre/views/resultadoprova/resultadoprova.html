@@ -81,23 +81,23 @@ $(document).ready(function() {
   {{if totaliza:}}
      {{for res in totaliza:}}
          <tr>
-         {{if res[1]<>None:}}
-            <td>{{=res[1]}}</td>
+         {{if res[0]<>None:}}
+            <td>{{=res[0]}}</td>
          {{else:}}
             <td>-</td>   
          {{pass}}
-         {{if res[2]<>None:}}
-            <td>{{=res[2]}}</td>
+         {{if res[1]<>None:}}
+            <td>{{=res[1]}}</td>
          {{else:}}   
             <td>-</td>
          {{pass}}   
-         {{if res[3]<>None:}}
-            <td>{{=res[3] + ' ' + res[4]}}</td>
+         {{if res[2]<>None:}}
+            <td>{{=res[2] + ' ' + res[3]}}</td>
          {{else:}}
             <td>-</td>   
          {{pass}}   
-         {{if res[11]<>None:}}
-            <td>{{=float(res[11])}}</td>
+         {{if res[10]<>None:}}
+            <td>{{=float(res[10])}}</td>
          {{else:}}
             <td>0</td>
          {{pass}}   
@@ -107,4 +107,3 @@ $(document).ready(function() {
 {{pass}}   
 </tbody>  
 </table>
-

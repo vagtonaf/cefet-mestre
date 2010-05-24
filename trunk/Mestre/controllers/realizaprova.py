@@ -63,7 +63,7 @@ def realizar_prova():
                     realizar_prova = FORM(TABLE(TR('Aluno não alocado a turma!')))
                     return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                 #testa se foi gerado uma prova para essa turma
-                row_prova = db(db.prova.turma==idTurma and db.prova.data_aplicacao>0).select(
+                row_prova = db((db.prova.turma==idTurma)&(db.prova.data_aplicacao!=None)).select(
                         db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
                 if row_prova:
                     for pl in row_prova:
@@ -88,7 +88,7 @@ def realizar_prova():
                       TR('Email:',semail,'Aluno:', nome + ' '+ lastname),
                       TR('Matricula:',matricula,'Turma:',nome_turma),
                       TR('Prova:',prova, 'Plano de Prova:',PlanoProva),
-                      TR('idProva:',idProva, 'idAluno:',idAluno),
+                      #TR('idProva:',idProva, 'idAluno:',idAluno),
                       #TR('Qual o Plano de Prova?', SELECT([OPTION(pro.referencia,_value=pro.referencia) for pro in db().select(db.plano_de_prova.referencia,distinct=True)],_name='planoprova',requires=IS_IN_DB(db,'plano_de_prova.referencia'))),
                       #TR('Qual a Turma?', SELECT([OPTION(tur.nome,_value=tur.nome) for tur in db().select(db.turma.nome,distinct=True)],_name='turma',requires=IS_IN_DB(db,'turma.nome'))),
                       TR('Realizar a Prova?', SELECT(['Sim','Não'],_name='opcao',requires=IS_IN_SET(['Sim','Não']))),
@@ -159,7 +159,7 @@ def realizar_prova():
                             if row_prova_gerada:
                                for provger in row_prova_gerada:
                                   if provger.data!=None:
-                                      response.flash = 'Prova finalizada idaluno:' + idAluno + ' idProva:' + idProva + ' Data:' + str(provger.data)
+                                      response.flash = 'Prova finalizada'
                                       realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
                                       return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
 
@@ -168,6 +168,7 @@ def realizar_prova():
                                 gerada = row_prova_gerada[0].gerada
                                 idProvaGerada = row_prova_gerada[0].id
                             else: 
+                                gerada=False
                                 #busca objeto aluno
                                 rAluno = db(db.aluno.id==idAluno).select(db.aluno.id)
                                 #busca objeto Prova                    
@@ -180,8 +181,7 @@ def realizar_prova():
                                 realizar_prova = FORM(TABLE(TR('Prova Gerada, se houve algum problema peça para o professor para gerar nova prova')))
                             else:
                                 #se haver item de prova gerada pega o id, se não gera um
-                                row_item_prova_gerada = db(db.item_prova_gerada.prova_gerada==idProvaGerada
-                                    and db.item_prova_gerada.questao==QuestaoSelecionada[0]).select(
+                                row_item_prova_gerada = db((db.item_prova_gerada.prova_gerada==idProvaGerada)&(db.item_prova_gerada.questao==QuestaoSelecionada[0])).select(
                                     db.item_prova_gerada.ALL
                                 )
                                 #busca objeto questao

@@ -62,23 +62,22 @@ def rel_aluno_nota():
     return dict(imagem = 'turma01.png')
     
 def graf_bar():
-    notabanco = db.executesql("""SELECT j.first_name as name, j.last_name as sobrenome, sum(i.valor) as start
-                                     FROM item_prova_gerada as a  
-                                     inner join prova_gerada as b on a.prova_gerada=b.id
-                                     inner join aluno as c on b.aluno=c.id
-                                     inner join questao as d on a.questao=d.id
-                                     inner join alternativa as e on d.id=e.id
-                                     inner join alternativa as f on a.alternativa_escolhida=f.id
-                                     inner join prova_gerada as g on a.prova_gerada=g.id
-                                     inner join prova as h on g.prova=h.id
-                                     inner join item_plano_de_prova as i on h.plano_de_prova=i.plano_de_prova
-                                     inner join auth_user as j on c.usuario==j.id
-                                    where f.correta=='T' and i.taxionomia=d.taxionomia and i.topico=d.topico and i.dificuldade=d.dificuldade
+    notabanco = db.executesql("""SELECT  e.first_name,  e.last_name, sum(i.valor) as nota
+                                           FROM item_prova_gerada as a  
+                                           left join prova_gerada as b on a.prova_gerada==b.id 
+                                           left join prova as c on b.prova==c.id 
+                                           left join aluno as d on b.aluno==d.id 
+                                           left join auth_user as e on d.usuario=e.id
+                                           left join questao as f on a.questao==f.id
+                                           left join plano_de_prova as g on c.plano_de_prova==g.id
+                                           left join alternativa as h on a.alternativa_escolhida==h.id
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" group by c.referencia, g.referencia, e.first_name, e.last_name
                                      """)
     
     
-    resultado = resultadoprova()
+    
     resposta = []
+    resultado = resultadoprova()
     for resp in notabanco:
         if resp[0]==None:
            nome='-'
@@ -101,7 +100,7 @@ def graf_bar():
     #starts = [x for i, x in enumerate(dado) if i % 2]
     #for name, start in zip(names, starts):
     #    resposta.append({'name': name, 'start': start})
-    return dict(resposta=resposta)
+    return dict(resposta=resposta, notabanco=notabanco)
 
 @auth.requires_login()
 def resultado_prova():

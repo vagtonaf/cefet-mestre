@@ -106,7 +106,7 @@ def responder_prova():
                     realizar_prova = FORM(TABLE(TR('Aluno não alocado a turma!')))
                     return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                 #testa se foi gerado uma prova para essa turma
-                row_prova = db(db.prova.turma==idTurma and db.prova.data_aplicacao>0).select(
+                row_prova = db((db.prova.turma==idTurma)&(db.prova.data_aplicacao>0)).select(
                         db.prova.id,db.prova.referencia,db.prova.plano_de_prova)
                 if row_prova:
                     for pl in row_prova:
@@ -162,8 +162,7 @@ def responder_prova():
                             return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                         if QuestaoSelecionada>0:
                             #verifica se a prova gerada existe e se não foi finalizada pelo aluno
-                            row_prova_gerada = db(db.prova_gerada.aluno==idAluno
-                                and db.prova_gerada.prova==idProva).select(
+                            row_prova_gerada = db((db.prova_gerada.aluno==idAluno)&(db.prova_gerada.prova==idProva)).select(
                                 db.prova_gerada.ALL
                             )
                             for provger in row_prova_gerada:
@@ -172,12 +171,13 @@ def responder_prova():
                                     realizar_prova = FORM(TABLE(TR('Prova Finalizada pelo aluno')))
                                     return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                             #se houver uma questão selecionada pesquisar se a prova gerada para o aluno nesta data
-                            row_prova_gerada = db(db.prova_gerada.aluno==idAluno and db.prova_gerada.prova==idProva).select(db.prova_gerada.ALL)
+                            row_prova_gerada = db((db.prova_gerada.aluno==idAluno)&(db.prova_gerada.prova==idProva)).select(db.prova_gerada.ALL)
                             #se haver prova gerada pega o id, se não inclui uma prova_gerada
                             if row_prova_gerada:
                                 gerada = row_prova_gerada[0].gerada
                                 idProvaGerada = row_prova_gerada[0].id
                             else: 
+                                gerada=False
                                 #busca objeto aluno
                                 rAluno = db(db.aluno.id==idAluno).select(db.aluno.id)
                                 #busca objeto Prova                    
@@ -190,8 +190,7 @@ def responder_prova():
                                 realizar_prova = FORM(TABLE(TR('Prova Gerada, se houve algum problema peça para o professor para gerar nova prova')))
                             else:
                                 #se haver item de prova gerada pega o id, se não gera um
-                                row_item_prova_gerada = db(db.item_prova_gerada.prova_gerada==idProvaGerada
-                                    and db.item_prova_gerada.questao==QuestaoSelecionada[0]).select(
+                                row_item_prova_gerada = db((db.item_prova_gerada.prova_gerada==idProvaGerada)&(db.item_prova_gerada.questao==QuestaoSelecionada[0])).select(
                                     db.item_prova_gerada.ALL
                                 )
                                 #busca objeto questao
