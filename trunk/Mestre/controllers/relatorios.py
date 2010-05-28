@@ -74,7 +74,7 @@ def graf_bar():
                                            left join turma as k on c.turma==k.id
                                            left join professor as n on g.professor==n.id
                                            left join auth_user as o on n.usuario=o.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" group by c.referencia, g.referencia, e.first_name, e.last_name
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" group by c.referencia, g.referencia, e.first_name, e.last_name order by sum(i.valor) desc
                                      """)
                                      
     testebanco = db.executesql("""SELECT  e.first_name,  e.last_name, m.nome as taxionomia, sum(i.valor) as nota
@@ -88,7 +88,7 @@ def graf_bar():
                                            left join alternativa as h on a.alternativa_escolhida==h.id
                                            left join turma as k on c.turma==k.id
                                            left join taxionomia as m on f.taxionomia==m.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=='T' group by e.first_name,  e.last_name, m.nome
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=='T' group by e.first_name,  e.last_name, m.nome order by sum(i.valor) desc
                                      """)                                  
     
     
@@ -124,7 +124,7 @@ def graf_bar():
                                
         #resultado.set_resultado(nome,nota)
         rr={}
-        rr['name']=str(nome)
+        rr['name']= str(prova) + " - " + str(nome)
         rr['start']=nota
         resposta.append(rr)
         ss={}
