@@ -14,6 +14,15 @@ $(document).ready(function() {
 });
 </script>
 <h1>Resultado das Provas</h1>
+{{if resposta:}}
+   <table>
+     <tr><td>{{=button('Nova Pesquisa','resultadoprova')}}</td></tr>     
+   </table>
+{{else:}}   
+  <table>
+      <tr><td>{{=pergunta}}</td></tr>
+  </table>  
+{{pass}}    
 <table border=1 class="smarttable">
 <thead>
 <tr><th>Item</th><th>ID</th><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Aplicacao</th><th>Conclusao</th><th>Gerada</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Valor</th></tr>
@@ -103,7 +112,10 @@ $(document).ready(function() {
          {{pass}}   
          </tr>
      {{pass}} 
-  {{pass}}     
-{{pass}}   
+  {{pass}}
+{{pass}}
 </tbody>  
+</table>
+<table>
+     <tr><td>{{=button('Nova Pesquisa','resultadoprova')}}</td></tr>     
 </table>
