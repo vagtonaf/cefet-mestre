@@ -47,8 +47,8 @@ def aplicar_prova():
     hoje = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     aplicar_prova = FORM(TABLE(
        TR('Professor:', nome + ' '+ sobrenome),
-       TR('Codigo Funcional:',codigo_funcional),
-       TR('Qual a Prova?', SELECT([OPTION(pr.referencia,_value=pr.referencia) for pr in db().select(db.prova.referencia,distinct=True)],_name='Prova',requires=IS_IN_DB(db,'prova.referencia'))),
+       TR('Código Funcional:',codigo_funcional),
+       TR('Selecione a Prova?', SELECT([OPTION(pr.referencia,_value=pr.referencia) for pr in db().select(db.prova.referencia,distinct=True)],_name='Prova',requires=IS_IN_DB(db,'prova.referencia'))),
        TR('Aplicar Prova?', SELECT(['Não','Sim','Cancelar'],_name='opcao',requires=IS_IN_SET(['Não','Sim','Cancelar']))),
        TR(INPUT(_type='hidden', _name='idProfessor', _value=idProfessor)),
        TR(INPUT(_type='hidden', _name='data_aplicacao', _value=hoje)),
