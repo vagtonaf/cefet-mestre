@@ -28,7 +28,7 @@ if 'auth' in globals():
            False, 
            URL(request.application,'default','index'), []
           ],
-          [T('Creditos'), 
+          [T('Créditos'), 
            False, 
            URL(request.application,'default','index'), []
           ],
@@ -45,7 +45,7 @@ if 'auth' in globals():
                      URL(request.application,'default','user/profile')],
                     ['Mudar a Senha', False,
                      URL(request.application,'default','user/change_password')],
-                    ['Menu de Administracao', False,
+                    ['Menu de Administração', False,
                      URL('admin','default','index')],
                     ['Tabelas', False, 
                      URL(request.application,'appadmin','index')],
@@ -71,7 +71,7 @@ if 'auth' in globals():
                  False, 
                  URL(request.application,'default','index'), 
                       [
-                       ['Usuario', 
+                       ['Usuário', 
                             False, 
                             URL(request.application,'mcrud','cadlist/auth_user'), [
                             ['Professor', 
@@ -84,7 +84,7 @@ if 'auth' in globals():
                             ],          
                            ]
                        ],
-                       ['Instituicao', 
+                       ['Instituição', 
                             False, 
                             URL(request.application,'mcrud','cadlist/instituicao'), [
                             ['Curso', 
@@ -99,7 +99,7 @@ if 'auth' in globals():
                                     False, 
                                     URL(request.application,'mcrud','cadlist/turma'), []
                             ],      
-                            ['Alocacao', 
+                            ['Alocação', 
                                     False, 
                                     URL(request.application,'mcrud','cadlist/alocacao'), []
                             ],             
@@ -117,11 +117,11 @@ if 'auth' in globals():
                        ['Prova', 
                             False, 
                             URL(request.application,'mcrud','cadlist/prova'), [
-                                    ['Topico', 
+                                    ['Tópico', 
                                             False, 
                                             URL(request.application,'mcrud','cadlist/topico'), []
                                     ],
-                                    ['Questao', 
+                                    ['Questão', 
                                             False, 
                                             URL(request.application,'mcrud','cadlist/questao'), []
                                     ],     
@@ -133,7 +133,7 @@ if 'auth' in globals():
                        ],  
                       ]             
                ],
-               ['Aplicacoes', 
+               ['Aplicações', 
                     False, 
                     URL(request.application,'aplicaprova','aplicar_prova'), [
                                    ['Aplicar Prova', 
@@ -142,13 +142,13 @@ if 'auth' in globals():
                                    ],
                     ]
                ],
-               ['Relatorios', 
+               ['Relatórios', 
                  False, 
                  URL(request.application,'default','index'), [
                        ['Cadastros', 
                             False, 
                             URL(request.application,'default','index'), [
-                           ['Lista Usuario', 
+                           ['Lista Usuário', 
                             False, 
                             URL(request.application,'mcrud','cadlist/auth_user/list'), []
                            ],
@@ -160,7 +160,7 @@ if 'auth' in globals():
                             False, 
                             URL(request.application,'mcrud','cadlist/aluno/list'), []
                            ],
-                           ['Lista Instituicao', 
+                           ['Lista Instituição', 
                             False, 
                             URL(request.application,'mcrud','cadlist/instituicao/list'), []
                            ],
@@ -176,15 +176,15 @@ if 'auth' in globals():
                             False, 
                             URL(request.application,'mcrud','cadlist/turma/list'), []
                            ],
-                           ['Lista Alocacao', 
+                           ['Lista Alocação', 
                             False, 
                             URL(request.application,'mcrud','cadlist/alocacao/list'), []
                            ],
-                           ['Lista Topico', 
+                           ['Lista Tópico', 
                             False, 
                             URL(request.application,'mcrud','cadlist/topico/list'), []
                            ],
-                           ['Lista Questao', 
+                           ['Lista Questão', 
                             False, 
                             URL(request.application,'mcrud','cadlist/questao/list'), []
                            ],
@@ -206,31 +206,35 @@ if 'auth' in globals():
                             False, 
                             URL(request.application,'resultadoprova','resultadoprova'), []
                        ],
-                       ['Gerar Relatorio de Turma por Aluno', 
+                       ['Gerar Relatório de Turma por Aluno', 
                             False, 
                             URL(request.application,'relatorio','rel/Turma_Aluno'), []
                        ],
-                       ['Gerar Relatorio de Turma por Aluno e Disciplina', 
+                       ['Gerar Relatório de Turma por Aluno e Disciplina', 
                             False, 
                             URL(request.application,'relatorio','rel/Turma_Aluno_Disciplina'), []
                        ],
-                       ['Gerar Relatorio por Aluno (Construção)', 
+                       ['Gerar Relatório por Aluno (Em Construção)', 
                             False, 
                             URL(request.application,'aluno','ver_relAluno'), []
                        ],
-                       ['Gerar Relatorio por Professor (Construção)', 
+                       ['Gráfico de Notas dos Alunos', 
                             False, 
-                            URL(request.application,'professor','ver_relProfessor'), []
+                            URL(request.application,'relatorios','graf_bar'), []
                        ],
-                       ['Gerar Relatorio de Resultados Por Turma (Construção)', 
+                       ['Gerar Relatorio por Professor (Em Construção)', 
                             False, 
-                            URL(request.application,'turma','ver_relTurma'), []
+                            URL(request.application,'util','construcao'), []
+                       ],
+                       ['Gerar Relatório de Resultados Por Turma (Em Construção)', 
+                            False, 
+                            URL(request.application,'util','construcao'), []
                        ],
                   ]
                ],
-        [T('Creditos'), 
+        [T('Créditos'), 
          False, 
-         URL(request.application,'default','index'), []
+         URL(request.application,'util','creditos'), []
         ],
        ]
        else:
@@ -246,15 +250,15 @@ if 'auth' in globals():
                             False, 
                             URL(request.application,'resultadoaluno','nota_aluno/' + str(auth.user.id)), []
                        ],
-                       ['Gabarito da Prova (Construção)', 
+                       ['Gabarito da Prova (Em Construção)', 
                             False, 
-                            URL(request.application,'aluno','ver_relAluno'), []
+                            URL(request.application,'util','construcao'), []
                        ],
                   ]
                ],
-        [T('Creditos'), 
+        [T('Créditos'), 
          False, 
-         URL(request.application,'default','index'), []
+         URL(request.application,'util','creditos'), []
         ],
        ]
 ##########################################
