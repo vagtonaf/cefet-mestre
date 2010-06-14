@@ -202,31 +202,31 @@ if 'auth' in globals():
                            ],
                          ]  
                        ],    
-                       ['Resultado da Prova por Aluno', 
+                       ['Resultado Turma', 
                             False, 
                             URL(request.application,'resultadoprova','resultadoprova'), []
                        ],
-                       ['Gerar Relatório de Turma por Aluno', 
+                       ['Turma por Aluno', 
                             False, 
                             URL(request.application,'relatorio','rel/Turma_Aluno'), []
                        ],
-                       ['Gerar Relatório de Turma por Aluno e Disciplina', 
+                       ['Turma por Aluno e Disciplina', 
                             False, 
                             URL(request.application,'relatorio','rel/Turma_Aluno_Disciplina'), []
                        ],
-                       ['Gerar Relatório por Aluno (Em Construção)', 
-                            False, 
-                            URL(request.application,'aluno','ver_relAluno'), []
-                       ],
-                       ['Gráfico de Notas dos Alunos', 
+                       ['Gráfico Notas Alunos', 
                             False, 
                             URL(request.application,'relatorios','graf_bar'), []
                        ],
-                       ['Gerar Relatorio por Professor (Em Construção)', 
+                       ['Gráfico Taxonomias', 
+                            False, 
+                            URL(request.application,'grafico','grafico'), []
+                       ],
+                       ['Professor (Em Construção)', 
                             False, 
                             URL(request.application,'util','construcao'), []
                        ],
-                       ['Gerar Relatório de Resultados Por Turma (Em Construção)', 
+                       ['Turma (Em Construção)', 
                             False, 
                             URL(request.application,'util','construcao'), []
                        ],

@@ -17,17 +17,17 @@
     <div class="wrapper">
       <table class="layout">
         <tr>
-          <td colspan="3"  class="header">
+          <td colspan="2"  class="header">
             <img heigth="30%" width="30%" align="rigth" src="/Mestre/static/logo.gif"/>
             <!--<h1>
             {{title=response.title or 'response.title'}}            
             {{=A(title, _href=URL(request.application,'default','index'))}}
             </h1>            
             <h3>{{=response.subtitle or 'response.subtitle'}}</h3>-->
-          </td>
+          <img heigth="12%" width="12%" align="left" src="/Mestre/static/brazil1.gif"/></td>
         </tr>
         <tr>
-          <td colspan="3" class="statusbar">
+          <td colspan="2" class="statusbar">
             {{='/'.join(['',request.application,request.controller,request.function]+request.args)}}
           </td>
         </tr>
