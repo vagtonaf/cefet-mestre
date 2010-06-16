@@ -23,7 +23,8 @@ $(document).ready(function() {
 </tr>    
 </thead>
 <tbody>
-{{for prova in row_prova:}}
+{{if row_prova:}}
+    {{for prova in row_prova:}}
       <tr>
       <td>{{=prova.prova.referencia}}</td>
       <td>{{=prova.prova.turma.nome}}</td>
@@ -31,7 +32,8 @@ $(document).ready(function() {
       <td>{{=prova.prova.tipo}}</td>
       <td>{{=prova.prova.data_aplicacao}}</td>
       </tr>
-{{pass}}
+    {{pass}}
+{{pass}}    
 </tbody>
 <tr><td>{{=button('Atualizar','aplicar_prova')}}</td></tr>
 </table>
