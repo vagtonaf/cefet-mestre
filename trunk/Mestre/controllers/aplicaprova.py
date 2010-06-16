@@ -12,10 +12,7 @@ def aplicar_prova():
     idUsuario=auth.user.id
     #testa se é um professor
     row_professor=db(db.professor.usuario==idUsuario).select(db.professor.ALL)
-    row_prova = db().select(
-                              db.prova.ALL, 
-                              db.plano_de_prova.ALL, 
-                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
+    
     if row_professor:
        for pr in row_professor:
           idProfessor=pr.id
@@ -24,6 +21,17 @@ def aplicar_prova():
        response.flash = 'O usuário não é um Professor cadastrado!'
        aplicar_prova = FORM(TABLE(TR('Só Professor pode aplicar uma prova!')))
        return dict(aplicar_prova=aplicar_prova, row_prova=row_prova)
+    
+    row_prova = db().select(  db.prova.ALL, 
+                              db.plano_de_prova.ALL, 
+                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
+    if row_prova:
+       for prv in row_prova:
+          idProva=prv.id
+    else:
+       response.flash = 'O usuário não possui uma prova cadastrado!'
+       aplicar_prova = FORM(TABLE(TR('Não possue prova cadastrada!')))
+       return dict(aplicar_prova=aplicar_prova, row_prova=None)
 
     #testa se o professor possue plano_de_prova criado
     row_planodeprova = db(db.plano_de_prova.professor==idProfessor).select(db.plano_de_prova.ALL)

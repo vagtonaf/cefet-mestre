@@ -23,14 +23,19 @@ class resultadoAluno:
    def get_nota(self):
      return self.nota     
    def minha_nota(self):  
-     if self.prova=='-': 
-        return "O aluno nao possue resultado ou sua nota foi Zero."   
-     if (self.nota <= 6):
+     if self.prova=='-':
+        self.nota="-"
+        return "O aluno nao possue resultado"   
+     if ((self.nota > 1) & (self.nota <= 6)):
         return "A nota do aluno: " + self.nome + " e " + str(self.nota) + ", prova:" + self.prova + ", ela foi baixa, o aluno deve melhorar!"
      elif (self.nota >= 10):               
         return "A nota do aluno: " + self.nome + " e " + str(self.nota) + ", prova:" + self.prova + ", ela foi otima continue assim!"
-     else:
+     elif ((self.nota > 6) & (self.nota < 10)):
         return "A nota do aluno: " + self.nome + " e " + str(self.nota) + ", prova:" + self.prova + ", muito bem!"
+     elif self.nota=='-':
+        return "O Aluno não possue nota!"
+     else:
+        return "O Aluno levou Zero!"
 
 def executesql(self, query): 
     self['_lastsql'] = query    
@@ -83,6 +88,8 @@ def nota_aluno():
            nota = float(resp[6]) 
         if conclusao=='-':
            nota = 'Prova sendo realizada!'                                 
+        if (conclusao=='-') & (prova=='-'):
+           nota = 'Prova a ser realizada!'                                 
         resultado.set_resultado(prova,plano,nome,aplicacao,conclusao,nota)
 
     
