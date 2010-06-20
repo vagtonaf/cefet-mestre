@@ -12,7 +12,10 @@ def aplicar_prova():
     idUsuario=auth.user.id
     #testa se é um professor
     row_professor=db(db.professor.usuario==idUsuario).select(db.professor.ALL)
-    
+    row_prova = db().select(
+                              db.prova.ALL, 
+                              db.plano_de_prova.ALL, 
+                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
     if row_professor:
        for pr in row_professor:
           idProfessor=pr.id
@@ -21,17 +24,6 @@ def aplicar_prova():
        response.flash = 'O usuário não é um Professor cadastrado!'
        aplicar_prova = FORM(TABLE(TR('Só Professor pode aplicar uma prova!')))
        return dict(aplicar_prova=aplicar_prova, row_prova=row_prova)
-    
-    row_prova = db().select(  db.prova.ALL, 
-                              db.plano_de_prova.ALL, 
-                              left=db.plano_de_prova.on(db.prova.plano_de_prova==db.plano_de_prova.id))
-    if row_prova:
-       for prv in row_prova:
-          idProva=prv.prova.id
-    else:
-       response.flash = 'O usuário não possui uma prova cadastrado!'
-       aplicar_prova = FORM(TABLE(TR('Não possue prova cadastrada!')))
-       return dict(aplicar_prova=aplicar_prova, row_prova=None)
 
     #testa se o professor possue plano_de_prova criado
     row_planodeprova = db(db.plano_de_prova.professor==idProfessor).select(db.plano_de_prova.ALL)
@@ -57,7 +49,7 @@ def aplicar_prova():
        TR('Professor:', nome + ' '+ sobrenome),
        TR('Código Funcional:',codigo_funcional),
        TR('Selecione a Prova?', SELECT([OPTION(pr.referencia,_value=pr.referencia) for pr in db().select(db.prova.referencia,distinct=True)],_name='Prova',requires=IS_IN_DB(db,'prova.referencia'))),
-       TR('Aplicar Prova?', SELECT(['Sim','Cancelar'],_name='opcao',requires=IS_IN_SET(['Sim','Cancelar']))),
+       TR('Aplicar Prova?', SELECT(['Não','Sim','Cancelar'],_name='opcao',requires=IS_IN_SET(['Não','Sim','Cancelar']))),
        TR(INPUT(_type='hidden', _name='idProfessor', _value=idProfessor)),
        TR(INPUT(_type='hidden', _name='data_aplicacao', _value=hoje)),
        TR(INPUT(_type='hidden', _name='total_prova', _value=n)),
@@ -89,7 +81,7 @@ def aplicar_prova():
           #aplicar_prova = FORM(TABLE('faz o Update, cancela o campo data_aplicacao',TR(row_prova)))  
           response.flash = 'Prova cancelada pelo professor!'
           return dict(aplicar_prova=aplicar_prova, row_prova=row_prova, vars = aplicar_prova.vars)
-       elif (sopcao == 'Sim'):
+       else:
           #recupera o Prova selecionado
           Prova =  aplicar_prova.vars.Prova
           row_prova = db(db.prova.referencia==Prova).select(

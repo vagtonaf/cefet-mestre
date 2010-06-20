@@ -21,11 +21,13 @@ def executesql2(self, query, args):
 def resultadoprova():
     if 'auth' in globals():
         if auth.is_logged_in():
+          row_prova = db().select(db.prova.ALL)
+          if row_prova: 
             pergunta = FORM(TABLE(
                           TR('Qual a Prova?', SELECT([OPTION(pro.referencia,_value=pro.referencia) for pro in db().select(db.prova.referencia,distinct=True)],_name='prova',requires=IS_IN_DB(db,'prova.referencia')), INPUT(_type='submit', _value='Pesquisar')),
                        ))
             if pergunta.accepts(request.vars, session):
-                #pega identificação da prova
+                #pega identificao da prova
                 prova = pergunta.vars.prova
                 query = """SELECT a.id, c.referencia as prova, g.referencia as plano_de_prova, e.first_name,  e.last_name, c.data_aplicacao, b.data as data_conclusao, b.gerada, f.enunciado, h.resposta, h.correta, i.valor
                                            FROM item_prova_gerada as a  
@@ -54,10 +56,12 @@ def resultadoprova():
                 totaliza = db.executesql(query)
                 return dict(pergunta=None, resposta=resposta, totaliza=totaliza)
             elif pergunta.errors:
-                response.flash = 'Formulário Inválido'
+                response.flash = 'Formulario Invalido'
             else:
                 response.flash = 'Por favor, Selecione uma prova!'
                 return dict(pergunta=pergunta, resposta=None, totaliza=None)
+          else:      
+              return dict(pergunta="nÃ£o possue prova cadastrada", resposta=None, totaliza=None)
         else:
             redirect(URL(r=request, f='../default/user/login'))
     else:

@@ -54,13 +54,9 @@ def cadlist():
                     db.turma.ALL,
                     db.disciplina.ALL,
                     left=db.disciplina.on(db.turma.disciplina==db.disciplina.id))
-                registros=db(db.aluno.id>0).select(
-                    db.alocacao.ALL,
-                    db.auth_user.ALL,
-                    left=db.auth_user.on(db.alocacao.aluno==db.auth_user.id),distinct=True
-                )
+                list_alocacao=db().select(db.alocacao.ALL)
                 response.flash='Lista ' + tabela.replace('_',' ')
-                return dict(registros=registros,form=form, tabela=tabela, list_turmas=list_turmas, list_alunos=list_alunos)
+                return dict(registros=list_alocacao, form=form, tabela=tabela, list_turmas=list_turmas, list_alunos=list_alunos)
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'disciplina':

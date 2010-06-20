@@ -51,13 +51,17 @@ def realizar_prova():
                     realizar_prova = FORM(TABLE(TR('Aluno não possui email cadastrado!')))
                     return dict(realizar_prova=realizar_prova, row_prova=row_prova, raluno=row_aluno, rprova=row_prova, tabela='solicitacao')
                 #testa se o aluno está alocado a uma turma   
-                row_alocacao = db(db.alocacao.aluno==idAluno).select(db.alocacao.turma)
+                row_alocacao = db((db.alocacao.aluno==idAluno)&(db.prova.data_aplicacao!=None)).select(db.alocacao.turma,
+                                                                     db.prova.ALL,
+                                                                     left=db.prova.on(db.alocacao.turma==db.prova.turma)
+                                                                    )
                 if row_alocacao:
                     for alo in row_alocacao:
-                        idTurma=alo.turma
+                        idTurma=alo.prova.turma
                         row_turma = db(db.turma.id==idTurma).select(db.turma.nome)
                         for tu in row_turma:
                             nome_turma=tu.nome
+                            print 'Turma Vaf:' + nome_turma
                 else:
                     response.flash = 'Aluno não está alocado a uma turma!'
                     realizar_prova = FORM(TABLE(TR('Aluno não alocado a turma!')))

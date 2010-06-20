@@ -1,4 +1,4 @@
-timestamp: 2010-03-19T22:53:51.906000
+timestamp: 2010-06-20T12:31:20.515000
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -9,21 +9,21 @@ CREATE TABLE auth_user(
     reset_password_key CHAR(512)
 );
 success!
-timestamp: 2010-03-19T22:53:51.906000
+timestamp: 2010-06-20T12:31:20.515000
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2010-03-19T22:53:51.921000
+timestamp: 2010-06-20T12:31:20.515000
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id REFERENCES auth_user(id) ON DELETE CASCADE,
     group_id REFERENCES auth_group(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T22:53:51.921000
+timestamp: 2010-06-20T12:31:20.531000
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id REFERENCES auth_group(id) ON DELETE CASCADE,
@@ -32,7 +32,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2010-03-19T22:53:51.937000
+timestamp: 2010-06-20T12:31:20.562000
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -42,47 +42,47 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2010-03-19T22:53:51.953000
+timestamp: 2010-06-20T12:31:20.578000
 CREATE TABLE administrador(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario REFERENCES auth_user(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T22:53:51.953000
+timestamp: 2010-06-20T12:31:20.578000
 CREATE TABLE professor(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario REFERENCES auth_user(id) ON DELETE CASCADE,
     codigo_funcional CHAR(10) NOT NULL
 );
 success!
-timestamp: 2010-03-19T22:53:51.968000
+timestamp: 2010-06-20T12:31:20.578000
 CREATE TABLE aluno(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario REFERENCES auth_user(id) ON DELETE CASCADE,
     matricula CHAR(10) NOT NULL
 );
 success!
-timestamp: 2010-03-19T22:53:51.984000
+timestamp: 2010-06-20T12:31:20.593000
 CREATE TABLE instituicao(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome CHAR(50) NOT NULL
 );
 success!
-timestamp: 2010-03-19T22:53:51.984000
+timestamp: 2010-06-20T12:31:20.593000
 CREATE TABLE curso(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome CHAR(50) NOT NULL,
     instituicao REFERENCES instituicao(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T22:53:52
+timestamp: 2010-06-20T12:31:20.609000
 CREATE TABLE disciplina(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome CHAR(50) NOT NULL,
     curso REFERENCES curso(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T22:53:52
+timestamp: 2010-06-20T12:31:20.609000
 CREATE TABLE turma(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome CHAR(50) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE turma(
     disciplina REFERENCES disciplina(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T22:53:52.093000
+timestamp: 2010-06-20T12:31:20.625000
 CREATE TABLE alocacao(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     aluno REFERENCES aluno(id) ON DELETE CASCADE,
@@ -98,25 +98,25 @@ CREATE TABLE alocacao(
     data TIMESTAMP
 );
 success!
-timestamp: 2010-03-19T23:13:46.390000
+timestamp: 2010-06-20T12:31:20.625000
 CREATE TABLE taxionomia(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome CHAR(512)
 );
 success!
-timestamp: 2010-03-19T23:13:46.406000
+timestamp: 2010-06-20T12:31:20.640000
 CREATE TABLE dificuldade(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nivel CHAR(512)
 );
 success!
-timestamp: 2010-03-19T23:13:46.406000
+timestamp: 2010-06-20T12:31:20.656000
 CREATE TABLE topico(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome CHAR(50) NOT NULL
 );
 success!
-timestamp: 2010-03-19T23:13:46.421000
+timestamp: 2010-06-20T12:31:20.671000
 CREATE TABLE questao(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     enunciado TEXT NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE questao(
     topico REFERENCES topico(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T23:13:46.437000
+timestamp: 2010-06-20T12:31:20.671000
 CREATE TABLE alternativa(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     questao REFERENCES questao(id) ON DELETE CASCADE,
@@ -133,14 +133,14 @@ CREATE TABLE alternativa(
     correta CHAR(1)
 );
 success!
-timestamp: 2010-03-19T23:13:46.437000
+timestamp: 2010-06-20T12:31:20.671000
 CREATE TABLE plano_de_prova(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     referencia CHAR(50) NOT NULL,
     professor REFERENCES professor(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T23:13:46.453000
+timestamp: 2010-06-20T12:31:20.687000
 CREATE TABLE item_plano_de_prova(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     valor DOUBLE,
@@ -150,441 +150,7 @@ CREATE TABLE item_plano_de_prova(
     topico REFERENCES topico(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-03-19T23:13:46.453000
-CREATE TABLE prova(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    referencia CHAR(50) NOT NULL,
-    turma REFERENCES turma(id) ON DELETE CASCADE,
-    plano_de_prova REFERENCES plano_de_prova(id) ON DELETE CASCADE,
-    tipo CHAR(512)
-);
-success!
-timestamp: 2010-03-19T23:13:46.468000
-CREATE TABLE prova_gerada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data TIMESTAMP,
-    aluno REFERENCES aluno(id) ON DELETE CASCADE,
-    prova REFERENCES prova(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-19T23:13:46.484000
-CREATE TABLE item_prova_gerada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    prova_gerada REFERENCES prova_gerada(id) ON DELETE CASCADE,
-    questao REFERENCES questao(id) ON DELETE CASCADE,
-    alternativa_correta REFERENCES alternativa(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-19T23:13:46.500000
-CREATE TABLE plugin_tagging_tag(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    counter INTEGER,
-    created_by REFERENCES auth_user(id) ON DELETE CASCADE,
-    created_on TIMESTAMP
-);
-success!
-timestamp: 2010-03-19T23:13:46.515000
-CREATE TABLE plugin_tagging_tag_link(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tag REFERENCES plugin_tagging_tag(id) ON DELETE CASCADE,
-    table_name CHAR(512),
-    record_id INTEGER
-);
-success!
-timestamp: 2010-03-30T22:18:15.953000
-CREATE TABLE auth_user(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name CHAR(128),
-    last_name CHAR(128),
-    email CHAR(512),
-    password CHAR(512),
-    registration_key CHAR(512),
-    reset_password_key CHAR(512)
-);
-success!
-timestamp: 2010-03-30T22:18:15.984000
-CREATE TABLE auth_group(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    role CHAR(512),
-    description TEXT
-);
-success!
-timestamp: 2010-03-30T22:18:15.984000
-CREATE TABLE auth_membership(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id REFERENCES auth_user(id) ON DELETE CASCADE,
-    group_id REFERENCES auth_group(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16
-CREATE TABLE auth_permission(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    group_id REFERENCES auth_group(id) ON DELETE CASCADE,
-    name CHAR(512),
-    table_name CHAR(512),
-    record_id INTEGER
-);
-success!
-timestamp: 2010-03-30T22:18:16
-CREATE TABLE auth_event(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    time_stamp TIMESTAMP,
-    client_ip CHAR(512),
-    user_id REFERENCES auth_user(id) ON DELETE CASCADE,
-    origin CHAR(512),
-    description TEXT
-);
-success!
-timestamp: 2010-03-30T22:18:16.015000
-CREATE TABLE administrador(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario REFERENCES auth_user(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.031000
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario REFERENCES auth_user(id) ON DELETE CASCADE,
-    codigo_funcional CHAR(10) NOT NULL
-);
-success!
-timestamp: 2010-03-30T22:18:16.031000
-CREATE TABLE aluno(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario REFERENCES auth_user(id) ON DELETE CASCADE,
-    matricula CHAR(10) NOT NULL
-);
-success!
-timestamp: 2010-03-30T22:18:16.046000
-CREATE TABLE instituicao(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL
-);
-success!
-timestamp: 2010-03-30T22:18:16.046000
-CREATE TABLE curso(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
-    instituicao REFERENCES instituicao(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.062000
-CREATE TABLE disciplina(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
-    curso REFERENCES curso(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.062000
-CREATE TABLE turma(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
-    turno CHAR(512),
-    disciplina REFERENCES disciplina(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.140000
-CREATE TABLE alocacao(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    aluno REFERENCES aluno(id) ON DELETE CASCADE,
-    turma REFERENCES turma(id) ON DELETE CASCADE,
-    data TIMESTAMP
-);
-success!
-timestamp: 2010-03-30T22:18:16.140000
-CREATE TABLE taxionomia(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(512)
-);
-success!
-timestamp: 2010-03-30T22:18:16.156000
-CREATE TABLE dificuldade(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nivel CHAR(512)
-);
-success!
-timestamp: 2010-03-30T22:18:16.171000
-CREATE TABLE topico(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL
-);
-success!
-timestamp: 2010-03-30T22:18:16.187000
-CREATE TABLE questao(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    enunciado TEXT NOT NULL,
-    taxionomia REFERENCES taxionomia(id) ON DELETE CASCADE,
-    dificuldade REFERENCES dificuldade(id) ON DELETE CASCADE,
-    topico REFERENCES topico(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.187000
-CREATE TABLE alternativa(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    questao REFERENCES questao(id) ON DELETE CASCADE,
-    resposta TEXT NOT NULL,
-    correta CHAR(1)
-);
-success!
-timestamp: 2010-03-30T22:18:16.203000
-CREATE TABLE plano_de_prova(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    referencia CHAR(50) NOT NULL,
-    professor REFERENCES professor(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.218000
-CREATE TABLE item_plano_de_prova(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    valor DOUBLE,
-    plano_de_prova REFERENCES plano_de_prova(id) ON DELETE CASCADE,
-    taxionomia REFERENCES taxionomia(id) ON DELETE CASCADE,
-    dificuldade REFERENCES dificuldade(id) ON DELETE CASCADE,
-    topico REFERENCES topico(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.218000
-CREATE TABLE prova(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    referencia CHAR(50) NOT NULL,
-    turma REFERENCES turma(id) ON DELETE CASCADE,
-    plano_de_prova REFERENCES plano_de_prova(id) ON DELETE CASCADE,
-    tipo CHAR(512)
-);
-success!
-timestamp: 2010-03-30T22:18:16.234000
-CREATE TABLE prova_gerada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data TIMESTAMP,
-    aluno REFERENCES aluno(id) ON DELETE CASCADE,
-    prova REFERENCES prova(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.250000
-CREATE TABLE item_prova_gerada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    prova_gerada REFERENCES prova_gerada(id) ON DELETE CASCADE,
-    questao REFERENCES questao(id) ON DELETE CASCADE,
-    alternativa_correta REFERENCES alternativa(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-03-30T22:18:16.296000
-CREATE TABLE plugin_tagging_tag(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    counter INTEGER,
-    created_by REFERENCES auth_user(id) ON DELETE CASCADE,
-    created_on TIMESTAMP
-);
-success!
-timestamp: 2010-03-30T22:18:16.312000
-CREATE TABLE plugin_tagging_tag_link(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tag REFERENCES plugin_tagging_tag(id) ON DELETE CASCADE,
-    table_name CHAR(512),
-    record_id INTEGER
-);
-success!
-timestamp: 2010-04-04T20:37:23.020000
-CREATE TABLE prova_aplicada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data TIMESTAMP,
-    prova REFERENCES prova(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-05T22:47:40.249000
-ALTER TABLE prova_gerada ADD prova_aplicada REFERENCES prova_aplicada(id) ON DELETE CASCADE;
-timestamp: 2010-04-05T23:27:24.495000
-CREATE TABLE prova_aplicada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    prova REFERENCES prova(id) ON DELETE CASCADE,
-    data TIMESTAMP
-);
-timestamp: 2010-04-05T23:27:25.612000
-CREATE TABLE prova_aplicada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    prova REFERENCES prova(id) ON DELETE CASCADE,
-    data TIMESTAMP
-);
-timestamp: 2010-04-05T23:27:47.444000
-CREATE TABLE prova_aplicada(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    prova REFERENCES prova(id) ON DELETE CASCADE,
-    data TIMESTAMP
-);
-timestamp: 2010-04-05T23:46:44.337000
-ALTER TABLE item_prova_gerada ADD alternativa_escolhida REFERENCES alternativa(id) ON DELETE CASCADE;
-timestamp: 2010-04-06T00:50:41.716000
-ALTER TABLE prova ADD data_aplicacao TIMESTAMP;
-timestamp: 2010-04-21T15:15:06.883000
-ALTER TABLE prova_gerada ADD gerada CHAR(1);
-timestamp: 2010-04-24T17:58:57.171000
-CREATE TABLE alternativa(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    questao REFERENCES questao(id) ON DELETE CASCADE,
-    resposta TEXT NOT NULL,
-    correta CHAR(1)
-);
-timestamp: 2010-04-24T17:59:33.281000
-CREATE TABLE alternativa(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    questao REFERENCES questao(id) ON DELETE CASCADE,
-    resposta TEXT NOT NULL,
-    correta CHAR(1)
-);
-timestamp: 2010-04-27T23:51:25.997759
-CREATE TABLE auth_user(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name CHAR(128),
-    last_name CHAR(128),
-    email CHAR(512),
-    password CHAR(512),
-    registration_key CHAR(512)
-);
-success!
-timestamp: 2010-04-27T23:51:26.011798
-CREATE TABLE auth_group(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    role CHAR(512),
-    description TEXT
-);
-success!
-timestamp: 2010-04-27T23:51:26.019458
-CREATE TABLE auth_membership(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id REFERENCES auth_user(id) ON DELETE CASCADE,
-    group_id REFERENCES auth_group(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.021608
-CREATE TABLE auth_permission(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    group_id REFERENCES auth_group(id) ON DELETE CASCADE,
-    name CHAR(512),
-    table_name CHAR(512),
-    record_id INTEGER
-);
-success!
-timestamp: 2010-04-27T23:51:26.023823
-CREATE TABLE auth_event(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    time_stamp TIMESTAMP,
-    client_ip CHAR(512),
-    user_id REFERENCES auth_user(id) ON DELETE CASCADE,
-    origin CHAR(512),
-    description TEXT
-);
-success!
-timestamp: 2010-04-27T23:51:26.028737
-CREATE TABLE administrador(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario REFERENCES auth_user(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.039989
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario REFERENCES auth_user(id) ON DELETE CASCADE,
-    codigo_funcional CHAR(10) NOT NULL
-);
-success!
-timestamp: 2010-04-27T23:51:26.041869
-CREATE TABLE aluno(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    usuario REFERENCES auth_user(id) ON DELETE CASCADE,
-    matricula CHAR(10) NOT NULL
-);
-success!
-timestamp: 2010-04-27T23:51:26.049978
-CREATE TABLE instituicao(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL
-);
-success!
-timestamp: 2010-04-27T23:51:26.059247
-CREATE TABLE curso(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
-    instituicao REFERENCES instituicao(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.061159
-CREATE TABLE disciplina(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
-    curso REFERENCES curso(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.063085
-CREATE TABLE turma(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL,
-    turno CHAR(512),
-    disciplina REFERENCES disciplina(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.069662
-CREATE TABLE alocacao(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    aluno REFERENCES aluno(id) ON DELETE CASCADE,
-    turma REFERENCES turma(id) ON DELETE CASCADE,
-    data TIMESTAMP
-);
-success!
-timestamp: 2010-04-27T23:51:26.071469
-CREATE TABLE taxionomia(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(512)
-);
-success!
-timestamp: 2010-04-27T23:51:26.080107
-CREATE TABLE dificuldade(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nivel CHAR(512)
-);
-success!
-timestamp: 2010-04-27T23:51:26.083727
-CREATE TABLE topico(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome CHAR(50) NOT NULL
-);
-success!
-timestamp: 2010-04-27T23:51:26.090967
-CREATE TABLE questao(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    enunciado TEXT NOT NULL,
-    taxionomia REFERENCES taxionomia(id) ON DELETE CASCADE,
-    dificuldade REFERENCES dificuldade(id) ON DELETE CASCADE,
-    topico REFERENCES topico(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.100859
-CREATE TABLE alternativa(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    questao REFERENCES questao(id) ON DELETE CASCADE,
-    resposta TEXT NOT NULL,
-    correta CHAR(1)
-);
-success!
-timestamp: 2010-04-27T23:51:26.109247
-CREATE TABLE plano_de_prova(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    referencia CHAR(50) NOT NULL,
-    professor REFERENCES professor(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.111525
-CREATE TABLE item_plano_de_prova(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    valor DOUBLE,
-    plano_de_prova REFERENCES plano_de_prova(id) ON DELETE CASCADE,
-    taxionomia REFERENCES taxionomia(id) ON DELETE CASCADE,
-    dificuldade REFERENCES dificuldade(id) ON DELETE CASCADE,
-    topico REFERENCES topico(id) ON DELETE CASCADE
-);
-success!
-timestamp: 2010-04-27T23:51:26.119775
+timestamp: 2010-06-20T12:31:20.687000
 CREATE TABLE prova(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     referencia CHAR(50) NOT NULL,
@@ -594,7 +160,7 @@ CREATE TABLE prova(
     data_aplicacao TIMESTAMP
 );
 success!
-timestamp: 2010-04-27T23:51:26.129655
+timestamp: 2010-06-20T12:31:20.781000
 CREATE TABLE prova_gerada(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     data TIMESTAMP,
@@ -603,7 +169,7 @@ CREATE TABLE prova_gerada(
     prova REFERENCES prova(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-04-27T23:51:26.132250
+timestamp: 2010-06-20T12:31:20.796000
 CREATE TABLE item_prova_gerada(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     prova_gerada REFERENCES prova_gerada(id) ON DELETE CASCADE,
@@ -611,7 +177,7 @@ CREATE TABLE item_prova_gerada(
     alternativa_escolhida REFERENCES alternativa(id) ON DELETE CASCADE
 );
 success!
-timestamp: 2010-04-27T23:51:26.154367
+timestamp: 2010-06-20T12:31:20.812000
 CREATE TABLE plugin_tagging_tag(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name CHAR(512),
@@ -620,7 +186,7 @@ CREATE TABLE plugin_tagging_tag(
     created_on TIMESTAMP
 );
 success!
-timestamp: 2010-04-27T23:51:26.156480
+timestamp: 2010-06-20T12:31:20.812000
 CREATE TABLE plugin_tagging_tag_link(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     tag REFERENCES plugin_tagging_tag(id) ON DELETE CASCADE,

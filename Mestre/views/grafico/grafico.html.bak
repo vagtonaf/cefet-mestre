@@ -1,12 +1,9 @@
 {{extend 'layout.html'}}
-<table border=1><tr><td colspan=3><h1>Taxonomias das Turmas</h1></td></tr>
-
-<tr><td><b>Turma</b></td><td><b>Taxonomia</b></td><td><b>Nota</b></td></tr>
-
+<table ><tr><td><h1>Taxonomias das Turmas</h1></td></tr>
 {{for i in turma:}}
-      <tr><td>&nbsp;<a>{{=i['turma']}}</a></td><td>&nbsp;<a>{{=i['taxonomia']}}</a></td><td>&nbsp;<a>{{=i['nota']}}</a></td></tr>
+      <tr><td>&nbsp;<a>{{=i['turma']}}</a></td></tr>
 {{pass}}
-<tr><td colspan=4>
+<tr><td>
  <script type="text/javascript"
 src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script>
  <script type="text/javascript">
@@ -28,8 +25,8 @@ src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script
        };
 
      /* Burtin's radius encoding is, as far as I can tell, sqrt(log(mic)). */
-     var max = Math.sqrt(Math.log(2 * 1E4));
-     var min = Math.sqrt(Math.log(10 * 1E4));
+     var min = Math.sqrt(Math.log(.5 * 1E4));
+     var max = Math.sqrt(Math.log(100 * 1E4));
      var a = (outerRadius - innerRadius) / (min - max);
      var b = innerRadius - a * max;
      function radius(mic) a * Math.sqrt(Math.log(mic * 1E4)) + b;

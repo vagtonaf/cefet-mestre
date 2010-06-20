@@ -1,0 +1,47 @@
+{{extend 'layout.html'}}
+{{=resposta}}
+<h1>Grafico de Notas dos Alunos</h1>
+<BR>
+<BR>
+ <script type="text/javascript" src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js">
+</script>
+<script type="text/javascript">
+
+var alunos_notas;
+alunos_notas={{=resposta}};
+
+var grafico = new pv.Panel()
+    .width(600)
+    .height(500)
+    .right(60)
+    .bottom(20);
+
+grafico.add(pv.Bar)
+     .data(alunos_notas)
+     .top(function(d) (this.index * 40))
+     .height(25)
+     .left(90)
+     .width(function(d) d.start*30)
+  .add(pv.Label)
+      .left(25)
+      .top(function(d) (this.index * 40))
+      .textBaseline("top")
+      .textMargin(6)
+      .font("italic 10px serif")
+      .text(function(d) d.name);
+
+var linhas = grafico.add(pv.Rule)
+    .data(pv.range(0, 10, .5))
+    .left(function(d) d * 30 + 90)
+    .strokeStyle(function(d) d ? "white" : "black");
+    
+var label_notas = grafico.add(pv.Label)
+    .left(function() grafico.width()+80)
+    .top(function() grafico.top()+ grafico.height()/2)
+    .textAlign("center")
+    .textBaseline("top")
+    .textStyle("black");
+
+grafico.render();
+
+</script>

@@ -147,7 +147,7 @@ db.prova.turma.requires=IS_IN_DB(db,'turma.id','turma.nome')
 db.prova.plano_de_prova.requires=IS_IN_DB(db,'plano_de_prova.id','plano_de_prova.referencia') 
 
 db.define_table('prova_gerada',
-        Field('data','datetime',default=request.now, writable=False),
+        Field('data','datetime'),
         Field('gerada','boolean'),
         Field('aluno',db.aluno),
         Field('prova',db.prova)

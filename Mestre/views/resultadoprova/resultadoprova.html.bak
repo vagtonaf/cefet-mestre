@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    {{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+    {{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+    {{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+    {{extend 'layout.html'}}
+</head>
+<script>
+$(document).ready(function() { 
+  jQuery('.smarttable').dataTable(); 
+});
+</script>
+<h1>Resultado das Provas</h1>
+<table border=1 class="smarttable">
+<thead>
+<tr><th>Item</th><th>ID</th><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Aplicacao</th><th>Conclusao</th><th>Gerada</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Valor</th></tr>
+</thead>
+<tbody>
+{{if resposta:}}
+  {{for item, res in enumerate(resposta):}}
+     <tr>
+     <td>{{=item+1}}</td>
+     <td>{{=res[0]}})</td>
+     <td>{{=res[1]}}</td>
+     <td>{{=res[2]}}</td>
+     <td>{{=res[3] + ' ' + res[4]}}</td>
+     <td>
+         {{if res[5]==None:}}
+             {{="Nao Aplicada"}}
+         {{else:}}
+             {{=res[5]}}
+         {{pass}}    
+     </td>
+     <td>
+        {{if res[6]==None:}}
+             {{="Nao Finalizada"}}
+         {{else:}}
+             {{=res[6]}}
+         {{pass}}    
+    </td>
+     <td>
+         {{if res[7]=="T" or res[7]==None:}}
+             {{="Sim"}}
+         {{else:}}
+             {{="Nao"}}
+         {{pass}}    
+     </td>
+     <td>{{=res[8]}}</td>
+     <td><p>
+         {{if res[9]==None:}}
+             {{="Nao Respondida"}}
+         {{else:}}
+             {{=res[9]}}
+         {{pass}}
+         </p>    
+     </td>
+     <td>
+         {{if res[10]=="T":}}
+             {{="Sim"}}
+         {{elif res[10]==None:}}
+             {{="Nao Respondida"}}
+         {{else:}}
+             {{="Nao"}}
+         {{pass}}
+     </td>
+     <td>{{=res[11]}}</td>
+     </tr>
+  {{pass}}
+  </tbody>     
+  </table>
+  <br>
+  <table border=1 class="smarttable">
+  <thead>
+  <tr><td colspan=4>Resultado da Prova</td></tr>
+  <tr><th>Prova</th><th>Plano&nbsp;de&nbsp;Prova</th><th>Nome</th><th>Total de Pontos</th></tr>
+  </thead>
+  <tbody>
+  {{if totaliza:}}
+     {{for res in totaliza:}}
+         <tr>
+         {{if res[0]<>None:}}
+            <td>{{=res[0]}}</td>
+         {{else:}}
+            <td>-</td>   
+         {{pass}}
+         {{if res[1]<>None:}}
+            <td>{{=res[1]}}</td>
+         {{else:}}   
+            <td>-</td>
+         {{pass}}   
+         {{if res[2]<>None:}}
+            <td>{{=res[2] + ' ' + res[3]}}</td>
+         {{else:}}
+            <td>-</td>   
+         {{pass}}   
+         {{if res[10]<>None:}}
+            <td>{{=float(res[10])}}</td>
+         {{else:}}
+            <td>0</td>
+         {{pass}}   
+         </tr>
+     {{pass}} 
+  {{pass}}     
+{{pass}}   
+</tbody>  
+</table>
