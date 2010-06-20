@@ -220,11 +220,11 @@ $(document).ready(function() {
     <tbody>
     {{for alocacao in registros:}}
         <tr>
-        <td>{{=alocacao.alocacao.aluno.usuario.first_name + ' ' + alocacao.alocacao.aluno.usuario.last_name}}</td>
-        <td>{{=alocacao.alocacao.aluno.matricula}}</td>
-        <td>{{=alocacao.alocacao.turma.nome}}</td>
-        <td>{{=alocacao.alocacao.data}}</td>
-        <td>{{=button('Alterar','edit/alocacao',alocacao.alocacao.id)}}</td>
+        <td>{{=alocacao.aluno.usuario.first_name + ' ' + alocacao.aluno.usuario.last_name}}</td>
+        <td>{{=alocacao.aluno.matricula}}</td>
+        <td>{{=alocacao.turma.nome}}</td>
+        <td>{{=alocacao.data}}</td>
+        <td>{{=button('Alterar','edit/alocacao',alocacao.id)}}</td>
         </tr>
     {{pass}}
     </tbody>

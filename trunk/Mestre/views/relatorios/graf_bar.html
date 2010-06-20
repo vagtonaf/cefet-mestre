@@ -1,7 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
 {{extend 'layout.html'}}
+</head>
 <h1>Resultado de notas</h1>
 <br>
-<table border=1><tr><td><seq></td><td>Professor</td><td>Aplicação</td><td>Prova</td><td>Turma</td><td>Aluno</td><td>Nota</td></tr>
+<table border=1><tr><td><seq></td><td>Professor</td><td>Data</td><td>Prova</td><td>Turma</td><td>Aluno</td><td>Nota</td></tr>
 {{for item, reg in enumerate(notar):}}
     <tr><td>{{=item+1}})</td>
         <td>{{=reg['professor']}}</td>
@@ -22,7 +31,7 @@
 {{pass}}
 <br>
 </table>
-<h1>Grafico de comparação de todas as notas de todos alunos de todoas as turmas</h1>
+<h1>Notas de todos alunos de todoas as turmas</h1>
 <BR>
 <BR>
  <script type="text/javascript" src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js">

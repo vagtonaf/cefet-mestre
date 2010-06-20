@@ -1,0 +1,683 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+{{extend 'layout.html'}}
+</head>
+<script>
+$(document).ready(function() { 
+  jQuery('.smarttable').dataTable(); 
+});
+</script>
+{{if tabela == 'auth_user': tabela='usuario'}}
+{{flayout=0}}
+{{if form != '':}}
+    <h1>Lista
+    {{if request.args(1) != 'list':}}
+         e Cadastro
+    {{pass}}
+    </h1>
+    {{if request.args(1) != 'list':}}
+         [<a href="#nil" onclick="jQuery('#form').slideToggle();">Cadastro</a>]
+    {{pass}}     
+    <!--Link do cadastro-->
+    {{if tabela == 'aluno':}}
+        {{=button('Lista Usuario','cadlist/auth_user')}}
+        {{=button('Lista de Alocação','cadlist/alocacao')}}
+    {{pass}}
+    {{if tabela == 'professor':}}
+        {{=button('Lista Usuario','cadlist/auth_user')}}
+        {{=button('Lista de Alocação','cadlist/alocacao')}}    
+    {{pass}}
+    {{if tabela == 'alocacao':}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Aluno','cadlist/aluno')}}    
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'disciplina':}}
+        {{=button('Lista Curso','cadlist/curso')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'plano_de_prova':}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'item_plano_de_prova':}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Topico','cadlist/topico')}}
+        {{=button('Lista Dificuldade','cadlist/dificuldade')}}
+        {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+        {{=button('Lista Questão','cadlist/questao')}}
+    {{pass}}
+    {{if tabela == 'prova':}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+        {{=button('Lista Professor','cadlist/professor')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'topico':}}
+        {{=button('Lista Curso','cadlist/curso')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'turma':}}
+        {{=button('Lista Disciplina','cadlist/disciplina')}}
+        {{=button('Lista Curso','cadlist/curso')}}
+        {{=button('Lista Alocação','cadlist/alocacao')}}
+    {{pass}}
+    {{if tabela == 'curso':}}
+        {{=button('Lista Instituicao','cadlist/instituicao')}}
+        {{=button('Lista Disciplina','cadlist/disciplina')}}
+        {{=button('Lista Turma','cadlist/turma')}}
+    {{pass}}
+    {{if tabela == 'instituicao':}}
+        {{=button('Lista Curso','cadlist/curso')}}
+    {{pass}}
+    {{if tabela == 'usuario':}}
+        {{=button('Lista Professor','cadlist/professor')}}
+        {{=button('Lista Aluno','cadlist/aluno')}}
+    {{pass}}
+    {{if tabela == 'dificuldade':}}
+        {{=button('Lista Topico','cadlist/topico')}}
+        {{=button('Lista Taxionomia','cadlist/taxionomia')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'taxionomia':}}
+        {{=button('Plano de Prova','cadlist/Plano_de_Prova')}}
+        {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'questao':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Alternativa','cadlist/alternativa')}}
+       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'alternativa':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Questão','cadlist/questao')}}
+       {{=button('Lista item de Plano de Prova','cadlist/item_plano_de_prova')}}
+    {{pass}}
+    {{if tabela == 'prova_gerada':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista item de Prova Gerada','cadlist/item_prova_gerada/list')}}
+    {{pass}}
+    {{if tabela == 'item_prova_gerada':}}
+       {{=button('Lista Prova','cadlist/prova')}}
+       {{=button('Lista Plano de Prova','cadlist/plano_de_prova')}}
+       {{=button('Lista Prova Gerada','cadlist/prova_gerada/list')}}
+    {{pass}}
+    {{if request.args(1) != 'list':}}
+        <div id="form">
+        <h2>Novo Registro de {{=tabela.replace('_',' ')}}</h2>
+        {{=form}}
+        </div>
+    {{pass}}
+{{else:}}
+    <h2>Solicitação não encontrada</h2>
+{{pass}}
+
+<br /><br />
+
+
+{{if tabela == 'administrador':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for admin in registros:}}
+        <tr>
+        <td>{{=admin.usuario.first_name + ' ' + admin.usuario.last_name}}</td>
+        <td>{{=admin.usuario.email}}</td>
+        <td>{{=button('Alterar','edit/administrador',admin.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+
+{{if tabela == 'usuario':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for usuario in registros:}}
+      <tr>
+      <td>{{=usuario.first_name + ' ' + usuario.last_name}}</td>
+      <td>{{=usuario.email}}</td>
+      <td>{{=button('Alterar','edit/auth_user',usuario.id)}}</td>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'aluno':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Matrícula</th><th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for aluno in registros:}}
+        <tr>
+        <td>{{=A(aluno.aluno.matricula,_href=url('cadlist/aluno',aluno.aluno.id))}}</td>
+        <td>{{=aluno.auth_user.first_name + ' ' + aluno.auth_user.last_name}}</td>
+        <td>{{=aluno.auth_user.email}}</td>
+        <td>{{=button('Alterar','edit/aluno',aluno.aluno.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'professor':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Cod. func.</th><th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for professor in registros:}}
+        <tr>
+        <td>{{=A(professor.professor.codigo_funcional,_href=url('cadlist/professor',professor.professor.id))}}</td>
+        <td>{{=professor.auth_user.first_name + ' ' + professor.auth_user.last_name}}</td>
+        <td>{{=professor.auth_user.email}}</td>
+        <td>{{=button('Alterar','edit/professor',professor.professor.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'alocacao':}}
+    {{flayout=1}}
+    <table border=1 class="smarttable">
+    <thead>
+    <tr><th colspan=4>[ Alocação ]</th></tr>
+    <tr>
+    <th>Nome</th><th>Matrícula</th><th>Turma</th><th>Data</th><th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{for alocacao in registros:}}
+        <tr>
+        <td>{{=alocacao.alocacao.aluno.usuario.first_name + ' ' + alocacao.alocacao.aluno.usuario.last_name}}</td>
+        <td>{{=alocacao.alocacao.aluno.matricula}}</td>
+        <td>{{=alocacao.alocacao.turma.nome}}</td>
+        <td>{{=alocacao.alocacao.data}}</td>
+        <td>{{=button('Alterar','edit/alocacao',alocacao.alocacao.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+    <table border=1 class="smarttable">
+    <thead>
+    <tr><th colspan=4>[Alunos NÃO Alocados a Turma]</th></tr>
+    <tr>
+    <th>Nome</th><th>Matricula</th><th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{for aluno in list_alunos:}}
+        <tr>
+        <td>{{=aluno.auth_user.first_name + ' ' + aluno.auth_user.last_name}}</td>
+        <td>{{=aluno.aluno.matricula}}</td>
+        <td>{{=button('Alterar','edit/aluno',aluno.aluno.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+    <table border=1 class="smarttable">
+    <thead>
+    <tr><th colspan=4>[TURMAS]</th></tr>
+    <tr>
+    <th>Disciplina</th><th>Nome</th><th>Ação</th>
+    </tr>  
+    </thead> 
+    <tbody>
+    {{for turma in list_turmas:}}
+        <tr>
+        <td>{{=turma.disciplina.nome}}</td>
+        <td>{{=turma.turma.nome}}</td>
+        <td>{{=button('Alterar','edit/turma',turma.turma.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'disciplina':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Disciplina</th><th>Curso</th><th>Acão</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{for disciplina in registros:}}
+        <tr>
+        <td>{{=A(disciplina.disciplina.nome,_href=url('edit/disciplina',disciplina.disciplina.id))}}</td>
+        <td>{{=A(disciplina.curso.nome,_href=url('edit/curso',disciplina.curso.id))}}</td>
+        <td>{{=button('Alterar','edit/disciplina',disciplina.disciplina.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'plano_de_prova':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Referência</th><th>Professor</th><th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{for planodeprova in registros:}}
+        <tr>
+        <td>{{=A(planodeprova.referencia,_href=url('cadlist/item_plano_de_prova',planodeprova.id))}}</td>
+        <td>{{=planodeprova.professor.usuario.first_name + ' ' + planodeprova.professor.usuario.last_name}}</td>
+        <td>{{=button('Alterar','edit/plano_de_prova',planodeprova.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'item_plano_de_prova':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Referência</th><th>Valor</th><th>Tópico</th><th>Taxonomia</th><th>dificuldade</th><th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{TOT=0}}
+    {{TOT2=0}}
+    {{ref1=''}}
+    {{flagv=0}}
+    {{for planodeprova in registros:}}
+        {{if flagv==0:}}
+          {{ref1=ref2=planodeprova.plano_de_prova.referencia}}
+          {{flagv=1}}
+        {{pass}}
+        <tr>
+        <td>{{=A(planodeprova.plano_de_prova.referencia,_href=url('cadlist/plano_de_prova',planodeprova.plano_de_prova))}}</td>
+        <td>{{=planodeprova.valor}}</td>
+        <td>{{=planodeprova.topico.nome}}</td>
+        <td>{{=planodeprova.taxionomia.nome}}</td>
+        <td>{{=planodeprova.dificuldade.nivel}}</td>
+        <td>{{=button('Alterar','edit/item_plano_de_prova',planodeprova.id)}}</td>
+        </tr>
+        {{if planodeprova.plano_de_prova.referencia == ref1:}}
+             {{TOT=TOT + TOT2 + planodeprova.valor}}
+             {{TOT2=0}}
+        {{else:}}
+             <tr><td>{{=ref1}}</td><td>{{=TOT}}</td><td><b><= Valor Total</b></td></tr>
+             {{ref1=planodeprova.plano_de_prova.referencia}}
+             {{TOT2=TOT2 + planodeprova.valor}}
+             {{TOT=0}}
+        {{pass}}
+    {{pass}}
+    <tr><td>{{=ref1}}</td><td>{{=TOT2 + TOT}}</td><td><b><= Valor Total</b></td></tr>
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'prova':}}
+    {{flayout=1}}
+    <table border=1 class="smarttable">
+    <thead>
+    <tr><th colspan=5>[ Prova ]</th></tr>
+    <tr>
+    <th>Referência</th><th>Turma</th><th>Plano de Prova</th><th>Tipo</th><th>Data Aplicação</th><th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{for prova in registros:}}
+        <tr>
+        <td>{{=prova.referencia }}</td>
+        <td>{{=prova.turma.nome}}</td>
+        <td>{{=prova.plano_de_prova.referencia}}</td>
+        <td>{{=prova.tipo}}</td>
+        <td>{{=prova.data_aplicacao}}</td>
+        <td>{{=button('Alterar','edit/prova',prova.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+    <table border=1 class="smarttable">
+    <thead>
+    <tr><th colspan=2>[ TURMA ]</th></tr>
+    <tr>
+    <th>Turma</th><th>Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{for turma in turmas:}}
+        <tr>
+        <td>{{=A(turma.nome,_href=url('cadlist/turma',turma.id))}}</td>
+        <td>{{=button('Alterar','edit/turma',turma.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'turma':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Turma</th><th>Turno</th><th>Disciplina</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for turma in registros:}}
+      <tr>
+      <td>{{=A(turma.turma.nome,_href=url('cadlist/turma',turma.turma.id))}}</td>
+      <td>{{=turma.turma.turno}}</td>
+      <td>{{=A(turma.disciplina.nome,_href=url('cadlist/disciplina',turma.disciplina.id))}}</td>
+      <td>{{=button('Alterar','edit/turma',turma.turma.id)}}</td></tr>
+   {{pass}}
+   </tbody>
+   </table>
+{{pass}}
+
+{{if tabela == 'instituicao':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Nome</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for instituicao in registros:}}
+      <tr>
+      <td>{{=A(instituicao.nome,_href=url('cadlist/instituicao',instituicao.id))}}</td>
+      <td>{{=button('Alterar','edit/instituicao',instituicao.id)}}</td>
+      </tr>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+{{if tabela == 'curso':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Curso</th><th>Instituicão</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for curso in registros:}}
+      <tr>
+      <td>{{=A(curso.nome,_href=url('edit/curso',curso.id))}}</td>
+      <td>{{=A(curso.instituicao.nome,_href=url('edit/instituicao',curso.instituicao.id))}}</td>
+      <td>{{=button('Alterar','edit/curso',curso.id)}}</td>
+    {{pass}}
+    </tbody>
+    </table>
+{{pass}}
+
+
+{{if tabela == 'dificuldade':}}
+    {{flayout=1}}
+    <table class="smarttable">
+    <thead>
+    <tr>
+    <th>Nível de Dificuldade</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for dificuldade in registros:}}
+      <tr>
+      <td>{{=A(dificuldade.nivel,_href=url('cadlist/curso',dificuldade.id))}}</td>
+      <td>{{=button('Alterar','edit/dificuldade',dificuldade.id)}}</td></tr>
+   {{pass}}
+   
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'topico':}}
+    {{flayout=1}}
+   <table class="smarttable">
+   <thead>
+   <tr>
+   <th>Tópico</th><th>Ação</th>
+   </tr>    
+   </thead>
+   <tbody>
+   {{for topico in registros:}}
+      <tr>
+      <td>{{=A(topico.nome,_href=url('cadlist/topico',topico.id))}}</td>
+      <td>{{=button('Alterar','edit/topico',topico.id)}}</td></tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'taxionomia':}}
+   {{flayout=1}}
+   <table class="smarttable">
+   <thead>
+   <tr>
+   <th>Nome</th><th>Ação</th>
+   </tr>    
+   </thead>
+   <tbody>
+   {{for taxionomia in registros:}}
+      <tr>
+      <td>{{=A(taxionomia.nome,_href=url('cadlist/taxionomia',taxionomia.nome))}}</td>   
+      <td>{{=button('Alterar','edit/taxionomia',taxionomia.id)}}</td>
+      </tr>
+   {{pass}}
+   </tbody>
+   </table>
+{{pass}}
+
+{{if tabela == 'questao':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Questão</th><th>Enunciado</th><th>Tópico</th><th>Taxonomia</th><th>Dificuldade</th><th>Resposta</th><th>Correta</th><th>Acão</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for questao in registros:}}
+      <tr>
+      <td>{{=questao.questao.id}}</td>
+      <td>
+      {{enunciado1=''}}
+      {{enunciado2=''}}
+      {{i=0}}
+      {{n=0}}
+      {{n=len(questao.questao.enunciado)}}
+      {{enunciado1 = str(questao.questao.enunciado)}}
+      {{if n >= 80:}}
+         {{while (i <= 80):}}
+            {{enunciado2 = enunciado2 + enunciado1[i]}}
+            {{i = i + 1}}
+         {{pass}}
+         {{=A(enunciado2 + ' ...',_href=url('edit/questao',questao.questao.id))}}
+      {{else:}}
+         {{=questao.questao.enunciado}}
+      {{pass}}
+      </td>
+      <td>{{=questao.questao.topico.nome}}</td>
+      <td>{{=questao.questao.taxionomia.nome}}</td>
+      <td>{{=questao.questao.dificuldade.nivel}}</td>
+      <td>
+      {{if questao.alternativa.resposta == None:}}
+          {{=questao.alternativa.resposta}}
+      {{else:}}
+          {{=A(questao.alternativa.resposta,_href=url('edit/alternativa',questao.alternativa.id))}}
+      {{pass}}
+      </td>    
+      <td>{{=questao.alternativa.correta}}</td>
+      <td>{{=button('Alterar/Enunciado','edit/questao',questao.questao.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'alternativa':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Questão</th><th>Enunciado</th><th>Resposta</th><th>Correta</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for alternativa in registros:}}
+       {{resp=''}}
+       {{resp=str(alternativa.correta)}}
+       {{if resp=='True': resp='Sim'}}
+       {{if resp=='False': resp='Não'}}
+      <tr>
+      <td>{{=A(alternativa.questao,_href=url('edit/questao',alternativa.questao))}}</td>
+      <td>
+      {{enunciado1=''}}
+      {{enunciado2=''}}
+      {{i=0}}
+      {{n=0}}
+      {{n=len(alternativa.questao.enunciado)}}
+      {{enunciado1 = str(alternativa.questao.enunciado)}}
+      {{if n >= 80:}}
+         {{while (i <= 80):}}
+            {{enunciado2 = enunciado2 + enunciado1[i]}}
+            {{i = i + 1}}
+         {{pass}}
+         {{=A(enunciado2 + ' ...',_href=url('edit/questao',alternativa.questao))}}
+      {{else:}}
+         {{=alternativa.questao.enunciado}}
+      {{pass}}
+      </td>
+      <td>
+      {{resposta1=''}}
+      {{resposta2=''}}
+      {{i=0}}
+      {{n=0}}
+      {{n=len(alternativa.resposta)}}
+      {{resposta1 = str(alternativa.resposta)}}
+      {{if n >= 80:}}
+         {{while (i <= 80):}}
+            {{resposta2 = resposta2 + resposta1[i]}}
+            {{i = i + 1}}
+         {{pass}}
+         {{=A(resposta2 + ' ...',_href=url('edit/alternativa',alternativa.id))}}
+      {{else:}}
+         {{=alternativa.resposta}}
+      {{pass}}
+      </td>
+      <td>{{=resp}}</td>
+      <td>{{=button('Alterar/Resposta','edit/alternativa',alternativa.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'prova_aplicada':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Referência</th><th>Turma</th><th>Tipo</th><th>Plano</th><th>Data</th><th>Acão</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for prova_aplicada in registros:}}
+      <tr>
+      <td>{{=prova_aplicada.prova.referencia}}</td>
+      <td>{{=prova_aplicada.prova.turma.nome}}</td>
+      <td>{{=prova_aplicada.prova.tipo}}</td>
+      <td>{{=prova_aplicada.prova.plano_de_prova.referencia}}</td>
+      <td>{{=prova_aplicada.data}}</td>
+      <td>{{=button('Alterar','edit/prova_aplicada',prova_aplicada.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+{{if tabela == 'prova_gerada':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Id Prova</th><th>Data Fechamento</th><th>Gerada</th><th>Aluno</th><th>Prova</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for prova_gerada in registros:}}
+      <tr>
+      <td>{{=prova_gerada.id}}</td>
+      <td>{{=prova_gerada.data}}</td>
+      <td>{{=T(str(prova_gerada.gerada))}}</td>
+      <td>{{=A(prova_gerada.aluno.usuario.first_name + " " + prova_gerada.aluno.usuario.last_name,_href=url('cadlist/item_prova_gerada/list',prova_gerada.id))}}</td>
+      <td>{{=prova_gerada.prova.referencia}}</td>
+      <td>{{=button('Alterar','edit/prova_gerada',prova_gerada.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+
+{{if tabela == 'item_prova_gerada':}}
+     {{flayout=1}}
+     <table class="smarttable">
+     <thead>
+    <tr>
+       <th>Id Prova</th><th>Questão</th><th>Alternativa</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for item_prova_gerada in registros:}}
+      <tr>
+      <td>{{=A(item_prova_gerada.prova_gerada,_href=url('cadlist/prova_gerada/list',item_prova_gerada.prova_gerada))}}</td>
+      <td>{{=item_prova_gerada.questao.enunciado}}</td>
+      <td>{{=item_prova_gerada.alternativa_escolhida.resposta}}</td>
+      <td>{{=button('Alterar','edit/item_prova_gerada',item_prova_gerada.id)}}</td>
+      </tr>
+   {{pass}}
+</tbody>
+</table>
+{{pass}}
+
+{{if flayout == 0:}}
+    <table class="smarttable">
+    <tbody>
+    {{=registros}}
+    </tbody>
+    </table>
+{{pass}}
