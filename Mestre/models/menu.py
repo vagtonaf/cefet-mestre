@@ -202,7 +202,7 @@ if 'auth' in globals():
                            ],
                          ]  
                        ],    
-                       ['Resultado Turma', 
+                       ['Resultado Prova', 
                             False, 
                             URL(request.application,'resultadoprova','resultadoprova'), []
                        ],
