@@ -19,20 +19,24 @@ def advanced_editor(field, value):
 db.define_table('administrador',
         Field('usuario',db.auth_user)
         )
-db.administrador.usuario.requires=IS_IN_DB(db,'auth_user.id','%(first_name)s %(last_name)s - %(email)s')       
+db.administrador.usuario.requires=IS_IN_DB(db,'auth_user.id','%(first_name)s %(last_name)s - %(email)s') 
 db.define_table('professor',
         Field('usuario',db.auth_user),
         Field('codigo_funcional',length=10,notnull=True)
         )
 db.professor.usuario.requires=IS_IN_DB(db,'auth_user.id','%(first_name)s %(last_name)s - %(email)s')
 db.professor.codigo_funcional.requires=IS_NOT_IN_DB(db, 'professor.codigo_funcional') 
+db.professor.codigo_funcional.label=T("Código Funcional")
+db.professor.usuario.label=T("Usuário")
 
 db.define_table('aluno',
         Field('usuario',db.auth_user),
         Field('matricula',length=10,notnull=True)
         )
 db.aluno.usuario.requires=IS_IN_DB(db,'auth_user.id','%(first_name)s %(last_name)s - %(email)s')
-db.aluno.matricula.requires=IS_NOT_IN_DB(db, 'aluno.matricula') 
+db.aluno.matricula.requires=IS_NOT_IN_DB(db, 'aluno.matricula')
+db.aluno.usuario.label=T("Usuário")
+db.aluno.matricula.label=T("Matrícula")
 
 db.define_table('instituicao',
         Field('nome',length=50,notnull=True)
@@ -45,7 +49,7 @@ db.define_table('curso',
         )
 db.curso.instituicao.requires=IS_IN_DB(db,'instituicao.id','instituicao.nome')
 db.curso.nome.requires=IS_NOT_IN_DB(db(db.curso.instituicao==request.vars.instituicao),db.curso.nome)
-
+db.curso.instituicao.label=T("Instituição")
 
 db.define_table('disciplina',
         Field('nome',length=50,notnull=True),
@@ -103,6 +107,8 @@ db.questao.taxionomia.requires=IS_IN_DB(db,'taxionomia.id','taxionomia.nome')
 db.questao.dificuldade.requires=IS_IN_DB(db,'dificuldade.id','dificuldade.nivel')
 db.questao.topico.requires=IS_IN_DB(db,'topico.id','topico.nome')
 db.questao.enunciado.requires=IS_NOT_IN_DB(db, 'questao.enunciado') 
+db.questao.taxionomia.label=T("Taxonomia")
+db.questao.topico.label=T("Tópico")
 
 db.define_table('alternativa',
         Field('questao',db.questao),
@@ -112,6 +118,7 @@ db.define_table('alternativa',
 db.alternativa.questao.requires=IS_IN_DB(db,'questao.id','questao.id')
 db.alternativa.resposta.requires=IS_NOT_IN_DB(db(db.alternativa.questao==request.vars.questao),db.alternativa.resposta)
 #db.alternativa.resposta.requires=IS_NOT_IN_DB(db, 'alternativa.resposta')
+db.alternativa.questao.label=T("Questão")
 
 db.define_table('plano_de_prova',
         Field('referencia',length=50,notnull=True),
@@ -120,6 +127,7 @@ db.define_table('plano_de_prova',
 db.plano_de_prova.referencia.requires=IS_NOT_IN_DB(db,'plano_de_prova.referencia')
 #db.plano_de_prova.professor.requires=IS_IN_DB(db,'professor.id','professor.codigo_funcional')   
 db.plano_de_prova.professor.requires=IS_IN_DB(db,'professor.id','Codigo Funcional: %(codigo_funcional)s')
+db.plano_de_prova.referencia.label=T("Referência")
 
 db.define_table('item_plano_de_prova',
         Field('valor','double',default=10.0,requires=IS_FLOAT_IN_RANGE(0,10.0)),
@@ -133,7 +141,8 @@ db.item_plano_de_prova.plano_de_prova.requires=IS_IN_DB(db,'plano_de_prova.id','
 db.item_plano_de_prova.taxionomia.requires=IS_IN_DB(db,'taxionomia.id','taxionomia.nome')
 db.item_plano_de_prova.dificuldade.requires=IS_IN_DB(db,'dificuldade.id','dificuldade.nivel')
 db.item_plano_de_prova.topico.requires=IS_IN_DB(db,'topico.id','topico.nome')
-      
+db.item_plano_de_prova.taxionomia.label=T("Taxonomia")
+db.item_plano_de_prova.topico.label=T("Tópico")
 
 db.define_table('prova',
         Field('referencia',length=50,notnull=True),
@@ -145,6 +154,10 @@ db.define_table('prova',
 db.prova.referencia.requires=IS_NOT_IN_DB(db,'prova.referencia') 
 db.prova.turma.requires=IS_IN_DB(db,'turma.id','turma.nome')
 db.prova.plano_de_prova.requires=IS_IN_DB(db,'plano_de_prova.id','plano_de_prova.referencia') 
+db.prova.referencia.label=T("Referência")
+db.prova.referencia.label=T("Referência")
+db.prova.data_aplicacao.label=T("Data Da Aplicação")
+
 
 db.define_table('prova_gerada',
         Field('data','datetime'),
@@ -165,3 +178,4 @@ db.item_prova_gerada.prova_gerada.requeres=IS_IN_DB(db,'prova_gerada.id')
 db.item_prova_gerada.questao.requires=IS_IN_DB(db,'questao.id','questao.enunciado')
 #db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db(db.alternativa.questao==db.item_prova_gerada.questao),db.alternativa.resposta)
 db.item_prova_gerada.alternativa_escolhida.requires=IS_IN_DB(db,'alternativa.id','alternativa.resposta')
+db.item_prova_gerada.questao.label=T("Questão")
