@@ -1,6 +1,6 @@
 # coding: utf8
 # try something like
-
+from uml import uml
 def url(f,args=[]): return URL(r=request,f=f,args=args)
 
 def button(text,action,args=[]):
@@ -9,6 +9,7 @@ def button(text,action,args=[]):
 @auth.requires_login()
 # Cadastra e Lista tabela simples
 def cadlist():
+    refObj=[]
     try:
         tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
         crud.messages.submit_button = 'Cadastrar'
@@ -34,6 +35,14 @@ def cadlist():
                     left=db.auth_user.on(db.aluno.usuario==db.auth_user.id),
                 orderby=db.aluno.matricula
                 )
+                if registros:
+                     for reg in registros:
+                        objAluno = uml.aluno()
+                        objAluno.set_matricula(reg.aluno.matricula)
+                        objAluno.set_nome(reg.auth_user.first_name)
+                        objAluno.set_sobrenome(reg.auth_user.last_name)
+                        objAluno.set_email(reg.auth_user.email)
+                        refObj.append(objAluno)
             else:
                 redirect(URL(r=request,f='../default/erro_acesso'))
         elif tabela == 'professor':
@@ -132,7 +141,7 @@ def cadlist():
         response.flash='Lista Usuario'
     else:
         response.flash='Lista ' + tabela.replace('_',' ')
-    return dict(registros=registros,form=form, tabela=tabela)
+    return dict(registros=registros,form=form, tabela=tabela,refObj=refObj)
 
 @auth.requires_login()
 # Edita tabela simples
@@ -152,6 +161,26 @@ def edit():
             #db.alternativa.questao.writable = False  
             #db.alternativa.questao.widget = advanced_editor  
             #db.alternativa.resposta.widget = advanced_editor
+        form=crud.update(db[tabela],registros,next=url('cadlist/'+ tabela))
+        return dict(form=form, tabela=tabela)
+    else:
+        redirect(URL(r=request,f='../default/erro_acesso'))
+  else:
+   redirect(URL(r=request,f='../default/error'))
+
+def edit2():
+  if auth.user:
+    #só deixa editar se for professor
+    row_professor=db(db.professor.usuario==auth.user.id).select(db.professor.ALL)
+    if row_professor:
+        tabela=request.args(0) or redirect(URL(r=request,f='../default/error'))
+        registro_id=request.args(1) or redirect(URL(r=request,f='../default/error'))
+        if tabela=="aluno":
+           ref=db(db.aluno.matricula==registro_id).select(db.aluno.id) or redirect(URL(r=request,f='../default/error')) 
+        else:
+           redirect(URL(r=request,f='../default/error')) 
+        registros=db[tabela][ref[0].id] or redirect(URL(r=request,f='../default/error'))      
+        crud.messages.submit_button = 'Alterar / Deletar'
         form=crud.update(db[tabela],registros,next=url('cadlist/'+ tabela))
         return dict(form=form, tabela=tabela)
     else:
