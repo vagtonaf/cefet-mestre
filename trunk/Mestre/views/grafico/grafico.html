@@ -28,7 +28,7 @@ src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script
        };
 
      /* Burtin's radius encoding is, as far as I can tell, sqrt(log(mic)). */
-     var max = Math.sqrt(Math.log(2 * 1E4));
+     var max = Math.sqrt(Math.log(1 * 1E4));
      var min = Math.sqrt(Math.log(10 * 1E4));
      var a = (outerRadius - innerRadius) / (min - max);
      var b = innerRadius - a * max;
