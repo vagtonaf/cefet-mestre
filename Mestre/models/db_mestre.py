@@ -148,7 +148,7 @@ db.define_table('prova',
         Field('referencia',length=50,notnull=True),
         Field('turma',db.turma),
         Field('plano_de_prova',db.plano_de_prova),
-        Field('tipo','string',requires=IS_IN_SET(["P1","SCHP1","P2","SCHP2","P3","SCHP3","PF","SCHPF","PR",])),
+        Field('tipo','string',requires=IS_IN_SET(["Diagnostica","Formativa","Somativa"])),
         Field('data_aplicacao','datetime')
         )
 db.prova.referencia.requires=IS_NOT_IN_DB(db,'prova.referencia') 
