@@ -10,7 +10,7 @@ def executesql(self, query):
         return None
         
 def grafico():
-    selecao = db.executesql("""SELECT  k.nome as turma, m.nome as taxonomia, sum(i.valor) as nota
+    selecao = db.executesql("""SELECT k.nome as turma,  m.nome as taxonomia, count(m.nome) as nota
                                            FROM item_prova_gerada as a  
                                            left join prova_gerada as b on a.prova_gerada==b.id 
                                            left join prova as c on b.prova==c.id 
@@ -21,9 +21,8 @@ def grafico():
                                            left join alternativa as h on a.alternativa_escolhida==h.id
                                            left join turma as k on c.turma==k.id
                                            left join taxionomia as m on f.taxionomia==m.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=='T' group by e.first_name,  e.last_name, m.nome order by sum(i.valor) desc
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=='T' group by  k.nome,  m.nome order by sum(i.valor) desc
                                      """)                                  
-    
     
     
     resposta = []
@@ -40,7 +39,7 @@ def grafico():
         if resp[2]==None:
            nota = 0
         else:
-           nota = float(resp[2]) 
+           nota = str(float(resp[2])) 
   
         rr={}
         rr['taxonomia']= str(taxonomia) 
@@ -49,6 +48,8 @@ def grafico():
         
         ss={}
         ss['turma']= str(turma)
+        ss['taxonomia']= str(taxonomia)
+        ss['nota']= nota
         turmax.append(ss) 
         
     return dict(resposta=resposta, turma=turmax)

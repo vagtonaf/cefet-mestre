@@ -115,7 +115,8 @@ $(document).ready(function() {
     {{pass}}
     {{if request.args(1) != 'list':}}
         <div id="form">
-        <h2>Novo Registro de {{=tabela.replace('_',' ')}}</h2>
+        {{ta=tabela.replace('_',' ')}}
+        <h2>Novo Registro de {{=ta.upper()}}</h2>
         {{=form}}
         </div>
     {{pass}}
@@ -181,6 +182,23 @@ $(document).ready(function() {
         <td>{{=aluno.auth_user.first_name + ' ' + aluno.auth_user.last_name}}</td>
         <td>{{=aluno.auth_user.email}}</td>
         <td>{{=button('Alterar','edit/aluno',aluno.aluno.id)}}</td>
+        </tr>
+    {{pass}}
+    </tbody>
+    </table>
+    <table border=1 class="smarttable">
+    <thead>
+    <tr>
+    <th>Matrícula</th><th>Nome</th><th>Email</th><th>Ação</th>
+    </tr>    
+    </thead>
+    <tbody>
+    {{for ref in refObj:}}
+        <tr>
+        <td>{{=ref.matricula}}</td>
+        <td>{{=ref.nome + " " + ref.sobrenome}}</td>
+        <td>{{=ref.email}}</td>
+        <td>{{=button('Alterar','edit2/aluno',ref.matricula)}}</td>
         </tr>
     {{pass}}
     </tbody>
@@ -270,7 +288,7 @@ $(document).ready(function() {
     <table class="smarttable">
     <thead>
     <tr>
-    <th>Disciplina</th><th>Curso</th><th>Acão</th>
+    <th>Disciplina</th><th>Curso</th><th>Ação</th>
     </tr>
     </thead>
     <tbody>
@@ -430,7 +448,7 @@ $(document).ready(function() {
     <table class="smarttable">
     <thead>
     <tr>
-    <th>Curso</th><th>Instituicão</th><th>Ação</th>
+    <th>Curso</th><th>Instituição</th><th>Ação</th>
     </tr>    
     </thead>
     <tbody>
@@ -506,7 +524,7 @@ $(document).ready(function() {
      <table class="smarttable">
      <thead>
     <tr>
-       <th>Questão</th><th>Enunciado</th><th>Tópico</th><th>Taxonomia</th><th>Dificuldade</th><th>Resposta</th><th>Correta</th><th>Acão</th>
+       <th>Questão</th><th>Enunciado</th><th>Tópico</th><th>Taxonomia</th><th>Dificuldade</th><th>Resposta</th><th>Correta</th><th>Ação</th>
     </tr>    
     </thead>
     <tbody>
@@ -611,7 +629,7 @@ $(document).ready(function() {
      <table class="smarttable">
      <thead>
     <tr>
-       <th>Referência</th><th>Turma</th><th>Tipo</th><th>Plano</th><th>Data</th><th>Acão</th>
+       <th>Referência</th><th>Turma</th><th>Tipo</th><th>Plano</th><th>Data</th><th>Ação</th>
     </tr>    
     </thead>
     <tbody>

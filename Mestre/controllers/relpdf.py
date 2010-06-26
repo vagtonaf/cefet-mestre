@@ -11,6 +11,8 @@ def executesql(self, query):
         
     
 def create_report():
+    import datetime
+    import time
     from reportlab.pdfgen import canvas
     from reportlab.lib.pagesizes import A4, landscape, letter
     from reportlab.lib.units import cm, mm, inch, pica
@@ -21,12 +23,16 @@ def create_report():
     import gluon.contenttype
     import StringIO
     resp = StringIO.StringIO()
-    filename = 'resposta.pdf'
+    dataref = datetime.date.today()
+    time = datetime.timedelta(microseconds=-1)
+     
+    filename = 'relpdf'+str(time.seconds)+str(dataref)+'.pdf'
     pdf = canvas.Canvas(filename, pagesize = letter) #Nome do arquivo e Tipo do papel
+    pdf.setTitle("Relatorio de Alunos")
     pdf.setFont('Courier',12) #Seta a fonte para Courier tamanho 12
     pdf.setStrokeColorRGB(1, 0, 0)
     row_aluno=db().select(db.aluno.ALL)
-    query = """SELECT c.referencia as prova, g.referencia as plano_de_prova, e.first_name,  e.last_name, c.data_aplicacao, b.data as data_conclusao, b.gerada, f.enunciado, h.resposta, h.correta, sum(i.valor)
+    query = """SELECT c.referencia as prova, g.referencia as plano_de_prova, e.first_name,  e.last_name, c.data_aplicacao, b.data as data_conclusao, b.gerada, f.enunciado, h.resposta, h.correta, i.valor
                                            FROM item_prova_gerada as a  
                                            left join prova_gerada as b on a.prova_gerada==b.id 
                                            left join prova as c on b.prova==c.id 
@@ -35,7 +41,7 @@ def create_report():
                                            left join questao as f on a.questao==f.id
                                            left join plano_de_prova as g on c.plano_de_prova==g.id
                                            left join alternativa as h on a.alternativa_escolhida==h.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" group by c.referencia, g.referencia, e.first_name, e.last_name """ 
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) """ 
                                            
     respQuery = db.executesql(query)
     lista = pdf.beginText(inch * 1, inch * 10)
