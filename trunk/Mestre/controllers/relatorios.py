@@ -77,7 +77,7 @@ def graf_bar():
                                            left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" group by c.referencia, g.referencia, e.first_name, e.last_name order by sum(i.valor) desc
                                      """)
                                      
-    testebanco = db.executesql("""SELECT  e.first_name,  e.last_name, m.nome as taxionomia, sum(i.valor) as nota
+    testebanco = db.executesql("""SELECT  e.first_name,  e.last_name, c.tipo as avaliacao, m.nome as taxionomia, sum(i.valor) as nota
                                            FROM item_prova_gerada as a  
                                            left join prova_gerada as b on a.prova_gerada==b.id 
                                            left join prova as c on b.prova==c.id 
