@@ -25,7 +25,8 @@ def arqpdf():
     resp = StringIO.StringIO()
     dataref = datetime.date.today()
      
-    filename = 'relpdf'+str(dataref)+'.pdf'
+    filename = 'applications/Mestre/static/relpdf'+str(dataref)+'.pdf'
+    filename2 = 'relpdf'+str(dataref)+'.pdf'
     pdf = canvas.Canvas(filename, pagesize = letter) #Nome do arquivo e Tipo do papel
     pdf.setTitle("Relatorio de Alunos")
     pdf.setFont('Courier',6) #Seta a fonte para Courier tamanho 12
@@ -65,10 +66,10 @@ def arqpdf():
     try:
       pdf.save()
     except: 
-      return dict(filename=str(filename), msg='Professor, o arquivo está aberto e não pode ser criado, por favor feche o Acrobat Read')
+      return dict(filename=str(filename2), msg='Professor, o arquivo está aberto e não pode ser criado, por favor feche o Acrobat Read')
     #resp.seek(0)
     #response.headers['Content-Type'] = gluon.contenttype.contenttype('.pdf')
-    #response.headers['Content-disposition'] = "attachment; filename=\"%s\"" % filename
+    #response.headers['Content-disposition'] = "attachment; filename='relpdf"+str(dataref)+".pdf"
     #return resp.read()
     #return response.stream(resp,chunk_size=64*1024)
-    return dict(filename=str(filename), msg=None)
+    return dict(filename=str(filename2), msg=None)

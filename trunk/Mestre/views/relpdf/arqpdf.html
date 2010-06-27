@@ -3,7 +3,9 @@
 {{if msg!=None:}}
    <h2>{{=msg}}</h2>
 {{else:}}
-   <h2>Professor, o arquivo gerado na pasta do web2py do servidor</h2>   
+   <h2>Professor, o arquivo foi gerado no servidor</h2>   
 {{pass}} 
 <br>  
-<b>{{=A(filename)}}</b>
+{{=filename}}
+<br> 
+<b><a href="http://localhost:8000/Mestre/static/{{=filename}}">Click para Acessar</a></b>
