@@ -10,7 +10,7 @@ def executesql(self, query):
         return None
         
     
-def create_report():
+def arqpdf():
     import datetime
     import time
     from reportlab.pdfgen import canvas
@@ -24,12 +24,11 @@ def create_report():
     import StringIO
     resp = StringIO.StringIO()
     dataref = datetime.date.today()
-    time = datetime.timedelta(microseconds=-1)
      
-    filename = 'relpdf'+str(time.seconds)+str(dataref)+'.pdf'
+    filename = 'relpdf'+str(dataref)+'.pdf'
     pdf = canvas.Canvas(filename, pagesize = letter) #Nome do arquivo e Tipo do papel
     pdf.setTitle("Relatorio de Alunos")
-    pdf.setFont('Courier',12) #Seta a fonte para Courier tamanho 12
+    pdf.setFont('Courier',6) #Seta a fonte para Courier tamanho 12
     pdf.setStrokeColorRGB(1, 0, 0)
     row_aluno=db().select(db.aluno.ALL)
     query = """SELECT c.referencia as prova, g.referencia as plano_de_prova, e.first_name,  e.last_name, c.data_aplicacao, b.data as data_conclusao, b.gerada, f.enunciado, h.resposta, h.correta, i.valor
@@ -48,29 +47,28 @@ def create_report():
     lista.textLine('Resultado da Prova dos Alunos')
     for item,reg in enumerate(respQuery):
          if reg[6]=='T':
-            r1="Sim"
+            r1='Sim'
          else:
-            r1="Não" 
+            r1='Não' 
          if reg[9]=='T':
-            r2="Sim"
+            r2='Sim'
          else:
-            r2="Não"   
-         lista.textLine("####################################################") 
-         lista.textLine("Prova: "+reg[0])
-         lista.textLine("Plano de Prova: "+reg[1])
-         lista.textLine("Aluno: "+reg[2]+' ' +reg[3])
-         lista.textLine("Data da Aplicação: "+str(reg[4]))
-         lista.textLine("Data da Conclusão: "+str(reg[5]))
-         lista.textLine("Prova Gerada: "+r1)
-         lista.textLine("Enunciado: "+reg[7])
-         lista.textLine("Resposta: "+reg[8])
-         lista.textLine("Resposta estava Correta: "+ r2)
-         lista.textLine("Valor da Questão: "+str(reg[10]))
+            r2='Não'   
+         lista.textLine("#####################################################################################") 
+         lista.textLine('Prova:[' + reg[0] + '] Plano de Prova:[ ' + reg[1] + ']')
+         lista.textLine('Data da Aplicação:[ ' + str(reg[4]) + '] Data da Conclusão:[' + str(reg[5])+']')
+         lista.textLine('Aluno:[' + reg[2] + ' ' + reg[3] + '] Prova foi Gerada:[' + r1 + ']')
+         lista.textLine('Enunciado:[' + reg[7] + ']')
+         lista.textLine('Resposta:[' + str(reg[8]) + '] Resposta estava Correta:[' + r2 + '] Valor da Questão:[' + str(reg[10])+']')
     pdf.drawText(lista)
     pdf.showPage()
-    pdf.save()
-    resp.seek(0)
-    response.headers['Content-Type'] = gluon.contenttype.contenttype('.pdf')
-    response.headers['Content-disposition'] = "attachment; filename=\"%s\"" % filename
-    return resp.read()
+    try:
+      pdf.save()
+    except: 
+      return dict(filename=str(filename), msg='Professor, o arquivo está aberto e não pode ser criado, por favor feche o Acrobat Read')
+    #resp.seek(0)
+    #response.headers['Content-Type'] = gluon.contenttype.contenttype('.pdf')
+    #response.headers['Content-disposition'] = "attachment; filename=\"%s\"" % filename
+    #return resp.read()
     #return response.stream(resp,chunk_size=64*1024)
+    return dict(filename=str(filename), msg=None)
