@@ -15,6 +15,10 @@ def executesql(self, query):
 def rel():
  if 'auth' in globals():
   if auth.is_logged_in():
+    if request.args(1)=='imp':
+       vimp='imp'
+    else:
+       vimp=None   
     #pega o Professor  
     nome=auth.user.first_name
     sobrenome=auth.user.last_name
@@ -44,4 +48,4 @@ def rel():
             resultado = None 
     else:   
         resultado = FORM(TABLE(TR('Só Professor pode executar esse relatôrio!')))
-    return dict(resultado=resultado, nome=nome, referencia=referencia)
+    return dict(resultado=resultado, nome=nome, referencia=referencia, vimp=vimp)
