@@ -22,12 +22,13 @@
 {{pass}}
 </table>
 <br>
-<table border=1><tr><td><seq></td><td>Aluno</td><td>Taxonomia</td><td>Nota</td></tr>
+<table border=1><tr><td><seq></td><td>Aluno</td><td>Tipo Avaliação</td><td>Taxonomia</td><td>Nota</td></tr>
 {{for item, reg in enumerate(testebanco):}}
     <tr><td>{{=item+1}})</td>
         <td>{{=reg[0]+ ' ' + reg[1]}}</td>
         <td>{{=reg[2]}}</td>
-        <td>{{=reg[3]}}</td></tr>
+        <td>{{=reg[3]}}</td>
+        <td>{{=reg[4]}}</td></tr>
 {{pass}}
 <br>
 </table>

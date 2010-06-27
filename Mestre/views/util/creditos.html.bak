@@ -1,3 +1,0 @@
-{{extend 'layout.html'}}
-<h1>Desculpe-me estamos em construção de mais essa facilidade</h1>
-<img src="../static/construcao.gif" alt="construção" />
