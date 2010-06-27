@@ -222,9 +222,9 @@ if 'auth' in globals():
                             False, 
                             URL(request.application,'grafico','grafico'), []
                        ],
-                       ['Professor (Em Construção)', 
+                       ['Notas dos Alunos PDF', 
                             False, 
-                            URL(request.application,'util','construcao'), []
+                            URL(request.application,'relpdf','arqpdf'), []
                        ],
                        ['Turma (Em Construção)', 
                             False, 
