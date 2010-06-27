@@ -5,8 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 {{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
 {{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
-{{extend 'layout.html'}}
 </head>
+    {{if vimp!='imp':}}
+       {{extend 'layout.html'}}
+    {{else:}}   
+        <table><tr><td><h1>Mestre - Mecanismo Sinérgico de Treinamento</h1></td></tr></table>
+    {{pass}}  
 <script>
 $(document).ready(function() { 
   jQuery('.smarttable').dataTable(); 
@@ -18,7 +22,7 @@ $(document).ready(function() {
     <table class="smarttable"><thead><tr><td>Nenhum resultado</td></tr></thead></table>
 {{else:}}
     {{if referencia=='Turma_Aluno':}}
-        <table class="smarttable">
+        <table border=1 class="smarttable">
         <thead>  
             <tr>
               <th>Turma</th><th>Turno</th><th>Matricula</th><th>Aluno</th>
@@ -36,7 +40,7 @@ $(document).ready(function() {
         </tbody>
         </table>
     {{elif referencia=='Turma_Aluno_Disciplina':}}
-        <table class="smarttable">
+        <table border=1 class="smarttable">
         <thead>  
             <tr>
               <th>Turma</th><th>Turno</th><th>Matricula</th><th>Aluno</th><th>Disciplina</th>
@@ -56,3 +60,10 @@ $(document).ready(function() {
         </table>
     {{pass}}    
 {{pass}}
+<table>
+   {{if referencia=='Turma_Aluno':}}
+     <tr><td>{{=button('Refresh','rel/Turma_Aluno')}}&nbsp;{{=button('Vista para Impressão','rel/Turma_Aluno/imp')}}</td></tr>  
+   {{elif referencia=='Turma_Aluno_Disciplina':}}   
+     <tr><td>{{=button('Refresh','rel/Turma_Aluno_Disciplina')}}&nbsp;{{=button('Vista para Impressão','rel/Turma_Aluno_Disciplina/imp')}}</td></tr>    
+   {{pass}}
+</table>
