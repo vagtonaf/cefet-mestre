@@ -2,6 +2,12 @@
 # try something like
 class resultadoAluno:
    # Atributos   
+   prova = None
+   plano = None
+   nome = None
+   aplicacao = None
+   conclusao = None
+   nota = None
    def set_resultado(self, prova, plano, nome, aplicacao, conclusao, nota):
      self.prova = prova
      self.plano = plano
@@ -58,10 +64,11 @@ def nota_aluno():
                                            left join questao as f on a.questao==f.id
                                            left join plano_de_prova as g on c.plano_de_prova==g.id
                                            left join alternativa as h on a.alternativa_escolhida==h.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta == 'T' and d.usuario == %s """ % (str(usuario_id))
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta == 'T' and d.usuario == %s  group by c.referencia,  g.referencia, e.first_name, e.last_name, c.data_aplicacao,  b.data order by b.data""" % (str(usuario_id))
     nota = db.executesql(query)
-    resultado = resultadoAluno()
+    refObj=[]
     for resp in nota:
+        resultado = resultadoAluno()
         if resp[0]==None:
            prova='-'
         else:
@@ -91,6 +98,5 @@ def nota_aluno():
         if (conclusao=='-') & (prova=='-'):
            nota = 'Prova a ser realizada!'                                 
         resultado.set_resultado(prova,plano,nome,aplicacao,conclusao,nota)
-
-    
-    return dict(resultado=resultado)
+        refObj.append(resultado)
+    return dict(resultado=refObj)
