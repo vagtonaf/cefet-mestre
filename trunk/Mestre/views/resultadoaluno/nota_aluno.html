@@ -8,13 +8,15 @@
                  <td>Conclusao</td>
                  <td>Nota</td>
                 </tr>
-                <tr>
-                  <td>{{=resultado.prova}}</td>
-                  <td>{{=resultado.plano}}</td>
-                  <td>{{=resultado.nome}}</td>
-                  <td>{{=resultado.aplicacao}}</td>
-                  <td>{{=resultado.conclusao}}</td>
-                  <td>{{=resultado.nota}}</td>
-                </tr>
-                <tr><td colspan=6>{{=resultado.minha_nota()}}</td></tr>
+                {{for ref in resultado:}}
+                  <tr>
+                  <td>{{=ref.prova}}</td>
+                  <td>{{=ref.plano}}</td>
+                  <td>{{=ref.nome}}</td>
+                  <td>{{=ref.aplicacao}}</td>
+                  <td>{{=ref.conclusao}}</td>
+                  <td>{{=ref.nota}}</td>
+                  </tr>
+                  <tr><td colspan=6>{{=ref.minha_nota()}}</td></tr>
+                {{pass}}
 </table>
