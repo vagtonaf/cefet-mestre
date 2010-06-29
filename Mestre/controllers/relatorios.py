@@ -62,7 +62,19 @@ def rel_aluno_nota():
     return dict(imagem = 'turma01.png')
     
 def graf_bar():
-    notabanco = db.executesql("""SELECT  e.first_name,  e.last_name, sum(i.valor) as nota, k.nome as turma, c.referencia, c.data_aplicacao, o.first_name,  o.last_name
+    if 'auth' in globals():
+        if auth.is_logged_in():
+          if request.args(0)=='imp':
+             vimp='imp'
+          else:
+             vimp=None   
+          row_turma = db().select(db.turma.ALL)
+          if row_turma: 
+            pergunta = FORM(TABLE(TR('Qual a Turma?', SELECT([OPTION(tur.nome,_value=tur.nome) for tur in db().select(db.turma.nome,distinct=True)],_name='turma',requires=IS_IN_DB(db,'turma.nome')), INPUT(_type='submit', _value='Pesquisar')),))
+            if pergunta.accepts(request.vars, session):
+                #pega identificao da prova
+                turma = pergunta.vars.turma
+                notabanco = db.executesql("""SELECT k.nome as turma, c.referencia, o.first_name, o.last_name, c.data_aplicacao, e.first_name,  e.last_name, sum(i.valor) as nota
                                            FROM item_prova_gerada as a  
                                            left join prova_gerada as b on a.prova_gerada==b.id 
                                            left join prova as c on b.prova==c.id 
@@ -74,10 +86,9 @@ def graf_bar():
                                            left join turma as k on c.turma==k.id
                                            left join professor as n on g.professor==n.id
                                            left join auth_user as o on n.usuario=o.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" group by c.referencia, g.referencia, e.first_name, e.last_name order by sum(i.valor) desc
-                                     """)
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=="T" and k.nome == %s group by  k.nome, c.referencia,  o.first_name,  o.last_name, c.data_aplicacao, e.first_name, e.last_name   order by sum(i.valor) desc """ % ("'" + str(turma) + "'"))
                                      
-    testebanco = db.executesql("""SELECT  e.first_name,  e.last_name, c.tipo as avaliacao, m.nome as taxionomia, sum(i.valor) as nota
+                testebanco = db.executesql("""SELECT  e.first_name, e.last_name, c.tipo as avaliacao, m.nome as taxionomia, sum(i.valor) as nota
                                            FROM item_prova_gerada as a  
                                            left join prova_gerada as b on a.prova_gerada==b.id 
                                            left join prova as c on b.prova==c.id 
@@ -88,62 +99,71 @@ def graf_bar():
                                            left join alternativa as h on a.alternativa_escolhida==h.id
                                            left join turma as k on c.turma==k.id
                                            left join taxionomia as m on f.taxionomia==m.id
-                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=='T' group by e.first_name,  e.last_name, m.nome order by sum(i.valor) desc
-                                     """)                                  
-    
-    
-    
-    resposta = []
-    notar=[]
-    #resultado = resultadoprova()
-    for resp in notabanco:
-        if resp[0]==None:
-           nome='-'
+                                           left join item_plano_de_prova as i on (f.taxionomia==i.taxionomia and f.dificuldade==i.dificuldade and f.topico==i.topico and c.plano_de_prova==i.plano_de_prova) where h.correta=='T' and k.nome == %s group by e.first_name, e.last_name, c.tipo, m.nome order by sum(i.valor) desc """ % ("'" + str(turma) + "'"))                                  
+                resposta = []
+                notar=[]
+                #resultado = resultadoprova()
+                if notabanco:
+                  for resp in notabanco:
+                    if resp[0]==None:
+                       turma = "-"
+                    else:
+                       turma = resp[0]    
+                    if resp[1]==None:
+                       prova = "-"
+                    else:
+                       prova = resp[1] 
+                    if resp[2]==None:
+                       professor = "-"
+                    else:
+                       professor = resp[2]+' ' + resp[3]   
+                    if resp[4]==None:
+                       data = "-"
+                    else:
+                       data = str(resp[4])
+                    if resp[5]==None:
+                       nome='-'
+                    else:
+                       nome=resp[5] + " " + resp[6]
+                    if resp[7]==None:
+                       nota = 0
+                    else:
+                       nota = float(resp[7]) 
+ 
+                    #resultado.set_resultado(nome,nota)
+                    rr={}
+                    rr['name']= str(prova) + " - " + str(nome)
+                    rr['start']=nota
+                    resposta.append(rr)
+                    ss={}
+                    ss['professor']=professor
+                    ss['prova']=prova
+                    ss['turma']=turma
+                    ss['nome']=nome
+                    ss['nota']=nota
+                    ss['data']=data
+                    notar.append(ss)
+                    #dado = ["vagton", 8.0, "Jose Roberto", 9.0,"Zezaum", 10.0,]
+                    #dado = ["Zezaum", 10.0]
+                    #names = [x for i, x in enumerate(dado) if not i % 2]
+                    #starts = [x for i, x in enumerate(dado) if i % 2]
+                    #for name, start in zip(names, starts):
+                    #    resposta.append({'name': name, 'start': start})
+                  return dict(pergunta=None, resposta=resposta, notar=notar, testebanco=testebanco, vimp=vimp)
+                else:
+                  return dict(pergunta="Não possue resultado para essa turma", resposta=None, notar=None, testebanco=None, vimp=vimp)    
+            elif pergunta.errors:
+                response.flash = 'Formulario Invalido'
+            else:
+                response.flash = 'Por favor, Selecione uma turma!'
+                return dict(pergunta=pergunta, resposta=None, notar=None, testebanco=None, vimp=vimp)
+          else:      
+              return dict(pergunta="não possue turma cadastrada", resposta=None, notar=None, testebanco=None, vimp=vimp)
         else:
-           nome=resp[0] + " " + resp[1]
-        if resp[2]==None:
-           nota = 0
-        else:
-           nota = float(resp[2]) 
-        if resp[3]==None:
-           turma = "-"
-        else:
-           turma = resp[3]    
-        if resp[4]==None:
-           prova = "-"
-        else:
-           prova = resp[4] 
-        if resp[5]==None:
-           data = "-"
-        else:
-           data = str(resp[5])
-        if resp[6]==None:
-           professor = "-"
-        else:
-           professor = resp[6]+' ' + resp[7]   
-                               
-        #resultado.set_resultado(nome,nota)
-        rr={}
-        rr['name']= str(prova) + " - " + str(nome)
-        rr['start']=nota
-        resposta.append(rr)
-        ss={}
-        ss['professor']=professor
-        ss['prova']=prova
-        ss['turma']=turma
-        ss['nome']=nome
-        ss['nota']=nota
-        ss['data']=data
-        notar.append(ss)
-        
-  
-    #dado = ["vagton", 8.0, "Jose Roberto", 9.0,"Zezaum", 10.0,]
-    #dado = ["Zezaum", 10.0]
-    #names = [x for i, x in enumerate(dado) if not i % 2]
-    #starts = [x for i, x in enumerate(dado) if i % 2]
-    #for name, start in zip(names, starts):
-    #    resposta.append({'name': name, 'start': start})
-    return dict(resposta=resposta, notar=notar, testebanco=testebanco)
+            redirect(URL(r=request, f='../default/user/login'))
+    else:
+        redirect(URL(r=request, f='../default/user/login'))
+
 
 @auth.requires_login()
 def resultado_prova():

@@ -6,12 +6,27 @@
 {{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
 {{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
 {{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
-{{extend 'layout.html'}}
 </head>
+{{if vimp!='imp':}}
+       {{extend 'layout.html'}}
+{{else:}}   
+        <table><tr><td><h1>Mestre - Mecanismo Sinérgico de Treinamento</h1></td></tr></table>
+{{pass}}   
 <h1>Resultado de notas</h1>
+{{if resposta:}}
+   <table>
+     <tr><td>{{=button('Nova Pesquisa','graf_bar')}}</td></tr>     
+   </table>
+{{else:}}   
+  <table>
+      <tr><td>{{=pergunta}}</td></tr>
+      <tr><td>{{=button('Nova Pesquisa','graf_bar')}}&nbsp;{{=button('Vista para Impressão','graf_bar/imp')}}</td></tr>  
+  </table>  
+{{pass}}    
 <br>
-<table border=1><tr><td><seq></td><td>Professor</td><td>Data</td><td>Prova</td><td>Turma</td><td>Aluno</td><td>Nota</td></tr>
-{{for item, reg in enumerate(notar):}}
+{{if notar:}}
+  <table border=1><tr><td><seq></td><td>Professor</td><td>Data</td><td>Prova</td><td>Turma</td><td>Aluno</td><td>Nota</td></tr>
+  {{for item, reg in enumerate(notar):}}
     <tr><td>{{=item+1}})</td>
         <td>{{=reg['professor']}}</td>
         <td>{{=reg['data']}}</td>
@@ -19,25 +34,29 @@
         <td>{{=reg['turma']}}</td>
         <td>{{=reg['nome']}}</td>
         <td>{{=reg['nota']}}</td></tr>
+  {{pass}}
 {{pass}}
 </table>
 <br>
-<table border=1><tr><td><seq></td><td>Aluno</td><td>Tipo Avaliação</td><td>Taxonomia</td><td>Nota</td></tr>
-{{for item, reg in enumerate(testebanco):}}
+{{if notar:}}
+ <table border=1><tr><td><seq></td><td>Aluno</td><td>Tipo Avaliação</td><td>Taxonomia</td><td>Nota</td></tr>
+ {{if testebanco:}}
+   {{for item, reg in enumerate(testebanco):}}
     <tr><td>{{=item+1}})</td>
         <td>{{=reg[0]+ ' ' + reg[1]}}</td>
         <td>{{=reg[2]}}</td>
         <td>{{=reg[3]}}</td>
         <td>{{=reg[4]}}</td></tr>
-{{pass}}
-<br>
-</table>
-<h1>Notas de todos alunos de todoas as turmas</h1>
-<BR>
-<BR>
+   {{pass}}
+ {{pass}}  
+ <br>
+ </table>
+ <h1>Notas de todos alunos de todoas as turmas</h1>
+ <BR>
+ <BR>
  <script type="text/javascript" src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js">
-</script>
-<script type="text/javascript">
+ </script>
+ <script type="text/javascript">
 
 var alunos_notas;
 alunos_notas={{=resposta}};
@@ -85,3 +104,4 @@ var label_notas = grafico.add(pv.Label)
 grafico.render();
 
 </script>
+{{pass}}
