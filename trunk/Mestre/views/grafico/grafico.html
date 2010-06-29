@@ -1,16 +1,39 @@
-{{extend 'layout.html'}}
-<table border=1><tr><td colspan=3><h1>Taxonomias das Turmas</h1></td></tr>
-
-<tr><td><b>Turma</b></td><td><b>Taxonomia</b></td><td><b>Nota</b></td></tr>
-
-{{for i in turma:}}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'br'}}">
+<head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{response.files.append(URL(r=request,c='static',f='js/ckeditor/ckeditor.js'))}}
+{{response.files.append(URL(r=request,c='static',f='jquery.dataTables.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='demo_table.css'))}}
+</head>
+{{if vimp!='imp':}}
+       {{extend 'layout.html'}}
+{{else:}}   
+        <table><tr><td><h1>Mestre - Mecanismo Sinérgico de Treinamento</h1></td></tr></table>
+{{pass}}  
+<table><tr><td colspan=3><h1>Taxonomias das Turmas</h1></td></tr></table>
+{{if resposta:}}
+   <table>
+     <tr><td>{{=button('Nova Pesquisa','grafico')}}</td></tr>     
+   </table>
+{{else:}}   
+  <table>
+      <tr><td>{{=pergunta}}</td></tr>
+      <tr><td>{{=button('Nova Pesquisa','grafico')}}&nbsp;{{=button('Vista para Impressão','grafico/imp')}}</td></tr>  
+  </table>  
+{{pass}}    
+{{if turma:}}
+  <table border=1>
+  <tr><td><b>Turma</b></td><td><b>Taxonomia</b></td><td><b>Nota</b></td></tr>
+  {{for i in turma:}}
       <tr><td>&nbsp;<a>{{=i['turma']}}</a></td><td>&nbsp;<a>{{=i['taxonomia']}}</a></td><td>&nbsp;<a>{{=i['nota']}}</a></td></tr>
-{{pass}}
-<tr><td colspan=4>
- <script type="text/javascript"
-src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script>
- <script type="text/javascript">
- var taxonomias={{=resposta}};
+  {{pass}}
+  <tr><td colspan=4>
+   <script type="text/javascript"
+  src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script>
+   <script type="text/javascript">
+   var taxonomias={{=resposta}};
 
 
      /* Basico dimencionamento */
@@ -114,5 +137,6 @@ src="/{{=request.application}}/static/js/protovis-3.1/protovis-r3.1.js"></script
  
 
      vis.render();
- </script>
-</td></tr></table>
+  </script>
+  </td></tr></table>
+{{pass}}
