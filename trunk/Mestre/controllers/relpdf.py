@@ -13,13 +13,16 @@ def executesql(self, query):
 def arqpdf():
     import datetime
     import time
-    from reportlab.pdfgen import canvas
-    from reportlab.lib.pagesizes import A4, landscape, letter
-    from reportlab.lib.units import cm, mm, inch, pica
-    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.graphics.shapes import Drawing
-    from reportlab.graphics.charts.barcharts import VerticalBarChart
+    try:
+      from reportlab.pdfgen import canvas
+      from reportlab.lib.pagesizes import A4, landscape, letter
+      from reportlab.lib.units import cm, mm, inch, pica
+      from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+      from reportlab.lib.styles import getSampleStyleSheet
+      from reportlab.graphics.shapes import Drawing
+      from reportlab.graphics.charts.barcharts import VerticalBarChart
+    except: 
+      return dict(filename=None, msg='Falta a Bliblioteca para gerar o pdf, procure o administrador!')       
     import gluon.contenttype
     import StringIO
     resp = StringIO.StringIO()
